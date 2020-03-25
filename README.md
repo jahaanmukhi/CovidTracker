@@ -1,1 +1,5 @@
-Nash Final Project
+# Nash Final Project
+
+## Team
+
+Jake Derry, 
