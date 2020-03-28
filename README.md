@@ -2,7 +2,8 @@
 
 ## Team
 
-Jake Derry, Joseph Nagy, Sam Snedeker, Ava LeWinter, Jahaan Mukhi, David Rothblatt
+Jake Derry, Joseph Nagy, Sam Snedeker, Ava LeWinter, Jahaan Mukhi, 
+David Rothblatt
 
 ## Project Goal
 
@@ -33,4 +34,5 @@ This project uses a Flask server and a PostgreSQL database.
 
 ## Audience
 
-People who would like to get updates about COVID-19 (and other disasters), would like to share their status with friends, or are worried about their friends.
+People who would like to get updates about COVID-19 (and other disasters), would 
+like to share their status with friends, or are worried about their friends.
