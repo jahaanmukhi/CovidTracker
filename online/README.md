@@ -22,4 +22,4 @@ information including all declarations of emergency
 
 ## Get started
 
-Information on how to start the server will be provided once the server is up.
+Run `bash start.sh` which will activate the virtual environment and start the server.
