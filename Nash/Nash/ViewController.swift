@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Nash
 //
-//  Created by Alejandro Meza on 3/25/20.
-//  Copyright © 2020 Nash. All rights reserved.
+//  Created by Jacob Andrew Derry on 4/4/20.
+//  Copyright © 2020 nash. All rights reserved.
 //
 
 import UIKit
