@@ -83,12 +83,23 @@ friends, map data, and news.
 #### GET /map
 
 ```json
-{
-  "Australia" : {
-      "confirmed": 5330,
-      "deaths": 28
-    }
-}
+[
+  { 
+    "uid" : 0,
+    "fips" : 0.0,
+    "combined_key" : "",
+    "country": "",
+    "state": "",
+    "county" : "",
+    "latitude": 0.0,
+    "longitude": 0.0,
+    "confirmed_cases" : 0,
+    "deaths" : 0,
+    "daily_change_cases" : 0,
+    "daily_change_deaths" : 0,
+    "population" : 0
+  }
+]
 ```
 
 #### GET /map/stats/{fips}
