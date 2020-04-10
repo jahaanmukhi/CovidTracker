@@ -11,16 +11,39 @@ import CoreData
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert, .sound])
+    } //added april 9
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler:
+        @escaping () -> Void) {
+        
+        if response.notification.request.identifier == "tempIdentifier" {
+            print("handling notifications with the TestIdentifier Identifier")
+            completionHandler()
+        }
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+   
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions
+        launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UNUserNotificationCenter.current().delegate = self
+        //request authorization for notifications
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+            print("granted: (\(granted)")
+        }
         return true
-    }
+    } //changed the inside of this function
+    
+    
+        // Override point for customization after application launch.
+//        return true
+    
 
     // MARK: UISceneSession Lifecycle
 
@@ -81,5 +104,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-}
 
+}
