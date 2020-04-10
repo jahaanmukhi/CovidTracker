@@ -8,16 +8,101 @@
 
 import UIKit
 import CoreData
+import UserNotifications
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    var window: UIWindow?
+    
+    //notifications and location setup
+    let locationManager = CLLocationManager()
+    let center = UNUserNotificationCenter.current()
+    
+    //setup geocoder
+    static let geoCoder = CLGeocoder()
+    
+    
+    
 
+    //handling notifications
+    //notification willPresent method
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//        completionHandler([.alert, .sound])
+//    }
+    
+    //notification DIDRECIEVE method
+    
+//    func userNotificationCenter(_ center: UNUserNotificationCenter,
+//    didReceive response: UNNotificationResponse,
+//    withCompletionHandler completionHandler:
+//        @escaping () -> Void) {
+//
+//        if response.notification.request.identifier == "tempIdentifier" {
+//               print("handling notifications with the TestIdentifier Identifier")
+//
+//            let storyboard = UIStoryboard(name: "Notifications", bundle: nil)
+//
+//            if let notificationVC = storyboard.instantiateViewController(withIdentifier: "NavigationVC") as? NotificationVC {
+//
+//                self.window?.rootViewController = notificationVC
+//            }
+//            completionHandler()
+//        }
+//
+//    }
+            
+            
+ 
+ //           let viewController = storyboard.instantiateViewController(withIdentifier :"NotificationVC") as! NotificationVC
+//            let NotificationNavVC = UINavigationController.init(rootViewController: viewController)
 
-
+//               if let window = self.window, let rootViewController = window.rootViewController {
+//                   var currentController = rootViewController
+//                   while let presentedController = currentController.presentedViewController {
+//                       currentController = presentedController
+//                    }
+//                       currentController.present(NotificationNavVC, animated: true)
+//
+//                 completionHandler()
+//               }
+//
+//
+//
+//        }
+//
+//    }
+    
+   
+   
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+       
+        //request authorization for location
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startMonitoringVisits()
+        locationManager.delegate = self
+        
+        //request authorization for notifications
+        center.requestAuthorization(options:[.alert, .badge, .sound]) { (granted, error) in
+            print("granted: \(granted)")
+            }
+        
+         
+            return true
+        }
+    //handle location erros if access is denied
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+       if let error = error as? CLError, error.code == .denied {
+          // Location updates are not authorized.
+    
+          manager.stopUpdatingLocation()
+          return
+       }
+       // Notify the user of any errors.
     }
+    
+
 
     // MARK: UISceneSession Lifecycle
 
@@ -77,6 +162,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    
 
 }
+
+extension AppDelegate: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+       let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
+
+        
+        AppDelegate.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
+            if let place = placemarks?.first {
+                let description =  "\(place)"
+                self.newVisitReceived(visit, description: description, place: place )
+            }
+        }
+        
+    }
+    
+    func newVisitReceived(_ visit: CLVisit, description: String, place: CLPlacemark) {
+        let location = Location(visit: visit, descriptionString: description)
+        let locality = place.locality
+    
+        let content = UNMutableNotificationContent()
+        content.title = "Cases in " + locality!
+        content.body = "Get data from API"
+        content.sound = .default
+
+        // 2
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: location.dateString, content: content, trigger: trigger)
+
+        // 3
+        center.add(request) { error in if error != nil {
+            print ("something went wrong")
+            }
+            
+        }
+    
+    
+       
+   }
+}
+
+
 
