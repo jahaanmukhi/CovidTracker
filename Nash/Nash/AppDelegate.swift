@@ -13,10 +13,32 @@ import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
+    //CODE FOR STRUCT_____________________________________________
+    
+    struct Place: Codable {
+        var combined_key: String //name of place
+        var confirmed_cases: Int
+        var country: String
+        //var county: String //think there is going to be problem with null values
+        var daily_change_cases: Int
+        var daily_change_deaths: Int
+        var deaths: Int
+//        var fips: Float //what is this?
+        var latitude: Float
+        var longitude: Float
+        var population: Int
+        var state: String
+        var uid: Int
+    }//create struct to put the data in
+    
+    var allCases: [Place] = []
+    
+    
+    //END CODE FOR STRUCT_____________________________________________
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
             // not using Google Analytics tool
             //FirebaseApp.configure()
-            
             // MARK: UserNotifications Center Setup
             let center = UNUserNotificationCenter.current()
             center.delegate = self
@@ -53,8 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 var dateComponents = DateComponents()
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
-                dateComponents.hour = 12  //  hours
-                dateComponents.minute = 39 // minutes
+                dateComponents.hour = 18  //  hours
+                dateComponents.minute = 50 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(
@@ -91,7 +113,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
     
     func bodyofDailyNotification() -> String {
-        return "REPLACE"
+        getAllData()
+        
+        
+        return "replace"
     }
         
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -187,6 +212,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
+//API CONNECTION CODE_________________________________________
+
+    func getAllData() {
+            //print("starting getAllData")
+            let mySession = URLSession(configuration: URLSessionConfiguration.default)
+            
+            let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
+            
+            let task = mySession.dataTask(with: url) {data, response, error in
+                
+                guard error == nil else {
+                    print ("error: \(error!)")
+                    return
+                }
+                
+                guard let jsonData = data else {
+                    print("No data")
+                    return
+                }
+                
+                print("Got the data from network")
+                
+                let decoder = JSONDecoder()
+
+                do {
+                    self.allCases = try decoder.decode([Place].self, from: jsonData)
+                     
+//                    for Place in self.allCases{
+//                        print(Place.confirmed_cases)
+//                        print(Place.country)
+//                    } //prints everything
+
+                    //print("finished printing")
+
+                }catch {
+                    print("JSON Decode error")
+                }
+            }
+            
+            task.resume()
+            
+        }
+        
+        
+
+    }
+
+    
+//END API CONNECTION CODE_____________________________________
+    
 
 
-}
