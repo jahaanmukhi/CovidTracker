@@ -15,94 +15,143 @@ import CoreLocation
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     
-    //notifications and location setup
-    let locationManager = CLLocationManager()
+    //global variables
+    static let geoCoder = CLGeocoder()
     let center = UNUserNotificationCenter.current()
     
-    //setup geocoder
-    static let geoCoder = CLGeocoder()
-    
-    
-    
+    struct Place: Codable {
+    //var combined_key: String //name of place
+    var confirmed_cases: Int
+    var country: String
+    //var county: String //think there is going to be problem with null values
+    //var daily_change_cases: Int
+   // var daily_change_deaths: Int
+   // var deaths: Int
+   // var fips: Float //what is this?
+   // var latitude: Float
+   // var longitude: Float
+   // var population: Int
+   // var state: String
+   // var uid: Int
+    }
 
-    //handling notifications
-    //notification willPresent method
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-//        completionHandler([.alert, .sound])
-//    }
-    
-    //notification DIDRECIEVE method
-    
-//    func userNotificationCenter(_ center: UNUserNotificationCenter,
-//    didReceive response: UNNotificationResponse,
-//    withCompletionHandler completionHandler:
-//        @escaping () -> Void) {
-//
-//        if response.notification.request.identifier == "tempIdentifier" {
-//               print("handling notifications with the TestIdentifier Identifier")
-//
-//            let storyboard = UIStoryboard(name: "Notifications", bundle: nil)
-//
-//            if let notificationVC = storyboard.instantiateViewController(withIdentifier: "NavigationVC") as? NotificationVC {
-//
-//                self.window?.rootViewController = notificationVC
-//            }
-//            completionHandler()
-//        }
-//
-//    }
-            
-            
- 
- //           let viewController = storyboard.instantiateViewController(withIdentifier :"NotificationVC") as! NotificationVC
-//            let NotificationNavVC = UINavigationController.init(rootViewController: viewController)
+    var allElms: [Place] = []
 
-//               if let window = self.window, let rootViewController = window.rootViewController {
-//                   var currentController = rootViewController
-//                   while let presentedController = currentController.presentedViewController {
-//                       currentController = presentedController
-//                    }
-//                       currentController.present(NotificationNavVC, animated: true)
-//
-//                 completionHandler()
-//               }
-//
-//
-//
-//        }
-//
-//    }
-    
-   
-   
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-       
-        //request authorization for location
+        
+       getAllData()
+        
+        //MARK: set up location tracking
+        //notifications and location setup
+        let locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
         locationManager.startMonitoringVisits()
         locationManager.delegate = self
         
-        //request authorization for notifications
-        center.requestAuthorization(options:[.alert, .badge, .sound]) { (granted, error) in
-            print("granted: \(granted)")
-            }
+        //handle location errors if access is denied
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+           if let error = error as? CLError, error.code == .denied {
+              // Location updates are not authorized.
         
-         
-            return true
+              manager.stopUpdatingLocation()
+              return
+           }
+           // Notify the user of any errors.
         }
-    //handle location erros if access is denied
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-       if let error = error as? CLError, error.code == .denied {
-          // Location updates are not authorized.
-    
-          manager.stopUpdatingLocation()
-          return
-       }
-       // Notify the user of any errors.
+        
+        //MARK: set up notifications
+        center.delegate = self
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+        //request authorization for notifications
+        center.requestAuthorization(options:options) { (granted, error) in if granted {
+            print ("Notification permission allowed")
+            self.setUpNotification()
+            }
+        }
+        
+        let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+        
+        let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
+
+        UNUserNotificationCenter.current().setNotificationCategories([myCategory])
+        
+        return true
     }
     
+    func setUpNotification() {
+         //setting content of notification
+        let content = UNMutableNotificationContent()
+        content.title = "Cases in this area..."
+        content.body = bodyofReturnNotification()
+        content.sound = UNNotificationSound.default
+        content.categoryIdentifier = "myUniqueCategory"
+        
+        //trigger notification when it matches dateCompotents
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        
+        // add action to Notification
+        let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+        let myCategory = UNNotificationCategory(identifier: "myUniqueIdentifier", actions: [notificationAction], intentIdentifiers: [], options: [])
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+                notificationCenter.setNotificationCategories([myCategory])
+        
+        // Add the request to the main Notification center.
+        let request = UNNotificationRequest(identifier: "returnIdentifer",
+                               content: content, trigger: trigger)
 
+            
+        notificationCenter.add(request) { (error) in
+            if error != nil {
+                // Handle any errors.
+            } else {
+                print("Notification created")
+            }
+        }
+    }
+    
+    func bodyofReturnNotification() -> String {
+        return "REPLACE"
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        //print("func 1")
+        let content = notification.request.content
+        //print("got here")
+        // Process notification content
+        print("Received Notification with \(content.title) -  \(content.body)")
+
+        // Display notification as regular alert and play sound
+        completionHandler([.alert, .sound])
+    } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let actionIdentifier = response.actionIdentifier
+        //print("func 2")
+        switch actionIdentifier {
+        case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
+            // Do something
+            completionHandler()
+        case UNNotificationDefaultActionIdentifier: // App was opened from notification
+            // Do something
+            completionHandler()
+        case "remindLater": do {
+                let newDate = Date(timeInterval: 60, since: Date())
+                print("Rescheduling notification until \(newDate)")
+                // TODO: reschedule the notification
+            
+            }
+            completionHandler()
+        default:
+            completionHandler()
+        }
+    }//end func userNotificationCenter #2 - CHANGED FOR DAILY UPDATE
+
+
+
+    
 
     // MARK: UISceneSession Lifecycle
 
@@ -163,6 +212,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
+    //MARK: API Call
+    
+    func getAllData() {
+        print("starting getAllData")
+        let mySession = URLSession(configuration: URLSessionConfiguration.default)
+        
+        let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
+        
+        let task = mySession.dataTask(with: url) {data, response, error in
+            
+            guard error == nil else {
+                print ("error: \(error!)")
+//                let alertController = UIAlertController(title: "Error", message: "Request failed. Check internet connection.", preferredStyle: .alert)
+//                let dismissAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+//                alertController.addAction(dismissAction)
+//                DispatchQueue.main.async {
+//                    self.present(alertController, animated: true)
+//                }
+                return
+            }
+            
+            guard let jsonData = data else {
+                print("No data")
+                return
+            }
+            
+            print("Got the data from network")
+            
+            let decoder = JSONDecoder()
+
+            do {
+                self.allElms = try decoder.decode([Place].self, from: jsonData)
+
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//
+                 for Place in self.allElms{
+                    print(Place.confirmed_cases)
+                    //print(Place.country)
+                }
+
+                print("done!!!")
+
+            }catch {
+                print("JSON Decode error")
+            }
+        }
+        
+        task.resume()
+        
+    }
+    
     
 
 }
@@ -192,10 +294,10 @@ extension AppDelegate: CLLocationManagerDelegate {
         content.sound = .default
 
         // 2
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: location.dateString, content: content, trigger: trigger)
 
-        // 3
+         //3
         center.add(request) { error in if error != nil {
             print ("something went wrong")
             }

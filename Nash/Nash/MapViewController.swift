@@ -12,14 +12,22 @@ import MapKit
 class MapViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: CoronavirusMapView!
     let locationManagerVC = CLLocationManager()
+    var localilty: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.userTrackingMode = .follow
-        
         //setup to collect user location
         //let locationManagerVC = CLLocationManager()
         locationManagerVC.delegate = self
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManagerVC.delegate = self
+            locationManagerVC.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManagerVC.startUpdatingLocation()
+        }
+        print("finish location manager")
+                
         
         // Set initial location in Honolulu
         //let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
@@ -32,56 +40,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
 //          locationName: "Waikiki Gateway Park",
 //          coordinate: CLLocationCoordinate2D(latitude: 21.283921, longitude: -157.831661))
 //        mapView.addAnnotation(artwork)
-        
-        
-        //
-        //
-        //create two notifications: daily update and returning to the app
-        
-        //create components of daily notification
-//        let content = UNMutableNotificationContent()
-//        content.title = "Daily Update"
-//        content.body = "Body"
-//        content.sound = UNNotificationSound.default
-//
-//        var dateComponents = DateComponents()
-//        dateComponents.hour = 9
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-//
-//        let request = UNNotificationRequest(identifier: "dailyIdentifier", content: content, trigger: trigger)
-//
-//        UNUserNotificationCenter.current().add(request) {error in if error != nil {
-//            print("something went wrong")
-//            }
-//        }
-        
-        //create components of notification when returninng to the app
-//        let contentTemp = UNMutableNotificationContent()
-//        contentTemp.title = "Here's what you missed..."
-//        contentTemp.body = "Body"
-//        contentTemp.sound = UNNotificationSound.default
-//
-//        let triggerTemp = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-//        let requestTemp = UNNotificationRequest(identifier: "tempIdentifier", content: contentTemp, trigger: triggerTemp)
-//
-//        UNUserNotificationCenter.current().add(requestTemp) {error in if error != nil {
-//            print("something went wrong")
-//            }
-//        }
-        //done with notification creation
-        
-        
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
     
@@ -95,19 +53,32 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         }
         
     }
-  
-  
     
     //zooms map around user location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.first!
-
         let coordinateRegion = MKCoordinateRegion (center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-
         mapView.setRegion(coordinateRegion, animated: true)
-
+        
+        //get users current location
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        //print("locations = \(locValue.latitude) \(locValue.longitude)")
+        
+        fetchCityAndCountry(from: location) { city, country, error in
+            guard let city = city, let country = country, error == nil else { return }
+            //print(city + ", " + country)
+        }
+        
         //locationManagerVC.stopUpdatingLocation()
     }
     
+    //get city and country from location coordinates
+    func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            completion(placemarks?.first?.locality,
+                       placemarks?.first?.country,
+                       error)
+        }
+    }
     
 }
