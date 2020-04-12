@@ -33,6 +33,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     var allCases: [Place] = []
     
+    struct myLocation {
+        static let location: String = "American Samoa, US"
+        static var locationConfirmedCases: Int = 0
+        static var locationCountry: String = ""
+        static var locationChangeInCases: Int = 0
+        static var locationChangeInDeaths: Int = 0
+        static var locationDeaths: Int = 0
+        static var locationLatitude: Float = 0.0
+        static var locationLongitude: Float = 0.0
+        static var locationPopulation: Int = 0
+        static var locationState: String = ""
+        static var locationUid: Int = 0
+        static var totalCases: Int = 0
+        
+    }
     
     //END CODE FOR STRUCT_____________________________________________
     
@@ -68,15 +83,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 //setting content of notification
                 let content = UNMutableNotificationContent()
-                content.title = "Daily Coronavirus Update"
+            content.title = "Coronavirus Update - " + myLocation.location
                 content.body = bodyofDailyNotification()
                 
                 //specify date/time for trigger - everyday 8am
                 var dateComponents = DateComponents()
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
-                dateComponents.hour = 18  //  hours
-                dateComponents.minute = 50 // minutes
+                dateComponents.hour = 10  //  hours
+                dateComponents.minute = 27 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(
@@ -114,9 +129,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func bodyofDailyNotification() -> String {
         getAllData()
+        let casesString = String(myLocation.locationConfirmedCases)
+        let deathsString = String(myLocation.locationDeaths)
+        let changeDeathsString = String(myLocation.locationChangeInDeaths)
+        let changeCasesString = String(myLocation.locationChangeInCases)
+        let totalCasesString = String(myLocation.totalCases)
+        print(casesString)
         
+        var ret = "Total global cases: " + totalCasesString
+        //ret += "\nUPDATES FOR " + myLocation.location
+        ret += "\nTotal local cases: " + casesString
+        ret += "\nTotal local deaths: " + deathsString
+        ret += "\nDaily change in local cases: " + changeCasesString
+        ret += "\nDaily change in local deaths: " + changeDeathsString
+
+//        print(myLocation.locationCountry)
+//        print(myLocation.locationConfirmedCases)
+        print(ret)
+        return ret
         
-        return "replace"
     }
         
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -243,20 +274,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //                        print(Place.confirmed_cases)
 //                        print(Place.country)
 //                    } //prints everything
+                    
+                    for index in 0..<self.allCases.count {
+                        //print(self.allCases[index].combined_key)
+                        //print(myLocation.location)
+                        myLocation.totalCases += self.allCases[index].confirmed_cases
+                        
+                        if self.allCases[index].combined_key == myLocation.location {
+                            print("got inside")
+                            myLocation.locationConfirmedCases = self.allCases[index].confirmed_cases
+                            myLocation.locationCountry = self.allCases[index].country
+                            myLocation.locationChangeInCases = self.allCases[index].daily_change_cases
+                            myLocation.locationChangeInDeaths = self.allCases[index].daily_change_deaths
+                            myLocation.locationDeaths = self.allCases[index].deaths
+                            myLocation.locationLatitude = self.allCases[index].latitude
+                            myLocation.locationLongitude = self.allCases[index].longitude
+                            myLocation.locationPopulation = self.allCases[index].population
+                            myLocation.locationState = self.allCases[index].state
+                            myLocation.locationUid = self.allCases[index].uid
+                            //print(myLocation.confirmedCases)
+                            //print(myLocation.countryName)
+                        }
+                    } //end of for loop
+                    print("finished loop")
+//                    for place in self.allCases{
+//                        if place.combined_key == myLocation.location {
+//                            print(place.combined_key)
+//                        }
+//                    }
 
                     //print("finished printing")
-
-                }catch {
+                }
+                    
+                catch {
                     print("JSON Decode error")
                 }
             }
-            
             task.resume()
-            
+            print("get all data completed")
         }
-        
-        
-
     }
 
     
