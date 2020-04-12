@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6EC52E542442A7AA0000F9DF /* Cases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC52E532442A7AA0000F9DF /* Cases.swift */; };
 		CF8643242438F45D00D1C0E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643232438F45D00D1C0E6 /* AppDelegate.swift */; };
 		CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */; };
 		CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643272438F45D00D1C0E6 /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6EC52E532442A7AA0000F9DF /* Cases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cases.swift; sourceTree = "<group>"; };
 		CF8643202438F45D00D1C0E6 /* Nash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8643232438F45D00D1C0E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				CF8643342438F46000D1C0E6 /* Info.plist */,
 				CF86432C2438F45D00D1C0E6 /* Nash.xcdatamodeld */,
 				CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */,
+				6EC52E532442A7AA0000F9DF /* Cases.swift */,
 			);
 			path = Nash;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 				CF8643432438FA3500D1C0E6 /* ShadowedImageView.swift in Sources */,
 				CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */,
 				CF86432E2438F45D00D1C0E6 /* Nash.xcdatamodeld in Sources */,
+				6EC52E542442A7AA0000F9DF /* Cases.swift in Sources */,
 				CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */,
 				CF8643482438FC2100D1C0E6 /* MapViewController.swift in Sources */,
 			);
