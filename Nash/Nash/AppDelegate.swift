@@ -12,127 +12,9 @@ import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-//SAM
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-//        completionHandler([.alert, .sound])
-//    } //added april 9
-//
-//    func userNotificationCenter(_ center: UNUserNotificationCenter,
-//                                didReceive response: UNNotificationResponse,
-//                                withCompletionHandler completionHandler:
-//        @escaping () -> Void) {
-//
-//        if response.notification.request.identifier == "tempIdentifier" {
-//            print("handling notifications with the TestIdentifier Identifier")
-//            completionHandler()
-//        }
-//    }
 
-//SAM
-//    func application(_ application: UIApplication, didFinishLaunchingWithOptions
-//        launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        // Override point for customization after application launch.
-//        UNUserNotificationCenter.current().delegate = self
-//        //request authorization for notifications
-//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
-//            print("granted: (\(granted)")
-//        }
-//        return true
-//    } //changed the inside of this function
-    
-//   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//          // Override point for customization after application launch.
-//
-//          // Google Analytics tool initialization
-//          FirebaseApp.configure()
-//
-//          // MARK: UserNotifications Center Setup
-//          let center = UNUserNotificationCenter.current()
-//          center.delegate = self
-//          let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-//          // request user authorization for notifications
-//          center.requestAuthorization(options: options) { (granted, error) in
-//              if granted {
-//                  //application.registerForRemoteNotifications()
-//                  print("Permission Granted")
-//                  self.setUpNotification()
-//              }
-//          }
-////    func application(_ application: UIApplication, didFinishLaunchingWithOptions
-////        launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-////        // Override point for customization after application launch.
-////
-////        let center = UNUserNotificationCenter.current()
-////        center.delegate = self
-////        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-////        center.requestAuthorization(options: options) { granted, error} in
-////        if granted{
-////            print(" Permission Granted")
-////            self.setUpNotification()
-////        }
-////        return true
-////    } //from slides
-//
-//    func setUpNotification() {
-//
-//        //setting content of notification
-//            let dailyContent = UNMutableNotificationContent()
-//            dailyContent.title = "Daily Update on Coronavirus Data"
-//            dailyContent.body = "REPLACE HERE"
-//            dailyContent.sound = UNNotificationSound.default
-//
-//        //specify date/time for trigger
-//            var dailyDate = DateComponents()
-//            //right now going for 8am every day
-//            dailyDate.calendar = Calendar.current
-//            dailyDate.hour = 8
-//            dailyDate.minute = 0
-//
-//        //trigger notification when it matches dateCompotents
-//            let dailyTrigger = UNCalendarNotificationTrigger(dateMatching: dailyDate, repeats: true)
-//
-//        let notificationCenter = UNUserNotificationCenter.current()
-//
-//        //creates the notification request and handles errors
-//        let request = UNNotificationRequest(identifier: "dailyIdentifier", content: dailyContent, trigger: dailyTrigger)
-//
-//        //add request to main notification center
-//        notificationCenter.add(request) { (error) in
-//            if error != nil {
-//                //handle errors
-//            } else {
-//                print("Notification Created")
-//            }
-//        }
-//
-//    }
-//
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//        let actionIdentifier = response.actionIdentifier
-//
-//        switch actionIdentifier {
-//        case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
-//            // Do something
-//            completionHandler()
-//        case UNNotificationDefaultActionIdentifier: // App was opened from notification
-//            // Do something
-//            completionHandler()
-//        case "remindLater": do {
-//                let newDate = Date(timeInterval: 60, since: Date())
-//                print("Rescheduling notification until \(newDate)")
-//                // TODO: reschedule the notification
-//
-//            }
-//            completionHandler()
-//        default:
-//            completionHandler()
-//        }
-//    } //me
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            // Override point for customization after application launch.
-            
-            // Google Analytics tool initialization
+            // not using Google Analytics tool
             //FirebaseApp.configure()
             
             // MARK: UserNotifications Center Setup
@@ -147,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     self.setUpNotification()
                 }
             }
+        
             //give remind me later option
              let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
         
@@ -156,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
             
             return true
-        }
+        } //end func didFinishLaunchingWithOptions - CHANGED THIS FOR DAILY NOTIFICATION
 
         
         func setUpNotification() {
@@ -164,14 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 //setting content of notification
                 let content = UNMutableNotificationContent()
                 content.title = "Daily Coronavirus Update"
-                content.body = "REPLACE THIS"
+                content.body = bodyofDailyNotification()
                 
-                //specify date/time for trigger
+                //specify date/time for trigger - everyday 8am
                 var dateComponents = DateComponents()
                 dateComponents.calendar = Calendar.current
-                dateComponents.weekday = 6  // sunday is 1
-                dateComponents.hour = 10  //  hours
-                dateComponents.minute = 11 // minutes
+                //dateComponents.weekday = 6  // sunday is 1
+                dateComponents.hour = 12  //  hours
+                dateComponents.minute = 39 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(
@@ -205,7 +88,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
                 
-            }
+        } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
+    
+    func bodyofDailyNotification() -> String {
+        return "REPLACE"
+    }
         
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             
@@ -215,9 +102,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // Process notification content
             print("Received Notification with \(content.title) -  \(content.body)")
 
-            completionHandler([])
-            //completionHandler([.alert, .sound]) // Display notification as regular alert and play sound
-        }
+            // Display notification as regular alert and play sound
+            completionHandler([.alert, .sound])
+        } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
         
         func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
             let actionIdentifier = response.actionIdentifier
@@ -239,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             default:
                 completionHandler()
             }
-        }
+        }//end func userNotificationCenter #2 - CHANGED FOR DAILY UPDATE
     
 
     // MARK: UISceneSession Lifecycle
