@@ -40,4 +40,8 @@ class Location: Codable {
   convenience init(visit: CLVisit, descriptionString: String) {
     self.init(visit.coordinate, date: visit.arrivalDate, descriptionString: descriptionString)
   }
+//    convenience init(location: CLLocation, descriptionString: String) {
+//        self.init(location.coordinate, date: l.arrivalDate, descriptionString: descriptionString)
+//    }
+    
 }

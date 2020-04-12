@@ -17,31 +17,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     //global variables
     static let geoCoder = CLGeocoder()
+    let locationManager = CLLocationManager()
     let center = UNUserNotificationCenter.current()
     
+    //MARK: api struct
     struct Place: Codable {
-    //var combined_key: String //name of place
+    var combined_key: String //name of place
     var confirmed_cases: Int
     var country: String
     //var county: String //think there is going to be problem with null values
-    //var daily_change_cases: Int
-   // var daily_change_deaths: Int
-   // var deaths: Int
-   // var fips: Float //what is this?
-   // var latitude: Float
-   // var longitude: Float
-   // var population: Int
-   // var state: String
-   // var uid: Int
+    var daily_change_cases: Int
+    var daily_change_deaths: Int
+    var deaths: Int
+    //var fips: Float //what is this?
+    var latitude: Float
+    var longitude: Float
+    var population: Int
+    var state: String
+    var uid: Int
     }
+    
+    //hard coded location
+    let country = "US"
+    let state = "Alabama"
+    
+    //var totalCases = 0
 
     var allElms: [Place] = []
+    
+   // let currLoc = CLLocationManager.location
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-       getAllData()
-        
+       // getAllData()
         //MARK: set up location tracking
         //notifications and location setup
         let locationManager = CLLocationManager()
@@ -84,6 +94,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let content = UNMutableNotificationContent()
         content.title = "Cases in this area..."
         content.body = bodyofReturnNotification()
+        //hardcoded and need to replace with api call to request current location
+        
         content.sound = UNNotificationSound.default
         content.categoryIdentifier = "myUniqueCategory"
         
@@ -110,9 +122,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
-    
+
     func bodyofReturnNotification() -> String {
-        return "REPLACE"
+        
+        var totalCases = 0
+        getAllData()
+        let currLoc = self.locationManager.location
+        
+        fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
+                    guard let city = city, let state = state, let country = country, error == nil else { return }
+            print("THIS IS IT " + city + ", " + state + ", ", country)
+            
+            for Place in self.allElms{
+                
+                if (Place.country == country) {
+                    //need to fix county codes
+                    totalCases += Place.confirmed_cases
+                }
+                //print(Place.confirmed_cases)
+                //print(Place.country)
+                //print(Place.county)
+
+            }
+        }
+        
+        
+
+//        var ret = "Total global cases: " + totalCasesString
+//        ret += "\nTotal local cases: " + casesString
+//        ret += "\nTotal local deaths: " + deathsString
+//        ret += "\nDaily change in local cases: " + changeCasesString
+//        ret += "\nDaily change in local deaths: " + changeDeathsString
+//        ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
+       // print(ret)
+       // return ret
+        return ""
+
+        
+    }
+    
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+//        let currLoc = locations.last!
+//
+//        fetchCityAndCountry(from: currLoc) { city, country, error in
+//            guard let city = city, let country = country, error == nil else { return }
+//            //print(city + ", " + country)
+//
+//            //self.bodyofReturnNotification(city : city, country : country)
+//        }
+//
+//
+//
+//    }
+//
+    func fetchCityStateAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ state: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            completion(placemarks?.first?.locality,
+                       placemarks?.first?.administrativeArea,
+                       placemarks?.first?.country,
+                       error)
+        }
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -215,6 +285,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: API Call
     
     func getAllData() {
+        //totalCases = 0
         print("starting getAllData")
         let mySession = URLSession(configuration: URLSessionConfiguration.default)
         
@@ -249,10 +320,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //                    self.tableView.reloadData()
 //                }
 //
-                 for Place in self.allElms{
-                    print(Place.confirmed_cases)
+                // for Place in self.allElms{
+                    
+                    
+                    //print(Place.confirmed_cases)
                     //print(Place.country)
-                }
+                    //print(Place.county)
+                    
+                    
+                //}
 
                 print("done!!!")
 
@@ -262,11 +338,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         task.resume()
+        sleep(1)
         
     }
-    
-    
-
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
