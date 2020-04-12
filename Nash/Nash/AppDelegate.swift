@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var allCases: [Place] = []
     
     struct myLocation {
-        static let location: String = "American Samoa, US"
+        static let location: String = "Puerto Rico, US"
         static var locationConfirmedCases: Int = 0
         static var locationCountry: String = ""
         static var locationChangeInCases: Int = 0
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         static var locationPopulation: Int = 0
         static var locationState: String = ""
         static var locationUid: Int = 0
-        static var totalCases: Int = 0
+        static var totalCases: Int = 1779842
         
     }
     
@@ -90,8 +90,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 var dateComponents = DateComponents()
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
-                dateComponents.hour = 10  //  hours
-                dateComponents.minute = 27 // minutes
+                dateComponents.hour = 12  //  hours
+                dateComponents.minute = 4 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(
@@ -134,27 +134,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let changeDeathsString = String(myLocation.locationChangeInDeaths)
         let changeCasesString = String(myLocation.locationChangeInCases)
         let totalCasesString = String(myLocation.totalCases)
-        print(casesString)
         
         var ret = "Total global cases: " + totalCasesString
-        //ret += "\nUPDATES FOR " + myLocation.location
         ret += "\nTotal local cases: " + casesString
         ret += "\nTotal local deaths: " + deathsString
         ret += "\nDaily change in local cases: " + changeCasesString
         ret += "\nDaily change in local deaths: " + changeDeathsString
-
-//        print(myLocation.locationCountry)
-//        print(myLocation.locationConfirmedCases)
+        ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
         print(ret)
         return ret
         
     }
         
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-            
-            //print("func 1")
             let content = notification.request.content
-            //print("got here")
+            
             // Process notification content
             print("Received Notification with \(content.title) -  \(content.body)")
 
@@ -274,29 +268,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //                        print(Place.confirmed_cases)
 //                        print(Place.country)
 //                    } //prints everything
+//                    let dispatchGroup = DispatchGroup()
+//                    let dispatchQueue = DispatchQueue(label: "taskQueue")
+//                    let dispatchSemaphore = DispatchSemaphore(value: 0)
                     
-                    for index in 0..<self.allCases.count {
-                        //print(self.allCases[index].combined_key)
-                        //print(myLocation.location)
-                        myLocation.totalCases += self.allCases[index].confirmed_cases
-                        
-                        if self.allCases[index].combined_key == myLocation.location {
-                            print("got inside")
-                            myLocation.locationConfirmedCases = self.allCases[index].confirmed_cases
-                            myLocation.locationCountry = self.allCases[index].country
-                            myLocation.locationChangeInCases = self.allCases[index].daily_change_cases
-                            myLocation.locationChangeInDeaths = self.allCases[index].daily_change_deaths
-                            myLocation.locationDeaths = self.allCases[index].deaths
-                            myLocation.locationLatitude = self.allCases[index].latitude
-                            myLocation.locationLongitude = self.allCases[index].longitude
-                            myLocation.locationPopulation = self.allCases[index].population
-                            myLocation.locationState = self.allCases[index].state
-                            myLocation.locationUid = self.allCases[index].uid
-                            //print(myLocation.confirmedCases)
-                            //print(myLocation.countryName)
-                        }
-                    } //end of for loop
-                    print("finished loop")
+                        for index in 0..<self.allCases.count {
+                            myLocation.totalCases += self.allCases[index].confirmed_cases//problem with this
+                            if self.allCases[index].combined_key == myLocation.location {
+                                myLocation.locationConfirmedCases = self.allCases[index].confirmed_cases
+                                myLocation.locationCountry = self.allCases[index].country
+                                myLocation.locationChangeInCases = self.allCases[index].daily_change_cases
+                                myLocation.locationChangeInDeaths = self.allCases[index].daily_change_deaths
+                                myLocation.locationDeaths = self.allCases[index].deaths
+                                myLocation.locationLatitude = self.allCases[index].latitude
+                                myLocation.locationLongitude = self.allCases[index].longitude
+                                myLocation.locationPopulation = self.allCases[index].population
+                                myLocation.locationState = self.allCases[index].state
+                                myLocation.locationUid = self.allCases[index].uid
+                            }
+                        } //end of for loop
 //                    for place in self.allCases{
 //                        if place.combined_key == myLocation.location {
 //                            print(place.combined_key)
@@ -311,9 +301,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
             task.resume()
-            print("get all data completed")
+            sleep(1)
+            //print("get all data completed")
         }
-    }
+    
+}
 
     
 //END API CONNECTION CODE_____________________________________
