@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class Results: Codable{
+struct Results: Codable{
     let results: [Covid]
     
     init(results: [Covid]) {
@@ -17,39 +17,26 @@ class Results: Codable{
     }
 }
 
-class Covid: Codable {
-    let uid: Int?
-    let fips: Double?
-    let combined_key: String?
-    let country: String?
-    let state: String?
+struct Covid: Codable {
+    let country: String
+    let state: String
     let county: String?
-    let latitude: Double!
-    let longitude: Double!
-    let confirmed_cases: Int!
-    let deaths: Int!
-    let daily_change_cases: Int?
-    let daily_change_deaths: Int?
-    let population: Int?
+    let latitude: Double
+    let longitude: Double
+    let confirmed_cases: Int
+    let deaths: Int
+    let population: Int
 
   init(
-    uid:Int?,
-    fips:Double?,
-    combined_key:String?,
-    country:String?,
-    state:String?,
-    county:String?,
-    latitude:Double!,
-    longitude:Double!,
-    confirmed_cases:Int?,
-    deaths:Int?,
-    daily_change_cases:Int?,
-    daily_change_deaths:Int?,
-    population:Int?
+    country:String,
+    state:String,
+    county:String,
+    latitude:Double,
+    longitude:Double,
+    confirmed_cases:Int,
+    deaths:Int,
+    population:Int
   ) {
-    self.uid = uid
-    self.fips = fips
-    self.combined_key = combined_key
     self.country = country
     self.state = state
     self.county = county
@@ -57,8 +44,6 @@ class Covid: Codable {
     self.longitude = longitude
     self.confirmed_cases = confirmed_cases
     self.deaths = deaths
-    self.daily_change_cases = daily_change_cases
-    self.daily_change_deaths = daily_change_deaths
     self.population = population
   }
 }
