@@ -2,19 +2,24 @@ from main import db
 
 # Initial code source:
 # https://flask-sqlalchemy.palletsprojects.com/en/2.x/quickstart/
-class User(db.Model):
-    __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    passwordHash = db.Column(db.String(120), nullable=False)
-    dynamicSalt = db.Column(db.String(30), nullable=False)
-    location = db.Column(db.Integer, db.ForeignKey('location.id'))
-
-    def __repr__(self):
-        return '<User %r>' % self.username
 
 class Location(db.Model):
     __tablename__ = 'location'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    latitude = db.Column(db.Double(), nullable=True)
-    longitude = db.Column(db.Double(), nullable=True)
+    loc_id = db.Column(db.Integer(), primary_key=True)
+    lat_ = db.Column(db.Float(), nullable=True)
+    long_ = db.Column(db.Float(), nullable=True)
+
+class User(db.Model):
+    __tablename__ = 'user'
+    uid = db.Column(db.Integer(), primary_key=True)
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    curr_loc = db.Column(db.Integer(), db.ForeignKey('location.loc_id'))
+
+    def __repr__(self):
+        return '<User %r>' % self.email
+
+class UserLocations(db.Model):
+    __tablename__ = 'user_locations'
+    uid = db.Column(db.Integer(), db.ForeignKey('user.uid'), primary_key=True)
+    loc_id = db.Column(db.Integer(), db.ForeignKey('location.loc_id'), primary_key=True)
