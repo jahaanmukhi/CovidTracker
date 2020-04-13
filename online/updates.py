@@ -37,17 +37,22 @@ def update():
    
     US_confirmed_df = pd.read_csv(StringIO(requests.get(url = US_confirmed).content.decode('utf-8')))
     US_deaths_df = pd.read_csv(StringIO(requests.get(url = US_deaths).content.decode('utf-8')))
-
+    global_confirmed_df = pd.read_csv(StringIO(requests.get(url = global_confirmed).content.decode('utf-8')))
+    global_deaths_df = pd.read_csv(StringIO(requests.get(url = global_deaths).content.decode('utf-8')))
     # change data into the correct json form
     
     merged_df = pd.merge(filter_df(US_confirmed_df), \
             filter_df(US_deaths_df, deaths=True), \
-            on=[ 'uid', 'fips', 'combined_key', 'country', 'state', 'state_abbr', 'county', 'longitude', 'latitude' ], \
+            on=[ 'uid', 'fips', 'combined_key', 'country', 'state', 'state_abbr', 'county', 'latitude', 'longitude' ], \
             how='left')
 
-    #filtered_df = filter_df(US_deaths_df, deaths=True)
+    merged_df2 = pd.merge(filter_df(global_confirmed_df, worldwide=True), \
+            filter_df(global_deaths_df, deaths=True, worldwide=True), \
+            on=[  'country', 'state', 'latitude', 'longitude' ], \
+            how='left')
 
-    merged_df.to_json('data/timeseries.json', orient='records')
+    merged_df.to_json('data/US_data.json', orient='records')
+    merged_df2.to_json('data/global_data.json', orient='records')
 
     # save the data to the file
 
@@ -55,68 +60,43 @@ def filter_df(df, deaths=False, worldwide=False):
 
     if worldwide == True: 
         ### For Global confirmed cases and confirmed deaths dataframes 
-        return filter_df_global(df, deaths)
-        
+        return filter_df_worldwide(df, deaths)
+
     else:
         ### For US confirmed cases and confirmed death dataframes 
         return filter_df_US(df, deaths)
 
+def filter_df_worldwide(df, deaths):
+    filters = ['Province/State','Country/Region','Lat','Long']
+
+    filtered_df = date_manipulation(df, deaths, filters)
+
+    if deaths == True:
+        rename = {  "Province/State" : "state",
+                    "Country/Region": "country",
+                    "Lat": "latitude",
+                    "Long":  "longitude",
+                    "daily_change": "daily_change_deaths",
+                    "weekly_change": "weekly_change_deaths"
+                }
+    else: 
+        rename = {  "Province/State" : "state",
+                    "Country/Region": "country",
+                    "Lat": "latitude",
+                    "Long":  "longitude",
+                    "daily_change": "daily_change_cases",
+                    "weekly_change": "weekly_change_cases"
+                }
+    filtered_df.rename(columns=rename, inplace=True)
+    return filtered_df
 
 def filter_df_US(df, deaths):
     filters = ['UID', 'FIPS', 'Combined_Key', 'Country_Region', 'Province_State', 'Admin2', 'Lat', 'Long_']
 
     if deaths == True:
         filters.append('Population')
-    try:
-        current_date_raw = datetime.datetime.now()
-        day_before_raw = current_date_raw - datetime.timedelta(days = 1) 
-        week_before_raw = current_date_raw - datetime.timedelta(days = 7) 
-    
-        current_date = current_date_raw.strftime("%-m/%-d/%y")
-        day_before = day_before_raw.strftime("%-m/%-d/%y")
-        week_before = week_before_raw.strftime("%-m/%-d/%y")
 
-        filters_with_current = list(filters)
-        filters_with_current.append(week_before)
-        filters_with_current.append(day_before)
-        filters_with_current.append(current_date)
-        slice_df = df[filters_with_current]
-        filtered_df = pd.DataFrame(slice_df)
-    
-        filtered_df['daily_change'] = filtered_df[current_date] - filtered_df[day_before]  
-        filtered_df['weekly_change'] = filtered_df[current_date] - filtered_df[week_before]
-        if deaths == True:
-            filtered_df.rename(columns={current_date : 'confirmed_deaths'}, inplace = True)
-        else:
-            filtered_df.rename(columns={current_date : 'confirmed_cases'}, inplace = True)  
-        filtered_df.drop([day_before, week_before], axis=1, inplace=True)
-    
-
-    except KeyError:
-        yesterday = current_date_raw - datetime.timedelta(days = 1) 
-        two_days_ago = current_date_raw - datetime.timedelta(days = 2) 
-        week_before_raw = current_date_raw - datetime.timedelta(days = 8) 
-
-
-        yesterday = yesterday.strftime("%-m/%-d/%y")
-        two_days_ago = two_days_ago.strftime("%-m/%-d/%y")
-        week_before = week_before_raw.strftime("%-m/%-d/%y")
-
-        filters_with_yesterday = list(filters)
-        filters_with_yesterday.append(week_before)
-        filters_with_yesterday.append(two_days_ago)
-        filters_with_yesterday.append(yesterday)
-        slice_df = df[filters_with_yesterday]
-        filtered_df = pd.DataFrame(slice_df)
-        
-        filtered_df['daily_change'] = filtered_df[yesterday] - filtered_df[two_days_ago]  
-        filtered_df['weekly_change'] = filtered_df[yesterday] - filtered_df[week_before]  
-        if deaths == True:
-            filtered_df.rename(columns={yesterday : 'confirmed_deaths'}, inplace = True)
-        else:
-            filtered_df.rename(columns={yesterday : 'confirmed_cases'}, inplace = True)
-
-        filtered_df.drop([two_days_ago, week_before], axis=1, inplace=True)
+    filtered_df = date_manipulation(df, deaths, filters)
 
     if deaths == True:
         rename = {  "UID" : "uid",
@@ -147,6 +127,68 @@ def filter_df_US(df, deaths):
     filtered_df.rename(columns=rename, inplace=True)
     filtered_df['state_abbr'] = filtered_df['state'].map(lambda name: us_state_abbrev[name], na_action='ignore')
     return filtered_df
+
+def date_manipulation(df, deaths, filters):
+
+    try:
+        current_date_raw = datetime.datetime.now()
+        day_before_raw = current_date_raw - datetime.timedelta(days = 1) 
+        week_before_raw = current_date_raw - datetime.timedelta(days = 7) 
+    
+        current_date = current_date_raw.strftime("%-m/%-d/%y")
+        day_before = day_before_raw.strftime("%-m/%-d/%y")
+        week_before = week_before_raw.strftime("%-m/%-d/%y")
+
+        filters_with_current = list(filters)
+        filters_with_current.append(week_before)
+        filters_with_current.append(day_before)
+        filters_with_current.append(current_date)
+        slice_df = df[filters_with_current]
+        filtered_df = pd.DataFrame(slice_df)
+    
+        filtered_df['daily_change'] = filtered_df[current_date] - filtered_df[day_before]  
+        filtered_df['weekly_change'] = filtered_df[current_date] - filtered_df[week_before]
+        if deaths == True:
+            filtered_df.rename(columns={current_date : 'confirmed_deaths'}, inplace = True)
+        else:
+            filtered_df.rename(columns={current_date : 'confirmed_cases'}, inplace = True)  
+        filtered_df.drop([day_before, week_before], axis=1, inplace=True)
+        
+        return filtered_df
+    
+    except KeyError:
+        yesterday = current_date_raw - datetime.timedelta(days = 1) 
+        two_days_ago = current_date_raw - datetime.timedelta(days = 2) 
+        week_before_raw = current_date_raw - datetime.timedelta(days = 8) 
+
+
+        yesterday = yesterday.strftime("%-m/%-d/%y")
+        two_days_ago = two_days_ago.strftime("%-m/%-d/%y")
+        week_before = week_before_raw.strftime("%-m/%-d/%y")
+
+        filters_with_yesterday = list(filters)
+        filters_with_yesterday.append(week_before)
+        filters_with_yesterday.append(two_days_ago)
+        filters_with_yesterday.append(yesterday)
+        slice_df = df[filters_with_yesterday]
+        filtered_df = pd.DataFrame(slice_df)
+        
+        filtered_df['daily_change'] = filtered_df[yesterday] - filtered_df[two_days_ago]  
+        filtered_df['weekly_change'] = filtered_df[yesterday] - filtered_df[week_before]  
+        if deaths == True:
+            filtered_df.rename(columns={yesterday : 'confirmed_deaths'}, inplace = True)
+        else:
+            filtered_df.rename(columns={yesterday : 'confirmed_cases'}, inplace = True)
+
+        filtered_df.drop([two_days_ago, week_before], axis=1, inplace=True)
+        
+        return filtered_df
+
+
+    
+
+
+############################################
 
 
 # https://gist.github.com/rogerallen/1583593
