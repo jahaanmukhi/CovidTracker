@@ -19,11 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var combined_key: String //name of place
         var confirmed_cases: Int
         var country: String
-        //var county: String //think there is going to be problem with null values
+        var county: String! //think there is going to be problem with null values
         var daily_change_cases: Int
         var daily_change_deaths: Int
         var deaths: Int
-//        var fips: Float //what is this?
+        var fips: Float! //what is this?
         var latitude: Float
         var longitude: Float
         var population: Int
@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
                 dateComponents.hour = 12  //  hours
-                dateComponents.minute = 4 // minutes
+                dateComponents.minute = 0 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(
@@ -140,7 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         ret += "\nTotal local deaths: " + deathsString
         ret += "\nDaily change in local cases: " + changeCasesString
         ret += "\nDaily change in local deaths: " + changeDeathsString
-        ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
+        //ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
         print(ret)
         return ret
         
@@ -301,7 +301,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
             task.resume()
-            sleep(1)
+            sleep(2)
             //print("get all data completed")
         }
     
