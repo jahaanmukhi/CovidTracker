@@ -271,11 +271,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     print("IVAR: " + String((self.myLocation.istate ?? "")!))
                     print("IVAR: " + String((self.myLocation.icountry ?? "")!))
 
-                        }
+                    }
+                    sleep(1)
+                
+                    print("IVARl: " + String((self.myLocation.icounty ?? "")!))
+                    print("IVARl: " + String((self.myLocation.istate ?? "")!))
+                    print("IVARl: " + String((self.myLocation.icountry ?? "")!))
 
                     //begin for loop
                     for Place in self.allElms{
                         print("loop")
+                        //print(Place.county)
+                        //print(self.myLocation.icounty)
                         if (Place.county == self.myLocation.icounty ) {
         //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
                             print("true")
