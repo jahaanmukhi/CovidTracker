@@ -9,74 +9,233 @@
 import UIKit
 import CoreData
 import UserNotifications
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-
-    //CODE FOR STRUCT_____________________________________________
+    var window: UIWindow?
     
+    //global variables
+    static let geoCoder = CLGeocoder()
+    let locationManager = CLLocationManager()
+    let center = UNUserNotificationCenter.current()
+    
+    //MARK: api struct
     struct Place: Codable {
-        var combined_key: String //name of place
-        var confirmed_cases: Int
-        var country: String
-        //var county: String //think there is going to be problem with null values
-        var daily_change_cases: Int
-        var daily_change_deaths: Int
-        var deaths: Int
-//        var fips: Float //what is this?
-        var latitude: Float
-        var longitude: Float
-        var population: Int
-        var state: String
-        var uid: Int
-    }//create struct to put the data in
+    var combined_key: String //name of place
+    var confirmed_cases: Int
+    var country: String
+    var county: String! //think there is going to be problem with null values
+    var daily_change_cases: Int
+    var daily_change_deaths: Int
+    var deaths: Int
+    var fips: Float! //what is this?
+    var latitude: Float
+    var longitude: Float
+    var population: Int
+    var state: String
+    var uid: Int
+    }
+
+    var allElms: [Place] = []
+    let myLocation = APILocation()
     
-    var allCases: [Place] = []
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        
+        //MARK: set up location tracking
+        let locationManager = CLLocationManager()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringVisits()
+        locationManager.delegate = self
+        
+        let status = CLLocationManager.authorizationStatus()
+        
+        
+        //handle location errors if access is denied
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+           if let error = error as? CLError, error.code == .denied {
+              // Location updates are not authorized.
+        
+              manager.stopUpdatingLocation()
+              return
+           }
+           // Notify the user of any errors.
+        }
+        
+        
+        //MARK: set up notifications
+        center.delegate = self
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+        //request authorization for notifications
+        center.requestAuthorization(options:options) { (granted, error) in if granted {
+            print ("Notification permission allowed")
+            self.setUpNotification()
+            }
+        }
+        
+        let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+        
+        let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
+
+        UNUserNotificationCenter.current().setNotificationCategories([myCategory])
+        
+        return true
+    }
     
-    struct myLocation {
-        static let location: String = "Puerto Rico, US"
-        static var locationConfirmedCases: Int = 0
-        static var locationCountry: String = ""
-        static var locationChangeInCases: Int = 0
-        static var locationChangeInDeaths: Int = 0
-        static var locationDeaths: Int = 0
-        static var locationLatitude: Float = 0.0
-        static var locationLongitude: Float = 0.0
-        static var locationPopulation: Int = 0
-        static var locationState: String = ""
-        static var locationUid: Int = 0
-        static var totalCases: Int = 1779842
+    // func setUpNotification() {
+    //      //setting content of notification
+    //     let content = UNMutableNotificationContent()
+    //     content.title = "Cases in this area..."
+    //     content.body = bodyofReturnNotification()
+    //     //hardcoded and need to replace with api call to request current location
+        
+    //     content.sound = UNNotificationSound.default
+    //     content.categoryIdentifier = "myUniqueCategory"
+        
+    //     //trigger notification when it matches dateCompotents
+    //     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        
+    //     // add action to Notification
+    //     let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+    //     let myCategory = UNNotificationCategory(identifier: "myUniqueIdentifier", actions: [notificationAction], intentIdentifiers: [], options: [])
+        
+    //     let notificationCenter = UNUserNotificationCenter.current()
+    //             notificationCenter.setNotificationCategories([myCategory])
+        
+    //     // Add the request to the main Notification center.
+    //     let request = UNNotificationRequest(identifier: "returnIdentifer",
+    //                           content: content, trigger: trigger)
+
+            
+    //     notificationCenter.add(request) { (error) in
+    //         if error != nil {
+    //             // Handle any errors.
+    //         } else {
+    //             print("Notification created")
+    //         }
+    //     }
+    // }
+
+    func bodyofReturnNotification() -> String{
+   
+        getAllData()
+        sleep(1)
+  
+
+        var ret = "Total local cases: " + String(myLocation.iconfirmedcases)
+        ret += "\nTotal local deaths: " + String(myLocation.ideaths)
+        ret += "\nDaily change in local cases: " + String(myLocation.ichangeInCases)
+        ret += "\nDaily change in local deaths: " + String(myLocation.ichangeInDeaths)
+        //ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
+        print(ret)
+        return ret
         
     }
     
-    //END CODE FOR STRUCT_____________________________________________
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            // not using Google Analytics tool
-            //FirebaseApp.configure()
-            // MARK: UserNotifications Center Setup
-            let center = UNUserNotificationCenter.current()
-            center.delegate = self
-            let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-            // request user authorization for notifications
-            center.requestAuthorization(options: options) { (granted, error) in
-                if granted {
-                    //application.registerForRemoteNotifications()
-                    print("Permission Granted")
-                    self.setUpNotification()
-                }
-            }
+    // func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-            //give remind me later option
-             let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
         
-             let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
+    //     let content = notification.request.content
+        
+    //     // Process notification content
+    //     print("Received Notification with \(content.title) -  \(content.body)")
 
-             UNUserNotificationCenter.current().setNotificationCategories([myCategory])
+    //     // Display notification as regular alert and play sound
+    //     completionHandler([.alert, .sound])
+    // } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
+    
+    // func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    //     let actionIdentifier = response.actionIdentifier
+    //     //print("func 2")
+    //     switch actionIdentifier {
+    //     case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
+    //         // Do something
+    //         completionHandler()
+    //     case UNNotificationDefaultActionIdentifier: // App was opened from notification
+    //         // Do something
+    //         completionHandler()
+    //     case "remindLater": do {
+    //             let newDate = Date(timeInterval: 60, since: Date())
+    //             print("Rescheduling notification until \(newDate)")
+    //             // TODO: reschedule the notification
+            
+    //         }
+    //         completionHandler()
+    //     default:
+    //         completionHandler()
+    //     }
+    // }//end func userNotificationCenter
+
+// @UIApplicationMain
+// class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+
+//     //CODE FOR STRUCT_____________________________________________
+    
+//     struct Place: Codable {
+//         var combined_key: String //name of place
+//         var confirmed_cases: Int
+//         var country: String
+//         //var county: String //think there is going to be problem with null values
+//         var daily_change_cases: Int
+//         var daily_change_deaths: Int
+//         var deaths: Int
+// //        var fips: Float //what is this?
+//         var latitude: Float
+//         var longitude: Float
+//         var population: Int
+//         var state: String
+//         var uid: Int
+//     }//create struct to put the data in
+    
+//     var allCases: [Place] = []
+    
+//     struct myLocation {
+//         static let location: String = "Puerto Rico, US"
+//         static var locationConfirmedCases: Int = 0
+//         static var locationCountry: String = ""
+//         static var locationChangeInCases: Int = 0
+//         static var locationChangeInDeaths: Int = 0
+//         static var locationDeaths: Int = 0
+//         static var locationLatitude: Float = 0.0
+//         static var locationLongitude: Float = 0.0
+//         static var locationPopulation: Int = 0
+//         static var locationState: String = ""
+//         static var locationUid: Int = 0
+//         static var totalCases: Int = 1779842
+        
+//     }
+    
+//     //END CODE FOR STRUCT_____________________________________________
+    
+    // func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    //         // not using Google Analytics tool
+    //         //FirebaseApp.configure()
+    //         // MARK: UserNotifications Center Setup
+    //         let center = UNUserNotificationCenter.current()
+    //         center.delegate = self
+    //         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+    //         // request user authorization for notifications
+    //         center.requestAuthorization(options: options) { (granted, error) in
+    //             if granted {
+    //                 //application.registerForRemoteNotifications()
+    //                 print("Permission Granted")
+    //                 self.setUpNotification()
+    //             }
+    //         }
+        
+    //         //give remind me later option
+    //          let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+        
+    //          let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
+
+    //          UNUserNotificationCenter.current().setNotificationCategories([myCategory])
 
             
-            return true
-        } //end func didFinishLaunchingWithOptions - CHANGED THIS FOR DAILY NOTIFICATION
+    //         return true
+    //     } //end func didFinishLaunchingWithOptions - CHANGED THIS FOR DAILY NOTIFICATION
 
         
         func setUpNotification() {
@@ -127,24 +286,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
         } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
     
-    func bodyofDailyNotification() -> String {
-        getAllData()
-        let casesString = String(myLocation.locationConfirmedCases)
-        let deathsString = String(myLocation.locationDeaths)
-        let changeDeathsString = String(myLocation.locationChangeInDeaths)
-        let changeCasesString = String(myLocation.locationChangeInCases)
-        let totalCasesString = String(myLocation.totalCases)
+    // func bodyofDailyNotification() -> String {
+    //     getAllData()
+    //     let casesString = String(myLocation.locationConfirmedCases)
+    //     let deathsString = String(myLocation.locationDeaths)
+    //     let changeDeathsString = String(myLocation.locationChangeInDeaths)
+    //     let changeCasesString = String(myLocation.locationChangeInCases)
+    //     let totalCasesString = String(myLocation.totalCases)
         
-        var ret = "Total global cases: " + totalCasesString
-        ret += "\nTotal local cases: " + casesString
-        ret += "\nTotal local deaths: " + deathsString
-        ret += "\nDaily change in local cases: " + changeCasesString
-        ret += "\nDaily change in local deaths: " + changeDeathsString
-        ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
-        print(ret)
-        return ret
+    //     var ret = "Total global cases: " + totalCasesString
+    //     ret += "\nTotal local cases: " + casesString
+    //     ret += "\nTotal local deaths: " + deathsString
+    //     ret += "\nDaily change in local cases: " + changeCasesString
+    //     ret += "\nDaily change in local deaths: " + changeDeathsString
+    //     ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
+    //     print(ret)
+    //     return ret
         
-    }
+    // }
         
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             let content = notification.request.content
@@ -237,78 +396,214 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
+    
+    //MARK: API Call
+    
+    func getAllData() {
+        
+        //totalCases = 0
+        print("starting getAllData")
+        let mySession = URLSession(configuration: URLSessionConfiguration.default)
+        
+        let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
+        
+        let task = mySession.dataTask(with: url) {data, response, error in
+            
+            guard error == nil else {
+                print ("error: \(error!)")
+                return
+            }
+            
+            guard let jsonData = data else {
+                print("No data")
+                return
+            }
+            
+            print("Got the data from network")
+            
+            let decoder = JSONDecoder()
+
+            do {
+                self.allElms = try decoder.decode([Place].self, from: jsonData)
+                
+               // get current location
+                let currLoc = self.locationManager.location
+                print(currLoc)
+                //get city state country from lat and long
+
+                self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
+                                    guard let city = city, let state = state, let country = country, error == nil else { return }
+                            print("THIS IS IT " + city + ", " + state + ", ", country)
+                    self.myLocation.icounty = city
+                    self.myLocation.icountry = country
+                    print("IVAR: " + String((self.myLocation.icounty ?? "")!))
+                    print("IVAR: " + String((self.myLocation.istate ?? "")!))
+                    print("IVAR: " + String((self.myLocation.icountry ?? "")!))
+
+                    }
+                    sleep(1)
+                
+                    print("IVARl: " + String((self.myLocation.icounty ?? "")!))
+                    print("IVARl: " + String((self.myLocation.istate ?? "")!))
+                    print("IVARl: " + String((self.myLocation.icountry ?? "")!))
+
+                    //begin for loop
+                    for Place in self.allElms{
+                        print("loop")
+                        //print(Place.county)
+                        //print(self.myLocation.icounty)
+                        if (Place.county == self.myLocation.icounty ) {
+        //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
+                            print("true")
+                            self.myLocation.iconfirmedcases = Place.confirmed_cases
+                            self.myLocation.ideaths = Place.deaths
+                            self.myLocation.ichangeInDeaths = Place.daily_change_deaths
+                            self.myLocation.ichangeInCases = Place.daily_change_cases
+                        }
+                    }
+
+                print("done!!!")
+
+            }catch {
+                print("JSON Decode error")
+            }
+        }
+        
+        task.resume()
+        sleep(2)
+        
+    }
+}
+
+extension AppDelegate: CLLocationManagerDelegate {
+    
+    //check to see if user has allowed location permission
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print("location manager authorization status changed")
+        
+        switch status {
+        case .authorizedAlways:
+            print("user allow app to get location data when app is active or in background")
+        case .authorizedWhenInUse:
+            print("user allow app to get location data only when app is active")
+        case .denied:
+            print("user tap 'disallow' on the permission dialog, cant get location data")
+        case .restricted:
+            print("parental control setting disallow location data")
+        case .notDetermined:
+            print("the location permission dialog haven't shown before, user haven't tap allow/disallow")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+       let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
+
+        
+        AppDelegate.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
+            if let place = placemarks?.first {
+                let description =  "\(place)"
+                self.newVisitReceived(visit, description: description, place: place )
+            }
+        }
+        
+    }
+    
+    func newVisitReceived(_ visit: CLVisit, description: String, place: CLPlacemark) {
+        let location = Location(visit: visit, descriptionString: description)
+        let locality = place.locality
+    
+        let content = UNMutableNotificationContent()
+        content.title = "Cases in " + locality!
+        content.body = "Get data from API"
+        content.sound = .default
+
+        // 2
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: location.dateString, content: content, trigger: trigger)
+
+         //3
+        center.add(request) { error in if error != nil {
+            print ("something went wrong")
+            }
+            
+        }
+       
+   }
+}
+
 //API CONNECTION CODE_________________________________________
 
-    func getAllData() {
-            //print("starting getAllData")
-            let mySession = URLSession(configuration: URLSessionConfiguration.default)
+//     func getAllData() {
+//             //print("starting getAllData")
+//             let mySession = URLSession(configuration: URLSessionConfiguration.default)
             
-            let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
+//             let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
             
-            let task = mySession.dataTask(with: url) {data, response, error in
+//             let task = mySession.dataTask(with: url) {data, response, error in
                 
-                guard error == nil else {
-                    print ("error: \(error!)")
-                    return
-                }
+//                 guard error == nil else {
+//                     print ("error: \(error!)")
+//                     return
+//                 }
                 
-                guard let jsonData = data else {
-                    print("No data")
-                    return
-                }
+//                 guard let jsonData = data else {
+//                     print("No data")
+//                     return
+//                 }
                 
-                print("Got the data from network")
+//                 print("Got the data from network")
                 
-                let decoder = JSONDecoder()
+//                 let decoder = JSONDecoder()
 
-                do {
-                    self.allCases = try decoder.decode([Place].self, from: jsonData)
+//                 do {
+//                     self.allCases = try decoder.decode([Place].self, from: jsonData)
                      
-//                    for Place in self.allCases{
-//                        print(Place.confirmed_cases)
-//                        print(Place.country)
-//                    } //prints everything
-//                    let dispatchGroup = DispatchGroup()
-//                    let dispatchQueue = DispatchQueue(label: "taskQueue")
-//                    let dispatchSemaphore = DispatchSemaphore(value: 0)
+// //                    for Place in self.allCases{
+// //                        print(Place.confirmed_cases)
+// //                        print(Place.country)
+// //                    } //prints everything
+// //                    let dispatchGroup = DispatchGroup()
+// //                    let dispatchQueue = DispatchQueue(label: "taskQueue")
+// //                    let dispatchSemaphore = DispatchSemaphore(value: 0)
                     
-                        for index in 0..<self.allCases.count {
-                            myLocation.totalCases += self.allCases[index].confirmed_cases//problem with this
-                            if self.allCases[index].combined_key == myLocation.location {
-                                myLocation.locationConfirmedCases = self.allCases[index].confirmed_cases
-                                myLocation.locationCountry = self.allCases[index].country
-                                myLocation.locationChangeInCases = self.allCases[index].daily_change_cases
-                                myLocation.locationChangeInDeaths = self.allCases[index].daily_change_deaths
-                                myLocation.locationDeaths = self.allCases[index].deaths
-                                myLocation.locationLatitude = self.allCases[index].latitude
-                                myLocation.locationLongitude = self.allCases[index].longitude
-                                myLocation.locationPopulation = self.allCases[index].population
-                                myLocation.locationState = self.allCases[index].state
-                                myLocation.locationUid = self.allCases[index].uid
-                            }
-                        } //end of for loop
-//                    for place in self.allCases{
-//                        if place.combined_key == myLocation.location {
-//                            print(place.combined_key)
-//                        }
-//                    }
+//                         for index in 0..<self.allCases.count {
+//                             myLocation.totalCases += self.allCases[index].confirmed_cases//problem with this
+//                             if self.allCases[index].combined_key == myLocation.location {
+//                                 myLocation.locationConfirmedCases = self.allCases[index].confirmed_cases
+//                                 myLocation.locationCountry = self.allCases[index].country
+//                                 myLocation.locationChangeInCases = self.allCases[index].daily_change_cases
+//                                 myLocation.locationChangeInDeaths = self.allCases[index].daily_change_deaths
+//                                 myLocation.locationDeaths = self.allCases[index].deaths
+//                                 myLocation.locationLatitude = self.allCases[index].latitude
+//                                 myLocation.locationLongitude = self.allCases[index].longitude
+//                                 myLocation.locationPopulation = self.allCases[index].population
+//                                 myLocation.locationState = self.allCases[index].state
+//                                 myLocation.locationUid = self.allCases[index].uid
+//                             }
+//                         } //end of for loop
+// //                    for place in self.allCases{
+// //                        if place.combined_key == myLocation.location {
+// //                            print(place.combined_key)
+// //                        }
+// //                    }
 
-                    //print("finished printing")
-                }
+//                     //print("finished printing")
+//                 }
                     
-                catch {
-                    print("JSON Decode error")
-                }
-            }
-            task.resume()
-            sleep(1)
-            //print("get all data completed")
-        }
+//                 catch {
+//                     print("JSON Decode error")
+//                 }
+//             }
+//             task.resume()
+//             sleep(1)
+//             //print("get all data completed")
+//         }
     
-}
+// }
 
     
 //END API CONNECTION CODE_____________________________________
     
+
 
 

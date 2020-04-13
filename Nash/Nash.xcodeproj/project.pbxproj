@@ -19,6 +19,8 @@
 		CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */; };
 		CF8643482438FC2100D1C0E6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643472438FC2100D1C0E6 /* MapViewController.swift */; };
 		CF86434A2438FD4F00D1C0E6 /* Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643492438FD4F00D1C0E6 /* Emergency.swift */; };
+		DD06D226244022500067FA9F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD06D225244022500067FA9F /* Location.swift */; };
+		DDCD9D892444B7BE00D25F96 /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCD9D882444B7BE00D25F96 /* APILocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronavirusMapView.swift; sourceTree = "<group>"; };
 		CF8643472438FC2100D1C0E6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CF8643492438FD4F00D1C0E6 /* Emergency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency.swift; sourceTree = "<group>"; };
+		DD06D225244022500067FA9F /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DDCD9D882444B7BE00D25F96 /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,17 +74,19 @@
 			children = (
 				CF8643422438FA3500D1C0E6 /* ShadowedImageView.swift */,
 				CF8643232438F45D00D1C0E6 /* AppDelegate.swift */,
+				DDCD9D882444B7BE00D25F96 /* APILocation.swift */,
 				CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */,
 				CF8643272438F45D00D1C0E6 /* ViewController.swift */,
 				CF86433A2438F4F200D1C0E6 /* MapStoryboard.storyboard */,
 				CF8643492438FD4F00D1C0E6 /* Emergency.swift */,
 				CF8643472438FC2100D1C0E6 /* MapViewController.swift */,
 				CF8643292438F45D00D1C0E6 /* Main.storyboard */,
-				CF86432F2438F46000D1C0E6 /* Assets.xcassets */,
 				CF8643312438F46000D1C0E6 /* LaunchScreen.storyboard */,
+				CF86432F2438F46000D1C0E6 /* Assets.xcassets */,
 				CF8643342438F46000D1C0E6 /* Info.plist */,
 				CF86432C2438F45D00D1C0E6 /* Nash.xcdatamodeld */,
 				CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */,
+				DD06D225244022500067FA9F /* Location.swift */,
 			);
 			path = Nash;
 			sourceTree = "<group>";
@@ -160,7 +166,9 @@
 				CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */,
 				CF8643242438F45D00D1C0E6 /* AppDelegate.swift in Sources */,
 				CF86434A2438FD4F00D1C0E6 /* Emergency.swift in Sources */,
+				DDCD9D892444B7BE00D25F96 /* APILocation.swift in Sources */,
 				CF8643432438FA3500D1C0E6 /* ShadowedImageView.swift in Sources */,
+				DD06D226244022500067FA9F /* Location.swift in Sources */,
 				CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */,
 				CF86432E2438F45D00D1C0E6 /* Nash.xcdatamodeld in Sources */,
 				CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */,
