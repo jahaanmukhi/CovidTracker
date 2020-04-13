@@ -1,6 +1,6 @@
 import time, datetime
 import requests
-import csv
+import csv, json 
 from io import StringIO
 import pandas as pd
 
@@ -41,18 +41,19 @@ def update():
     global_deaths_df = pd.read_csv(StringIO(requests.get(url = global_deaths).content.decode('utf-8')))
     # change data into the correct json form
     
-    merged_df = pd.merge(filter_df(US_confirmed_df), \
+    US_df = pd.merge(filter_df(US_confirmed_df), \
             filter_df(US_deaths_df, deaths=True), \
             on=[ 'uid', 'fips', 'combined_key', 'country', 'state', 'state_abbr', 'county', 'latitude', 'longitude' ], \
             how='left')
 
-    merged_df2 = pd.merge(filter_df(global_confirmed_df, worldwide=True), \
+    global_df = pd.merge(filter_df(global_confirmed_df, worldwide=True), \
             filter_df(global_deaths_df, deaths=True, worldwide=True), \
             on=[  'country', 'state', 'latitude', 'longitude' ], \
             how='left')
 
-    merged_df.to_json('data/US_data.json', orient='records')
-    merged_df2.to_json('data/global_data.json', orient='records')
+    covid_data = pd.merge(US_df, global_df, how='outer')
+
+    covid_data.to_json('data/daily_data.json', orient='records')
 
     # save the data to the file
 
@@ -69,6 +70,10 @@ def filter_df(df, deaths=False, worldwide=False):
 def filter_df_worldwide(df, deaths):
     filters = ['Province/State','Country/Region','Lat','Long']
 
+    if deaths == True:
+        filters.append('Population')
+        df['Population'] = df['Country/Region'].map(lambda country: global_populations[country]*1000 , na_action='ignore') 
+
     filtered_df = date_manipulation(df, deaths, filters)
 
     if deaths == True:
@@ -77,7 +82,8 @@ def filter_df_worldwide(df, deaths):
                     "Lat": "latitude",
                     "Long":  "longitude",
                     "daily_change": "daily_change_deaths",
-                    "weekly_change": "weekly_change_deaths"
+                    "weekly_change": "weekly_change_deaths",
+                    "Population": "population"
                 }
     else: 
         rename = {  "Province/State" : "state",
@@ -125,7 +131,7 @@ def filter_df_US(df, deaths):
                 }
     
     filtered_df.rename(columns=rename, inplace=True)
-    filtered_df['state_abbr'] = filtered_df['state'].map(lambda name: us_state_abbrev[name], na_action='ignore')
+    filtered_df['state_abbr'] = filtered_df['state'].map(lambda state: us_state_abbrev[state], na_action='ignore')
     return filtered_df
 
 def date_manipulation(df, deaths, filters):
@@ -190,68 +196,12 @@ def date_manipulation(df, deaths, filters):
 
 ############################################
 
+with open('us_state_abbreviations.json', 'r') as file1:
+    us_state_abbrev = json.load(file1)
 
-# https://gist.github.com/rogerallen/1583593
-us_state_abbrev = {
-    'Alabama': 'AL',
-    'Alaska': 'AK',
-    'American Samoa': 'AS',
-    'Arizona': 'AZ',
-    'Arkansas': 'AR',
-    'California': 'CA',
-    'Colorado': 'CO',
-    'Connecticut': 'CT',
-    'Delaware': 'DE',
-    'District of Columbia': 'DC',
-    'Florida': 'FL',
-    'Georgia': 'GA',
-    'Guam': 'GU',
-    'Hawaii': 'HI',
-    'Idaho': 'ID',
-    'Illinois': 'IL',
-    'Indiana': 'IN',
-    'Iowa': 'IA',
-    'Kansas': 'KS',
-    'Kentucky': 'KY',
-    'Louisiana': 'LA',
-    'Maine': 'ME',
-    'Maryland': 'MD',
-    'Massachusetts': 'MA',
-    'Michigan': 'MI',
-    'Minnesota': 'MN',
-    'Mississippi': 'MS',
-    'Missouri': 'MO',
-    'Montana': 'MT',
-    'Nebraska': 'NE',
-    'Nevada': 'NV',
-    'New Hampshire': 'NH',
-    'New Jersey': 'NJ',
-    'New Mexico': 'NM',
-    'New York': 'NY',
-    'North Carolina': 'NC',
-    'North Dakota': 'ND',
-    'Northern Mariana Islands':'MP',
-    'Ohio': 'OH',
-    'Oklahoma': 'OK',
-    'Oregon': 'OR',
-    'Pennsylvania': 'PA',
-    'Puerto Rico': 'PR',
-    'Rhode Island': 'RI',
-    'South Carolina': 'SC',
-    'South Dakota': 'SD',
-    'Tennessee': 'TN',
-    'Texas': 'TX',
-    'Utah': 'UT',
-    'Vermont': 'VT',
-    'Virgin Islands': 'VI',
-    'Virginia': 'VA',
-    'Washington': 'WA',
-    'West Virginia': 'WV',
-    'Wisconsin': 'WI',
-    'Wyoming': 'WY', 
-    'Diamond Princess': 'DP', 
-    'Grand Princess': 'GP',
-}
+global_populations = {}
+with open('global_populations.json', 'r') as file2: 
+    global_populations = json.load(file2)
 
 if __name__ == '__main__':
     update()
