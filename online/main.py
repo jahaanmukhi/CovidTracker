@@ -33,7 +33,6 @@ def update():
 
 @app.route('/user/add')
 def add_user():
-
     email = request.args.get('email')
     password_unhashed = request.args.get('password')
     curr_lat = request.args.get('current_lat')
@@ -44,7 +43,6 @@ def add_user():
     pair_id = db.session.query(UserLocations).count() + 1
 
     #password_hashed = sha256_crypt.hash(password_unhashed)
-
 
     try:
         location = Location(
@@ -58,19 +56,25 @@ def add_user():
 	    db.session.rollback()
 
     try:
+        #hash = sha256_crypt.hash("password")
+        #sha256_crypt.verify("password", hash)
         user = User(
             uid = uid,
             email = email,
             password = password_unhashed,
             curr_loc=loc_id
         )
-        #hash = sha256_crypt.hash("password")
-        #sha256_crypt.verify("password", hash)
+        db.session.add(user)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+    
+    try: 
         userLocation = UserLocations(
             uid = uid, 
             loc_id = loc_id
         )
-        db.session.add(user)
+        db.session.add(userLocation)
         db.session.commit()
         return "User added. user id={}".format(user.uid)
     except Exception as e:
