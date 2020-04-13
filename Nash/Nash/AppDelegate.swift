@@ -25,39 +25,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var combined_key: String //name of place
     var confirmed_cases: Int
     var country: String
-    //var county: String //think there is going to be problem with null values
+    var county: String! //think there is going to be problem with null values
     var daily_change_cases: Int
     var daily_change_deaths: Int
     var deaths: Int
-    //var fips: Float //what is this?
+    var fips: Float! //what is this?
     var latitude: Float
     var longitude: Float
     var population: Int
     var state: String
     var uid: Int
     }
-    
-    //hard coded location
-    let country = "US"
-    let state = "Alabama"
-    
-    //var totalCases = 0
 
     var allElms: [Place] = []
+    let myLocation = APILocation()
     
-   // let currLoc = CLLocationManager.location
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-       // getAllData()
         //MARK: set up location tracking
-        //notifications and location setup
         let locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
         locationManager.startMonitoringVisits()
         locationManager.delegate = self
+        
+        let status = CLLocationManager.authorizationStatus()
+        
         
         //handle location errors if access is denied
         func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -69,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
            }
            // Notify the user of any errors.
         }
+        
         
         //MARK: set up notifications
         center.delegate = self
@@ -123,73 +119,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 
-    func bodyofReturnNotification() -> String {
-        
-        var totalCases = 0
+    func bodyofReturnNotification() -> String{
+   
         getAllData()
-        let currLoc = self.locationManager.location
-        
-        fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
-                    guard let city = city, let state = state, let country = country, error == nil else { return }
-            print("THIS IS IT " + city + ", " + state + ", ", country)
-            
-            for Place in self.allElms{
-                
-                if (Place.country == country) {
-                    //need to fix county codes
-                    totalCases += Place.confirmed_cases
-                }
-                //print(Place.confirmed_cases)
-                //print(Place.country)
-                //print(Place.county)
+        sleep(1)
+  
 
-            }
-        }
+        var ret = "Total local cases: " + String(myLocation.iconfirmedcases)
+        ret += "\nTotal local deaths: " + String(myLocation.ideaths)
+        ret += "\nDaily change in local cases: " + String(myLocation.ichangeInCases)
+        ret += "\nDaily change in local deaths: " + String(myLocation.ichangeInDeaths)
+        //ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
+        print(ret)
+        return ret
         
-        
-
-//        var ret = "Total global cases: " + totalCasesString
-//        ret += "\nTotal local cases: " + casesString
-//        ret += "\nTotal local deaths: " + deathsString
-//        ret += "\nDaily change in local cases: " + changeCasesString
-//        ret += "\nDaily change in local deaths: " + changeDeathsString
-//        ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
-       // print(ret)
-       // return ret
-        return ""
-
-        
-    }
-    
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-//        let currLoc = locations.last!
-//
-//        fetchCityAndCountry(from: currLoc) { city, country, error in
-//            guard let city = city, let country = country, error == nil else { return }
-//            //print(city + ", " + country)
-//
-//            //self.bodyofReturnNotification(city : city, country : country)
-//        }
-//
-//
-//
-//    }
-//
-    func fetchCityStateAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ state: String?, _ country:  String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-            completion(placemarks?.first?.locality,
-                       placemarks?.first?.administrativeArea,
-                       placemarks?.first?.country,
-                       error)
-        }
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        //print("func 1")
+        
         let content = notification.request.content
-        //print("got here")
+        
         // Process notification content
         print("Received Notification with \(content.title) -  \(content.body)")
 
@@ -217,11 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         default:
             completionHandler()
         }
-    }//end func userNotificationCenter #2 - CHANGED FOR DAILY UPDATE
-
-
-
-    
+    }//end func userNotificationCenter
 
     // MARK: UISceneSession Lifecycle
 
@@ -285,6 +231,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: API Call
     
     func getAllData() {
+        
         //totalCases = 0
         print("starting getAllData")
         let mySession = URLSession(configuration: URLSessionConfiguration.default)
@@ -295,12 +242,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             guard error == nil else {
                 print ("error: \(error!)")
-//                let alertController = UIAlertController(title: "Error", message: "Request failed. Check internet connection.", preferredStyle: .alert)
-//                let dismissAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-//                alertController.addAction(dismissAction)
-//                DispatchQueue.main.async {
-//                    self.present(alertController, animated: true)
-//                }
                 return
             }
             
@@ -315,20 +256,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
             do {
                 self.allElms = try decoder.decode([Place].self, from: jsonData)
+                
+               // get current location
+                let currLoc = self.locationManager.location
+                print(currLoc)
+                //get city state country from lat and long
 
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//
-                // for Place in self.allElms{
-                    
-                    
-                    //print(Place.confirmed_cases)
-                    //print(Place.country)
-                    //print(Place.county)
-                    
-                    
-                //}
+                self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
+                                    guard let city = city, let state = state, let country = country, error == nil else { return }
+                            print("THIS IS IT " + city + ", " + state + ", ", country)
+                    self.myLocation.icounty = city
+                    self.myLocation.icountry = country
+                    print("IVAR: " + String((self.myLocation.icounty ?? "")!))
+                    print("IVAR: " + String((self.myLocation.istate ?? "")!))
+                    print("IVAR: " + String((self.myLocation.icountry ?? "")!))
+
+                        }
+
+                    //begin for loop
+                    for Place in self.allElms{
+                        print("loop")
+                        if (Place.county == self.myLocation.icounty ) {
+        //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
+                            print("true")
+                            self.myLocation.iconfirmedcases = Place.confirmed_cases
+                            self.myLocation.ideaths = Place.deaths
+                            self.myLocation.ichangeInDeaths = Place.daily_change_deaths
+                            self.myLocation.ichangeInCases = Place.daily_change_cases
+                        }
+                    }
 
                 print("done!!!")
 
@@ -338,12 +294,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         task.resume()
-        sleep(1)
+        sleep(2)
         
     }
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
+    
+    //check to see if user has allowed location permission
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print("location manager authorization status changed")
+        
+        switch status {
+        case .authorizedAlways:
+            print("user allow app to get location data when app is active or in background")
+        case .authorizedWhenInUse:
+            print("user allow app to get location data only when app is active")
+        case .denied:
+            print("user tap 'disallow' on the permission dialog, cant get location data")
+        case .restricted:
+            print("parental control setting disallow location data")
+        case .notDetermined:
+            print("the location permission dialog haven't shown before, user haven't tap allow/disallow")
+        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
        let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
@@ -377,11 +351,8 @@ extension AppDelegate: CLLocationManagerDelegate {
             }
             
         }
-    
-    
        
    }
 }
-
 
 

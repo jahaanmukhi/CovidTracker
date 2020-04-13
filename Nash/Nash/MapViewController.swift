@@ -62,11 +62,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
         //get users current location
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        //print("locations = \(locValue.latitude) \(locValue.longitude)")
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
         
         fetchCityAndCountry(from: location) { city, country, error in
             guard let city = city, let country = country, error == nil else { return }
-            //print(city + ", " + country)
+            print(city + ", " + country)
         }
         
         //locationManagerVC.stopUpdatingLocation()
