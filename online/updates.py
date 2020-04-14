@@ -222,7 +222,6 @@ def date_manipulation(df, deaths, recovered, filters):
             filtered_df.rename(columns={yesterday : 'confirmed_deaths'}, inplace = True)
         elif recovered == True: 
             filtered_df.rename(columns={yesterday : 'confirmed_recovered'}, inplace = True)
-            print(filtered_df['confirmed_recovered'])
         else:
             filtered_df.rename(columns={yesterday : 'confirmed_cases'}, inplace = True)
 
