@@ -83,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 //setting content of notification
                 let content = UNMutableNotificationContent()
-            content.title = "Coronavirus Update - " + myLocation.location
+                content.title = "Coronavirus Update - " + myLocation.location
                 content.body = bodyofDailyNotification()
                 
                 //specify date/time for trigger - everyday 8am
