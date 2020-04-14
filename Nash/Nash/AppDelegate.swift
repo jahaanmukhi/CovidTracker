@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var county: String! //think there is going to be problem with null values
         var daily_change_cases: Int!
         var daily_change_deaths: Float!
-        var confirmed_deaths: Float!
+        var confirmed_deaths: Float?
         var fips: Float! //what is this?
         var latitude: Float!
         var longitude: Float!
@@ -241,19 +241,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 //setting content of notification
                 let content = UNMutableNotificationContent()
-            content.title = "Coronavirus Update - "
+                content.title = "Coronavirus Update - "
                 content.body = bodyofReturnNotification()
                 
                 //specify date/time for trigger - everyday 8am
                 var dateComponents = DateComponents()
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
-                dateComponents.hour = 9  //  hours
-                dateComponents.minute = 00 // minutes
+                dateComponents.hour = 16  //  hours
+                dateComponents.minute = 30 // minutes
             
                 //trigger notification when it matches dateCompotents
-                let trigger = UNCalendarNotificationTrigger(
-                         dateMatching: dateComponents, repeats: true)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+            //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
    
 
             // add action to Notification
@@ -432,7 +432,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
                 self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
                                     guard let city = city, let state = state, let country = country, error == nil else { return }
-                            print("THIS IS IT " + city + ", " + state + ", ", country)
+                            print("Current location: " + city + ", " + state + ", ", country)
                     self.myLocation.icounty = city
                     self.myLocation.icountry = country
                     self.myLocation.istate = state
@@ -457,7 +457,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             //print("loop")
                             print("true")
                             self.myLocation.iconfirmedcases = Place.confirmed_cases
-                            self.myLocation.ideaths = Place.confirmed_deaths
+                            self.myLocation.ideaths = Place.confirmed_deaths ?? 0
                             self.myLocation.ichangeInDeaths = Place.daily_change_deaths
                             self.myLocation.ichangeInCases = Place.daily_change_cases
                         }
@@ -497,6 +497,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        print("visit")
        let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
 
         
