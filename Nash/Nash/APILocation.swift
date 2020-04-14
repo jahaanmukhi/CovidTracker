@@ -11,7 +11,7 @@ import CoreLocation
 
 class APILocation: NSObject {
     
-   
+    var icombinedkey: String?
     var ilocation: String?
     var iconfirmedcases: Int = 0
     var icountry: String?

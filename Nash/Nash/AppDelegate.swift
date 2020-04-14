@@ -241,15 +241,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 //setting content of notification
                 let content = UNMutableNotificationContent()
-                content.title = "Coronavirus Update - "
+                
                 content.body = bodyofReturnNotification()
+            content.title = "Coronavirus Update - " + (self.myLocation.icombinedkey ?? "uknown")
                 
                 //specify date/time for trigger - everyday 8am
                 var dateComponents = DateComponents()
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
                 dateComponents.hour = 16  //  hours
-                dateComponents.minute = 30 // minutes
+                dateComponents.minute = 44 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
@@ -456,6 +457,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         if (Place.county == self.myLocation.icounty && Place.state_abbr == self.myLocation.istate) {
                             //print("loop")
                             print("true")
+                            self.myLocation.icombinedkey = Place.combined_key
                             self.myLocation.iconfirmedcases = Place.confirmed_cases
                             self.myLocation.ideaths = Place.confirmed_deaths ?? 0
                             self.myLocation.ichangeInDeaths = Place.daily_change_deaths
