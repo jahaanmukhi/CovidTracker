@@ -16,6 +16,10 @@ class MapViewController: UIViewController {
     
     var covid = [Covid]()
     
+    var resultSearchController: UISearchController? = nil
+    
+    var selectedPin : MKPlacemark? = nil
+    
     
     func downloadJSON(){
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
@@ -43,7 +47,7 @@ class MapViewController: UIViewController {
             
             //populate map with pins
             for c in covid{
-                let description = "Cases: \(c.confirmed_cases ?? 0)) \n Deaths: \(c.deaths ?? 0)"
+                let description = "Cases: \(c.confirmed_cases ?? 0) \n Deaths: \(c.confirmed_deaths ?? 0)"
                 let location = "\(c.county ?? "No COUNTY") County, \(c.state ?? "NO STATE")"
                 let annotation = Pin(coordinate: CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude ), title: location, subtitle: description)
                 mapView.addAnnotation(annotation)
@@ -53,6 +57,27 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.downloadJSON()
+        
+        //set up search results table
+        let locationSearchTable = storyboard!.instantiateViewController(identifier: "LocationSearch") as! LocationSearchTableViewController
+        resultSearchController = UISearchController(searchResultsController: locationSearchTable)
+        resultSearchController?.searchResultsUpdater = locationSearchTable as! UISearchResultsUpdating
+        
+        locationSearchTable.mapView = mapView
+        locationSearchTable.handleMapSearchDelegate = self 
+        
+        //configure search bar and embed within navigation bar
+        let searchBar = resultSearchController!.searchBar
+        searchBar.sizeToFit()
+        searchBar.placeholder = "Search"
+        navigationItem.titleView = resultSearchController?.searchBar
+       
+        //format search bar and results
+        resultSearchController?.hidesNavigationBarDuringPresentation = false
+        resultSearchController?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        
+        
         
         
         // Set initial location
@@ -73,4 +98,30 @@ class MapViewController: UIViewController {
     }
     */
 
+}
+
+protocol HandleMapSearch{
+    func dropPinZoomIn(placemark: MKPlacemark)
+}
+
+extension MapViewController : HandleMapSearch {
+    func dropPinZoomIn(placemark: MKPlacemark) {
+    // cache the pin
+    selectedPin = placemark
+    // clear existing pins
+    //mapView.removeAnnotations(mapView.annotations)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = placemark.coordinate
+        
+        if let city = placemark.locality,
+            let state = placemark.administrativeArea
+        {
+            annotation.subtitle = "(city) (state)"
+        }
+        mapView.addAnnotation(annotation)
+        
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
 }
