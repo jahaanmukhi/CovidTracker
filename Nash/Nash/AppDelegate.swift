@@ -457,8 +457,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
                             print("true")
                             self.myLocation.iconfirmedcases = Place.confirmed_cases
-                            self.myLocation.ideaths = Place.confirmed_deaths!
-                            self.myLocation.ichangeInDeaths = Place.daily_change_deaths
+                            //self.myLocation.ideaths = Place.confirmed_deaths!
+                            //self.myLocation.ichangeInDeaths = Place.daily_change_deaths
                             self.myLocation.ichangeInCases = Place.daily_change_cases
                         }
                     }
