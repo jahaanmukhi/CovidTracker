@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         
         //MARK: set up location tracking
-        let locationManager = CLLocationManager()
+        // let locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.startMonitoringVisits()
@@ -426,6 +426,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                // get current location
                 let currLoc = self.locationManager.location
+                if (currLoc == nil) {
+                    print("No location available")
+                    return
+                }
                 print(currLoc)
                 //get city state country from lat and long
 
