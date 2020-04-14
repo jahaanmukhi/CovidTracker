@@ -18,5 +18,6 @@ class CoronavirusMapView: MKMapView {
         latitudinalMeters: regionRadius,
         longitudinalMeters: regionRadius)
       setRegion(coordinateRegion, animated: true)
+        
     }
 }
