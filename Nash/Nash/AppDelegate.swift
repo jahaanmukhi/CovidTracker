@@ -39,13 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     var allElms: [Place] = []
     let myLocation = APILocation()
-    
+        
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         //MARK: set up location tracking
-        let locationManager = CLLocationManager()
+        
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.startMonitoringVisits()
