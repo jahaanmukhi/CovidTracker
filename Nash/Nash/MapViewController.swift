@@ -69,7 +69,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             print(city + ", " + country)
         }
         
-        //locationManagerVC.stopUpdatingLocation()
+        locationManagerVC.stopUpdatingLocation()
     }
     
     //get city and country from location coordinates

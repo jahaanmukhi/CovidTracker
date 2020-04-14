@@ -22,19 +22,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     //MARK: api struct
     struct Place: Codable {
-    var combined_key: String //name of place
-    var confirmed_cases: Int
-    var country: String
-    var county: String! //think there is going to be problem with null values
-    var daily_change_cases: Int
-    var daily_change_deaths: Int
-    var deaths: Int
-    var fips: Float! //what is this?
-    var latitude: Float
-    var longitude: Float
-    var population: Int
-    var state: String
-    var uid: Int
+        var combined_key: String! //name of place
+        var confirmed_cases: Int!
+        var country: String!
+        var county: String! //think there is going to be problem with null values
+        var daily_change_cases: Int!
+        var daily_change_deaths: Float!
+        var confirmed_deaths: Float!
+        var fips: Float! //what is this?
+        var latitude: Float!
+        var longitude: Float!
+        var population: Float!
+        var state: String!
+        var uid: Float!
     }
 
     var allElms: [Place] = []
@@ -123,8 +123,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
    
         getAllData()
         sleep(1)
-  
-
         var ret = "Total local cases: " + String(myLocation.iconfirmedcases)
         ret += "\nTotal local deaths: " + String(myLocation.ideaths)
         ret += "\nDaily change in local cases: " + String(myLocation.ichangeInCases)
@@ -242,15 +240,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 //setting content of notification
                 let content = UNMutableNotificationContent()
-            content.title = "Coronavirus Update - " + myLocation.location
-                content.body = bodyofDailyNotification()
+            content.title = "Coronavirus Update - "
+                content.body = bodyofReturnNotification()
                 
                 //specify date/time for trigger - everyday 8am
                 var dateComponents = DateComponents()
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
-                dateComponents.hour = 12  //  hours
-                dateComponents.minute = 4 // minutes
+                dateComponents.hour = 9  //  hours
+                dateComponents.minute = 00 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(
@@ -449,14 +447,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
                     //begin for loop
                     for Place in self.allElms{
-                        print("loop")
+                        //print("loop")
                         //print(Place.county)
                         //print(self.myLocation.icounty)
                         if (Place.county == self.myLocation.icounty ) {
         //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
                             print("true")
                             self.myLocation.iconfirmedcases = Place.confirmed_cases
-                            self.myLocation.ideaths = Place.deaths
+                            self.myLocation.ideaths = Place.confirmed_deaths
                             self.myLocation.ichangeInDeaths = Place.daily_change_deaths
                             self.myLocation.ichangeInCases = Place.daily_change_cases
                         }
