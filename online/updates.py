@@ -51,6 +51,13 @@ def update():
     US_df['uid']  = US_df['uid'].astype('Int64')
     US_df['fips'] = US_df['fips'].astype('Int64')
 
+    US_df.drop(US_df[US_df.county == "Kings"].index, inplace=True)
+    US_df.drop(US_df[US_df.county == "Queens"].index, inplace=True)
+    US_df.drop(US_df[US_df.county == "Bronx"].index, inplace=True)
+    US_df.drop(US_df[US_df.county == "Richmond"].index, inplace=True)
+    US_df.drop(US_df[US_df.county == "Unassigned"].index, inplace=True)
+    US_df.drop(US_df[US_df.county.str.contains("Out of", na=False)].index, inplace=True)
+
     global_df_wout_recovered = pd.merge(filter_df(global_deaths_df, deaths=True, recovered=False, worldwide=True), \
             filter_df(global_confirmed_df, deaths=False, recovered=False, worldwide=True), \
             on=[ 'latitude', 'longitude' ], \
