@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
                 dateComponents.hour = 12  //  hours
-                dateComponents.minute = 0 // minutes
+                dateComponents.minute = 37 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(
