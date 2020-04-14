@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var longitude: Float!
         var population: Float!
         var state: String!
+        var state_abbr: String!
         var uid: Float!
     }
 
@@ -434,6 +435,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             print("THIS IS IT " + city + ", " + state + ", ", country)
                     self.myLocation.icounty = city
                     self.myLocation.icountry = country
+                    self.myLocation.istate = state
+                    print("Global location variables being declared: ")
                     print("IVAR: " + String((self.myLocation.icounty ?? "")!))
                     print("IVAR: " + String((self.myLocation.istate ?? "")!))
                     print("IVAR: " + String((self.myLocation.icountry ?? "")!))
@@ -450,8 +453,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         //print("loop")
                         //print(Place.county)
                         //print(self.myLocation.icounty)
-                        if (Place.county == self.myLocation.icounty ) {
-        //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
+                        if (Place.county == self.myLocation.icounty && Place.state_abbr == self.myLocation.istate) {
+                            //print("loop")
                             print("true")
                             self.myLocation.iconfirmedcases = Place.confirmed_cases
                             self.myLocation.ideaths = Place.confirmed_deaths
