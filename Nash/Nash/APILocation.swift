@@ -17,13 +17,13 @@ class APILocation: NSObject {
     var icountry: String?
     var icounty: String?
     var ichangeInCases: Int = 0
-    var ichangeInDeaths: Int = 0
-    var ideaths: Int = 0
+    var ichangeInDeaths: Float = 0.0
+    var ideaths: Float = 0.0
     var ilatitude: Float = 0.0
     var ilongitude: Float = 0.0
-    var ipopulation: Int = 0
+    var ipopulation: Float = 0.0
     var istate: String?
-    var iuid: Int = 0
+    var iuid: Float = 0.0
     //static var totalCases: Int
     
     func fetchCityStateAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ state: String?, _ country:  String?, _ error: Error?) -> ()) {

@@ -22,19 +22,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     //MARK: api struct
     struct Place: Codable {
-    var combined_key: String //name of place
-    var confirmed_cases: Int
-    var country: String
-    var county: String! //think there is going to be problem with null values
-    var daily_change_cases: Int
-    var daily_change_deaths: Int
-    var deaths: Int
-    var fips: Float! //what is this?
-    var latitude: Float
-    var longitude: Float
-    var population: Int
-    var state: String
-    var uid: Int
+        var combined_key: String! //name of place
+        var confirmed_cases: Int!
+        var country: String!
+        var county: String! //think there is going to be problem with null values
+        var daily_change_cases: Int!
+        var daily_change_deaths: Float!
+        var confirmed_deaths: Float!
+        var fips: Float! //what is this?
+        var latitude: Float!
+        var longitude: Float!
+        var population: Float!
+        var state: String!
+        var uid: Float!
     }
 
     var allElms: [Place] = []
@@ -242,8 +242,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 
                 //setting content of notification
                 let content = UNMutableNotificationContent()
-            content.title = "Coronavirus Update - " + myLocation.location
-                content.body = bodyofDailyNotification()
+                content.body = bodyofReturnNotification()
+            content.title = "Daily Coronavirus Update"
+//                + myLocation.ilocation! ?? nil
                 
                 //specify date/time for trigger - everyday 8am
                 var dateComponents = DateComponents()
@@ -427,36 +428,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 self.allElms = try decoder.decode([Place].self, from: jsonData)
                 
                // get current location
-                let currLoc = self.locationManager.location
-                print(currLoc)
+//                let currLoc = self.locationManager.location
+//                print(currLoc)
                 //get city state country from lat and long
 
-                self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
-                                    guard let city = city, let state = state, let country = country, error == nil else { return }
-                            print("THIS IS IT " + city + ", " + state + ", ", country)
-                    self.myLocation.icounty = city
-                    self.myLocation.icountry = country
-                    print("IVAR: " + String((self.myLocation.icounty ?? "")!))
-                    print("IVAR: " + String((self.myLocation.istate ?? "")!))
-                    print("IVAR: " + String((self.myLocation.icountry ?? "")!))
-
-                    }
-                    sleep(1)
-                
-                    print("IVARl: " + String((self.myLocation.icounty ?? "")!))
-                    print("IVARl: " + String((self.myLocation.istate ?? "")!))
-                    print("IVARl: " + String((self.myLocation.icountry ?? "")!))
+//                self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
+//                                    guard let city = city, let state = state, let country = country, error == nil else { return }
+//                            print("THIS IS IT " + city + ", " + state + ", ", country)
+//                    self.myLocation.icounty = city
+//                    self.myLocation.icountry = country
+//                    print("IVAR: " + String((self.myLocation.icounty ?? "")!))
+//                    print("IVAR: " + String((self.myLocation.istate ?? "")!))
+//                    print("IVAR: " + String((self.myLocation.icountry ?? "")!))
+//
+//                    }
+//                    sleep(1)
+//
+//                    print("IVARl: " + String((self.myLocation.icounty ?? "")!))
+//                    print("IVARl: " + String((self.myLocation.istate ?? "")!))
+//                    print("IVARl: " + String((self.myLocation.icountry ?? "")!))
 
                     //begin for loop
                     for Place in self.allElms{
-                        print("loop")
+//                        print("loop")
                         //print(Place.county)
                         //print(self.myLocation.icounty)
                         if (Place.county == self.myLocation.icounty ) {
         //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
                             print("true")
                             self.myLocation.iconfirmedcases = Place.confirmed_cases
-                            self.myLocation.ideaths = Place.deaths
+                            self.myLocation.ideaths = Place.confirmed_deaths
                             self.myLocation.ichangeInDeaths = Place.daily_change_deaths
                             self.myLocation.ichangeInCases = Place.daily_change_cases
                         }
