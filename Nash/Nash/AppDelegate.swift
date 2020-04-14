@@ -45,14 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         
         //MARK: set up location tracking
-        let locationManager = CLLocationManager()
+        //let locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.startMonitoringVisits()
         locationManager.delegate = self
         
         let status = CLLocationManager.authorizationStatus()
-        
         
         //handle location errors if access is denied
         func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -84,46 +83,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         return true
     }
-    
-    // func setUpNotification() {
-    //      //setting content of notification
-    //     let content = UNMutableNotificationContent()
-    //     content.title = "Cases in this area..."
-    //     content.body = bodyofReturnNotification()
-    //     //hardcoded and need to replace with api call to request current location
-        
-    //     content.sound = UNNotificationSound.default
-    //     content.categoryIdentifier = "myUniqueCategory"
-        
-    //     //trigger notification when it matches dateCompotents
-    //     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        
-    //     // add action to Notification
-    //     let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-    //     let myCategory = UNNotificationCategory(identifier: "myUniqueIdentifier", actions: [notificationAction], intentIdentifiers: [], options: [])
-        
-    //     let notificationCenter = UNUserNotificationCenter.current()
-    //             notificationCenter.setNotificationCategories([myCategory])
-        
-    //     // Add the request to the main Notification center.
-    //     let request = UNNotificationRequest(identifier: "returnIdentifer",
-    //                           content: content, trigger: trigger)
 
-            
-    //     notificationCenter.add(request) { (error) in
-    //         if error != nil {
-    //             // Handle any errors.
-    //         } else {
-    //             print("Notification created")
-    //         }
-    //     }
-    // }
 
     func bodyofReturnNotification() -> String{
    
         getAllData()
         sleep(1)
-  
 
         var ret = "Total local cases: " + String(myLocation.iconfirmedcases)
         ret += "\nTotal local deaths: " + String(myLocation.ideaths)
@@ -250,8 +215,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 var dateComponents = DateComponents()
                 dateComponents.calendar = Calendar.current
                 //dateComponents.weekday = 6  // sunday is 1
-                dateComponents.hour = 12  //  hours
-                dateComponents.minute = 4 // minutes
+                dateComponents.hour = 1  //  hours
+                dateComponents.minute = 5 // minutes
             
                 //trigger notification when it matches dateCompotents
                 let trigger = UNCalendarNotificationTrigger(
@@ -308,7 +273,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             let content = notification.request.content
-            
+            print("got here")
             // Process notification content
             print("Received Notification with \(content.title) -  \(content.body)")
 
@@ -455,7 +420,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         //print(self.myLocation.icounty)
                         if (Place.county == self.myLocation.icounty ) {
         //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
-                            print("true")
+                            //print("true")
                             self.myLocation.iconfirmedcases = Place.confirmed_cases
                             //self.myLocation.ideaths = Place.confirmed_deaths!
                             //self.myLocation.ichangeInDeaths = Place.daily_change_deaths
