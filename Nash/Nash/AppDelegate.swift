@@ -457,7 +457,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
                             print("true")
                             self.myLocation.iconfirmedcases = Place.confirmed_cases
-                            self.myLocation.ideaths = Place.confirmed_deaths
+                            self.myLocation.ideaths = Place.confirmed_deaths!
                             self.myLocation.ichangeInDeaths = Place.daily_change_deaths
                             self.myLocation.ichangeInCases = Place.daily_change_cases
                         }
@@ -481,7 +481,6 @@ extension AppDelegate: CLLocationManagerDelegate {
     //check to see if user has allowed location permission
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         print("location manager authorization status changed")
-        
         switch status {
         case .authorizedAlways:
             print("user allow app to get location data when app is active or in background")
