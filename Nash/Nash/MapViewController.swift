@@ -13,6 +13,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     @IBOutlet weak var mapView: CoronavirusMapView!
     var locationManagerVC = CLLocationManager()
     var localilty: String = ""
+        
+    @IBAction func profileButton(_ sender: Any) {
+        performSegue(withIdentifier: "MaptoProfile", sender: self)
+    }
     
     final let url = URL(string:"https://nash-273721.df.r.appspot.com/map")
     

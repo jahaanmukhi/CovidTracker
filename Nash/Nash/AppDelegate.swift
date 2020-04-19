@@ -28,24 +28,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var county: String! //think there is going to be problem with null values
         var daily_change_cases: Int!
         var daily_change_deaths: Float!
-        var confirmed_deaths: Float!
+        var confirmed_deaths: Float?
         var fips: Float! //what is this?
         var latitude: Float!
         var longitude: Float!
         var population: Float!
         var state: String!
+        var state_abbr: String!
         var uid: Float!
     }
 
     var allElms: [Place] = []
     let myLocation = APILocation()
-    
+        
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         //MARK: set up location tracking
-        // let locationManager = CLLocationManager()
+        
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.startMonitoringVisits()
@@ -448,84 +449,79 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     //MARK: API Call
     
-//    func getAllData() {
-//
-//        //totalCases = 0
-//        print("starting getAllData")
-//        let mySession = URLSession(configuration: URLSessionConfiguration.default)
-//
-//        let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
-//
-//        let task = mySession.dataTask(with: url) {data, response, error in
-//
-//            guard error == nil else {
-//                print ("error: \(error!)")
-//                return
-//            }
-//
-//            guard let jsonData = data else {
-//                print("No data")
-//                return
-//            }
-//
-//            print("Got the data from network")
-//
-//            let decoder = JSONDecoder()
-//
-//            do {
-//                self.allElms = try decoder.decode([Place].self, from: jsonData)
-//
-//               // get current location
-//                let currLoc = self.locationManager.location
-//                if (currLoc == nil) {
-//                    print("No location available")
-//                    return
-//                }
-//                print(currLoc)
-//                //get city state country from lat and long
-//
-//                self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
-//                                    guard let city = city, let state = state, let country = country, error == nil else { return }
-//                            print("THIS IS IT " + city + ", " + state + ", ", country)
-//                    self.myLocation.icounty = city
-//                    self.myLocation.icountry = country
-//                    print("IVAR: " + String((self.myLocation.icounty ?? "")!))
-//                    print("IVAR: " + String((self.myLocation.istate ?? "")!))
-//                    print("IVAR: " + String((self.myLocation.icountry ?? "")!))
-//
-//                    }
-//                    sleep(1)
-//
-//                    print("IVARl: " + String((self.myLocation.icounty ?? "")!))
-//                    print("IVARl: " + String((self.myLocation.istate ?? "")!))
-//                    print("IVARl: " + String((self.myLocation.icountry ?? "")!))
-//
-//                    //begin for loop
-//                    for Place in self.allElms{
-//                        //print("loop")
-//                        //print(Place.county)
-//                        //print(self.myLocation.icounty)
-//                        if (Place.county == self.myLocation.icounty ) {
-//        //&& Place.country == self.myLocation.icountry && Place.state == self.myLocation.istate
-//                            print("true")
-//                            self.myLocation.iconfirmedcases = Place.confirmed_cases
-//                            self.myLocation.ideaths = Place.confirmed_deaths
-//                            self.myLocation.ichangeInDeaths = Place.daily_change_deaths
-//                            self.myLocation.ichangeInCases = Place.daily_change_cases
-//                        }
-//                    }
-//
-//                print("done!!!")
-//
-//            }catch {
-//                print("JSON Decode error")
-//            }
-//        }
-//
-//        task.resume()
-//        sleep(2)
-//
-//    }
+    func getAllData() {
+        
+        //totalCases = 0
+        print("starting getAllData")
+        let mySession = URLSession(configuration: URLSessionConfiguration.default)
+        
+        let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
+        
+        let task = mySession.dataTask(with: url) {data, response, error in
+            
+            guard error == nil else {
+                print ("error: \(error!)")
+                return
+            }
+            
+            guard let jsonData = data else {
+                print("No data")
+                return
+            }
+            
+            print("Got the data from network")
+            
+            let decoder = JSONDecoder()
+
+            do {
+                self.allElms = try decoder.decode([Place].self, from: jsonData)
+               // get current location
+                let currLoc = self.locationManager.location
+                print(currLoc)
+                //get city state country from lat and long
+                self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
+                                    guard let city = city, let state = state, let country = country, error == nil else { return }
+                            print("Current location: " + city + ", " + state + ", ", country)
+                    self.myLocation.icounty = city
+                    self.myLocation.icountry = country
+                    self.myLocation.istate = state
+                    print("Global location variables being declared: ")
+                    print("IVAR: " + String((self.myLocation.icounty ?? "")!))
+                    print("IVAR: " + String((self.myLocation.istate ?? "")!))
+                    print("IVAR: " + String((self.myLocation.icountry ?? "")!))
+
+                    }
+                    sleep(1)
+                
+                    print("IVARl: " + String((self.myLocation.icounty ?? "")!))
+                    print("IVARl: " + String((self.myLocation.istate ?? "")!))
+                    print("IVARl: " + String((self.myLocation.icountry ?? "")!))
+
+                    //begin for loop
+                    for Place in self.allElms{
+                        print("loop")
+                        //print(Place.county)
+                        //print(self.myLocation.icounty)
+                        if (Place.county == self.myLocation.icounty && Place.state_abbr == self.myLocation.istate) {
+                            //print("loop")
+                            print("true")
+                            self.myLocation.icombinedkey = Place.combined_key
+                            self.myLocation.iconfirmedcases = Place.confirmed_cases
+                            self.myLocation.ideaths = Place.confirmed_deaths ?? 0
+                            self.myLocation.ichangeInDeaths = Place.daily_change_deaths
+                            self.myLocation.ichangeInCases = Place.daily_change_cases
+                        }
+                    }
+                print("done!!!")
+            } catch {
+                print("JSON Decode error")
+            }
+        }
+        
+        task.resume()
+        sleep(2)
+        
+    }
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
@@ -549,6 +545,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        print("visit")
        let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
 
         
