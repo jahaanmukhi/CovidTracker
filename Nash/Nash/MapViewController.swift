@@ -22,6 +22,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     
     var selectedPin : MKPlacemark? = nil
     
+    func getString(c:Covid) -> String {
+        var locationString = ""
+        if (c.county != nil) {
+            locationString += c.county! + " County, "
+        }
+        let countryNil = (c.country == nil || c.country == "US") // treat the US as nil because we don't want to display it
+        if (c.state != nil) {
+            var ending = ", "
+            if (countryNil) {
+                ending = " "
+            }
+            locationString += c.state! + ending
+        }
+        if (!countryNil) {
+            locationString += c.country!
+        }
+        return locationString
+    }
     
     func downloadJSON(){
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
@@ -55,12 +73,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
             
             
             //populate map with pins
-            for c in covid{
+            for c in covid {
                 let description = "Cases: \(c.confirmed_cases ?? 0) \n Deaths: \(c.confirmed_deaths ?? 0)"
-                let location = "\(c.county ?? "No COUNTY") County, \(c.state ?? "NO STATE")"
+                let location = getString(c:c)
                 let cases = Float(c.confirmed_cases ?? 0)
                 var percentage = (cases/1000.0)*100.0 + 10
-                if percentage > 100{
+                if percentage > 100 {
                     percentage = 100
                 }
                 let color = UIColor.yellow.toColor(UIColor.red, percentage: CGFloat(percentage))
