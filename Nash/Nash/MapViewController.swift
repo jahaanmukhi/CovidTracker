@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, CLLocationManagerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDelegate {
     @IBOutlet weak var mapView: CoronavirusMapView!
     var locationManagerVC = CLLocationManager()
     var localilty: String = ""
@@ -46,14 +46,50 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func addPins(){
+               // Set initial location
+               let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
+
+               // Do any additional setup after loading the view.
+               mapView.centerToLocation(initialLocation)
+        
+            
             
             //populate map with pins
             for c in covid{
                 let description = "Cases: \(c.confirmed_cases ?? 0) \n Deaths: \(c.confirmed_deaths ?? 0)"
                 let location = "\(c.county ?? "No COUNTY") County, \(c.state ?? "NO STATE")"
-                let annotation = Pin(coordinate: CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude ), title: location, subtitle: description)
+                let cases = Float(c.confirmed_cases ?? 0)
+                var percentage = (cases/1000.0)*100.0 + 10
+                if percentage > 100{
+                    percentage = 100
+                }
+                let color = UIColor.yellow.toColor(UIColor.red, percentage: CGFloat(percentage))
+                let annotation = Pin(coordinate: CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude ), title: location, subtitle: description, color:color)
                 mapView.addAnnotation(annotation)
             }
+    }
+    
+
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation {
+            return nil
+        }
+
+        let custom = annotation as! Pin
+        var annotationView = MKMarkerAnnotationView()
+        
+        if let dequedView = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin") as? MKMarkerAnnotationView {
+            annotationView = dequedView
+        } else{
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "pin")
+        }
+        
+        annotationView.canShowCallout = true
+        annotationView.markerTintColor = custom.color!
+
+        return annotationView
     }
     
     override func viewDidLoad() {
@@ -83,6 +119,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         //setup to collect user location
         //let locationManagerVC = CLLocationManager()
         locationManagerVC.delegate = self
+        self.mapView.delegate = self
         
         if CLLocationManager.locationServicesEnabled() {
             locationManagerVC.delegate = self
@@ -93,7 +130,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
         
         // Set initial location
-        let initialLocation = CLLocation(latitude: 39.86746056019632, longitude: -74.19296019422868)
+        let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
 
         // Do any additional setup after loading the view.
         mapView.centerToLocation(initialLocation)
@@ -117,11 +154,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         
         //get users current location
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        //print("locations = \(locValue.latitude) \(locValue.longitude)")
         
         fetchCityAndCountry(from: location) { city, country, error in
             guard let city = city, let country = country, error == nil else { return }
-            print(city + ", " + country)
+            //print(city + ", " + country)
         }
         
         locationManagerVC.stopUpdatingLocation()
@@ -161,4 +198,21 @@ extension MapViewController : HandleMapSearch {
         let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
+}
+
+extension UIColor {
+    func toColor(_ color: UIColor, percentage: CGFloat) -> UIColor {
+        let percentage = percentage / 100
+        if percentage == 1{
+            return color
+        }
+        var (r1, g1, b1, a1): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
+        var (r2, g2, b2, a2): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
+        self.getRed(&r1, green: &g1, blue: &b1, alpha: &a1)
+        color.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
+        return UIColor(red: CGFloat(r1 + (r2 - r1) * percentage),
+                       green: CGFloat(g1 + (g2 - g1) * percentage),
+                       blue: CGFloat(b1 + (b2 - b1) * percentage),
+                       alpha: CGFloat(a1 + (a2 - a1) * percentage))
+}
 }
