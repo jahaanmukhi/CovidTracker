@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A6D6D4A2445266300D2EC36 /* LocationSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */; };
 		CF8643242438F45D00D1C0E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643232438F45D00D1C0E6 /* AppDelegate.swift */; };
 		CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */; };
 		CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643272438F45D00D1C0E6 /* ViewController.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchTableViewController.swift; sourceTree = "<group>"; };
 		CF8643202438F45D00D1C0E6 /* Nash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8643232438F45D00D1C0E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				CF86433A2438F4F200D1C0E6 /* MapStoryboard.storyboard */,
 				DD6FDDCF244A09A5008D266B /* LocationPrefTableViewController.swift */,
 				DD6FDDCD244A01F7008D266B /* ProfileViewController.swift */,
+				3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */,
 				CF8643492438FD4F00D1C0E6 /* Emergency.swift */,
 				CF8643472438FC2100D1C0E6 /* MapViewController.swift */,
 				CF8643292438F45D00D1C0E6 /* Main.storyboard */,
@@ -180,6 +183,7 @@
 				CF8643432438FA3500D1C0E6 /* ShadowedImageView.swift in Sources */,
 				DD06D226244022500067FA9F /* Location.swift in Sources */,
 				DD6FDDCE244A01F7008D266B /* ProfileViewController.swift in Sources */,
+				3A6D6D4A2445266300D2EC36 /* LocationSearchTableViewController.swift in Sources */,
 				CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */,
 				CF86432E2438F45D00D1C0E6 /* Nash.xcdatamodeld in Sources */,
 				CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */,
@@ -329,12 +333,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JBK62Z348L;
 				INFOPLIST_FILE = Nash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cs290.Nash;
+				PRODUCT_BUNDLE_IDENTIFIER = covidApp.Nash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -346,12 +351,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JBK62Z348L;
 				INFOPLIST_FILE = Nash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cs290.Nash;
+				PRODUCT_BUNDLE_IDENTIFIER = covidApp.Nash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

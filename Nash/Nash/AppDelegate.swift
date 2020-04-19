@@ -73,7 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //request authorization for notifications
         center.requestAuthorization(options:options) { (granted, error) in if granted {
             print ("Notification permission allowed")
-            self.setUpNotification()
+//            self.setUpNotification()
+            self.setUpDailyNotification()
             }
         }
         
@@ -122,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func bodyofReturnNotification() -> String{
    
-        getAllData()
+//        getAllData()
         sleep(1)
         var ret = "Total local cases: " + String(myLocation.iconfirmedcases)
         ret += "\nTotal local deaths: " + String(myLocation.ideaths)
@@ -237,54 +238,103 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //     } //end func didFinishLaunchingWithOptions - CHANGED THIS FOR DAILY NOTIFICATION
 
         
-        func setUpNotification() {
-                
-                //setting content of notification
-                let content = UNMutableNotificationContent()
-                
-                content.body = bodyofReturnNotification()
-                content.title = "Coronavirus Update - " + (self.myLocation.icombinedkey ?? "uknown")
-                
-                //specify date/time for trigger - everyday 8am
-                var dateComponents = DateComponents()
-                dateComponents.calendar = Calendar.current
-                //dateComponents.weekday = 6  // sunday is 1
-                dateComponents.hour = 16  //  hours
-                dateComponents.minute = 44 // minutes
-            
-                //trigger notification when it matches dateCompotents
-                //let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-   
-
-            // add action to Notification
-            let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-            let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
+//        func setUpNotification() {
+//
+//                //setting content of notification
+//                let content = UNMutableNotificationContent()
+//                content.title = "Coronavirus Update - "
+//                content.body = bodyofReturnNotification()
+//
+//                //specify date/time for trigger - everyday 8am
+//                var dateComponents = DateComponents()
+//                dateComponents.calendar = Calendar.current
+//                //dateComponents.weekday = 6  // sunday is 1
+//                dateComponents.hour = 9  //  hours
+//                dateComponents.minute = 00 // minutes
+//
+//                //trigger notification when it matches dateCompotents
+////                let trigger = UNCalendarNotificationTrigger(
+////                         dateMatching: dateComponents, repeats: true)
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+//
+//
+//            // add action to Notification
+//            let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+//            let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
+//
+//            let notificationCenter = UNUserNotificationCenter.current()
+//            notificationCenter.setNotificationCategories([myCategory])
+//
+//            // cutomise the content categoryIdentifier
+//            content.categoryIdentifier = "myUniqueCategory"
+//
+//            // add sound to Notification
+//            content.sound = UNNotificationSound.default
+//
+//            // Create the request
+//            let request = UNNotificationRequest(identifier: "myUniqueIdentifierString1234",
+//                        content: content, trigger: trigger)
+//
+//            // Add the request to the main Notification center.
+//
+//            notificationCenter.add(request) { (error) in
+//               if error != nil {
+//                  // Handle any errors.
+//               } else {
+//                    print("Notification created")
+//                }
+//            }
+//
+//        } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
     
-            let notificationCenter = UNUserNotificationCenter.current()
-            notificationCenter.setNotificationCategories([myCategory])
-
-            // cutomise the content categoryIdentifier
-            content.categoryIdentifier = "myUniqueCategory"
-
-            // add sound to Notification
-            content.sound = UNNotificationSound.default
-
-            // Create the request
-            let request = UNNotificationRequest(identifier: "myUniqueIdentifierString1234",
-                        content: content, trigger: trigger)
-            
-            // Add the request to the main Notification center.
-            
-            notificationCenter.add(request) { (error) in
-               if error != nil {
-                  // Handle any errors.
-               } else {
-                    print("Notification created")
-                }
-            }
+    func setUpDailyNotification() {
+                    
+                    //setting content of notification
+                    let content2 = UNMutableNotificationContent()
+                    content2.title = "Good Morning"
+                    content2.body = "Check your daily coronavirus update here!"
+                    
+                    //specify date/time for trigger - everyday 8am
+                    var dateComponents2 = DateComponents()
+                    dateComponents2.calendar = Calendar.current
+                    //dateComponents.weekday = 6  // sunday is 1
+                    dateComponents2.hour =   22//  hours
+                    dateComponents2.minute = 25 // minutes
                 
-        } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
+                    //trigger notification when it matches dateCompotents
+                    let trigger2 = UNCalendarNotificationTrigger(
+                             dateMatching: dateComponents2, repeats: true)
+//                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+       
+
+                // add action to Notification
+                let notificationAction2 = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+                let myCategory2 = UNNotificationCategory(identifier: "myUniqueCategory2", actions: [notificationAction2], intentIdentifiers: [], options: [])
+        
+                let notificationCenter2 = UNUserNotificationCenter.current()
+                notificationCenter2.setNotificationCategories([myCategory2])
+
+                // cutomise the content categoryIdentifier
+                content2.categoryIdentifier = "myUniqueCategory2"
+
+                // add sound to Notification
+                content2.sound = UNNotificationSound.default
+
+                // Create the request
+                let request2 = UNNotificationRequest(identifier: "myUniqueIdentifierString12345",
+                            content: content2, trigger: trigger2)
+                
+                // Add the request to the main Notification center.
+                
+                notificationCenter2.add(request2) { (error) in
+                   if error != nil {
+                      // Handle any errors.
+                   } else {
+                        print("Daily Notification created")
+                    }
+                }
+                    
+            } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
     
     // func bodyofDailyNotification() -> String {
     //     getAllData()
