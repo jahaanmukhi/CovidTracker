@@ -61,8 +61,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon stats" translatesAutoresizingMaskIntoConstraints="NO" id="PnE-Lv-AJD">
-                                <rect key="frame" x="64" y="217" width="288" height="636"/>
+                                <rect key="frame" x="64" y="376" width="288" height="318"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cxb-oJ-7aA">
+                                <rect key="frame" x="70" y="734" width="274" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Daily Update">
+                                    <attributedString key="attributedTitle"/>
+                                </state>
+                                <connections>
+                                    <action selector="dailyUpdate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zPj-1Z-qXY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -97,10 +107,11 @@
             <point key="canvasLocation" x="749" y="112"/>
         </scene>
     </scenes>
+    <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
+        <image name="Daily Update" width="544" height="56"/>
         <image name="Screen Shot 2020-04-17 at 11.41.48 PM" width="280" height="179"/>
         <image name="icon stats" width="288" height="318"/>
         <image name="track" width="432" height="98"/>
     </resources>
-    <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -40,17 +40,22 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        createAlert(title: "Daily Coronavirus Update", message: bodyofReturnNotification())
+    @IBAction func dailyUpdate(_ sender: Any) {
+        let alert = UIAlertController(title: "Daily Coronavirus Update", message: bodyofReturnNotification(), preferredStyle: .alert)
+               
+               alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in }))
+               
+               self.present(alert, animated: true, completion: nil)
     }
     
-    func createAlert(title: String, message: String){
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in }))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        createAlert(title: "Daily Coronavirus Update", message: bodyofReturnNotification())
+//    }
+//
+//    func createAlert(title: String, message: String){
+//
+//    }
     
         func bodyofReturnNotification() -> String{
     
