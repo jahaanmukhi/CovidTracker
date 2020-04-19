@@ -98,6 +98,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         // Do any additional setup after loading the view.
         mapView.centerToLocation(initialLocation)
     }
+
     
     //when user clicks button, alls map to collect their location
     func onZoomToUserButton(_ sender: Any) {
@@ -135,6 +136,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                        error)
         }
     }
+
+    
 }
 
 protocol HandleMapSearch{
