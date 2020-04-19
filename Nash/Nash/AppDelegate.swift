@@ -254,7 +254,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //                //trigger notification when it matches dateCompotents
 ////                let trigger = UNCalendarNotificationTrigger(
 ////                         dateMatching: dateComponents, repeats: true)
-//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 //
 //
 //            // add action to Notification
@@ -297,8 +297,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     var dateComponents2 = DateComponents()
                     dateComponents2.calendar = Calendar.current
                     //dateComponents.weekday = 6  // sunday is 1
-                    dateComponents2.hour =   22//  hours
-                    dateComponents2.minute = 25 // minutes
+                    dateComponents2.hour =   8//  hours
+                    dateComponents2.minute = 0 // minutes
                 
                     //trigger notification when it matches dateCompotents
                     let trigger2 = UNCalendarNotificationTrigger(
