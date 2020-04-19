@@ -13,6 +13,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: CoronavirusMapView!
     let locationManagerVC = CLLocationManager()
     var localilty: String = ""
+        
+    @IBAction func profileButton(_ sender: Any) {
+        performSegue(withIdentifier: "MaptoProfile", sender: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

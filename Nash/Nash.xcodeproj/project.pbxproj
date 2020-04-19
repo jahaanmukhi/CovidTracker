@@ -20,6 +20,9 @@
 		CF8643482438FC2100D1C0E6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643472438FC2100D1C0E6 /* MapViewController.swift */; };
 		CF86434A2438FD4F00D1C0E6 /* Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643492438FD4F00D1C0E6 /* Emergency.swift */; };
 		DD06D226244022500067FA9F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD06D225244022500067FA9F /* Location.swift */; };
+		DD6FDDCE244A01F7008D266B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FDDCD244A01F7008D266B /* ProfileViewController.swift */; };
+		DD6FDDD0244A09A5008D266B /* LocationPrefTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FDDCF244A09A5008D266B /* LocationPrefTableViewController.swift */; };
+		DD6FDDD4244A4353008D266B /* LocationPrefTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FDDD3244A4353008D266B /* LocationPrefTableViewCell.swift */; };
 		DDCD9D892444B7BE00D25F96 /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCD9D882444B7BE00D25F96 /* APILocation.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +42,9 @@
 		CF8643472438FC2100D1C0E6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CF8643492438FD4F00D1C0E6 /* Emergency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency.swift; sourceTree = "<group>"; };
 		DD06D225244022500067FA9F /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DD6FDDCD244A01F7008D266B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		DD6FDDCF244A09A5008D266B /* LocationPrefTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPrefTableViewController.swift; sourceTree = "<group>"; };
+		DD6FDDD3244A4353008D266B /* LocationPrefTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPrefTableViewCell.swift; sourceTree = "<group>"; };
 		DDCD9D882444B7BE00D25F96 /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +84,8 @@
 				CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */,
 				CF8643272438F45D00D1C0E6 /* ViewController.swift */,
 				CF86433A2438F4F200D1C0E6 /* MapStoryboard.storyboard */,
+				DD6FDDCF244A09A5008D266B /* LocationPrefTableViewController.swift */,
+				DD6FDDCD244A01F7008D266B /* ProfileViewController.swift */,
 				CF8643492438FD4F00D1C0E6 /* Emergency.swift */,
 				CF8643472438FC2100D1C0E6 /* MapViewController.swift */,
 				CF8643292438F45D00D1C0E6 /* Main.storyboard */,
@@ -87,6 +95,7 @@
 				CF86432C2438F45D00D1C0E6 /* Nash.xcdatamodeld */,
 				CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */,
 				DD06D225244022500067FA9F /* Location.swift */,
+				DD6FDDD3244A4353008D266B /* LocationPrefTableViewCell.swift */,
 			);
 			path = Nash;
 			sourceTree = "<group>";
@@ -164,14 +173,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */,
+				DD6FDDD0244A09A5008D266B /* LocationPrefTableViewController.swift in Sources */,
 				CF8643242438F45D00D1C0E6 /* AppDelegate.swift in Sources */,
 				CF86434A2438FD4F00D1C0E6 /* Emergency.swift in Sources */,
 				DDCD9D892444B7BE00D25F96 /* APILocation.swift in Sources */,
 				CF8643432438FA3500D1C0E6 /* ShadowedImageView.swift in Sources */,
 				DD06D226244022500067FA9F /* Location.swift in Sources */,
+				DD6FDDCE244A01F7008D266B /* ProfileViewController.swift in Sources */,
 				CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */,
 				CF86432E2438F45D00D1C0E6 /* Nash.xcdatamodeld in Sources */,
 				CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */,
+				DD6FDDD4244A4353008D266B /* LocationPrefTableViewCell.swift in Sources */,
 				CF8643482438FC2100D1C0E6 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

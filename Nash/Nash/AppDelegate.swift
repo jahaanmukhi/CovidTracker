@@ -243,7 +243,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let content = UNMutableNotificationContent()
                 
                 content.body = bodyofReturnNotification()
-            content.title = "Coronavirus Update - " + (self.myLocation.icombinedkey ?? "uknown")
+                content.title = "Coronavirus Update - " + (self.myLocation.icombinedkey ?? "uknown")
                 
                 //specify date/time for trigger - everyday 8am
                 var dateComponents = DateComponents()
@@ -253,8 +253,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 dateComponents.minute = 44 // minutes
             
                 //trigger notification when it matches dateCompotents
-                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-            //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                //let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
    
 
             // add action to Notification
@@ -425,12 +425,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
             do {
                 self.allElms = try decoder.decode([Place].self, from: jsonData)
-                
                // get current location
                 let currLoc = self.locationManager.location
                 print(currLoc)
                 //get city state country from lat and long
-
                 self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
                                     guard let city = city, let state = state, let country = country, error == nil else { return }
                             print("Current location: " + city + ", " + state + ", ", country)
@@ -451,7 +449,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
                     //begin for loop
                     for Place in self.allElms{
-                        //print("loop")
+                        print("loop")
                         //print(Place.county)
                         //print(self.myLocation.icounty)
                         if (Place.county == self.myLocation.icounty && Place.state_abbr == self.myLocation.istate) {
@@ -464,10 +462,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             self.myLocation.ichangeInCases = Place.daily_change_cases
                         }
                     }
-
                 print("done!!!")
-
-            }catch {
+            } catch {
                 print("JSON Decode error")
             }
         }
