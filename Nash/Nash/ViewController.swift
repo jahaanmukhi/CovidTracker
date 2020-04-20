@@ -22,7 +22,9 @@ class ViewController: UIViewController {
         var country: String!
         var county: String! //think there is going to be problem with null values
         var daily_change_cases: Int!
-        var daily_change_deaths: Float!
+        var daily_change_deaths: Int!
+        var weekly_change_cases: Int!
+        var weekly_change_deaths: Int!
         var confirmed_deaths: Float!
         var fips: Float! //what is this?
         var latitude: Float!
@@ -108,20 +110,47 @@ class ViewController: UIViewController {
         for place in self.covidWorldWide{
             if (self.myLocation.icountry == "United States") {
                 print("USA")
-                if (place.county != nil && place.county == self.myLocation.icounty && place.state_abbr != nil && place.state_abbr == self.myLocation.istate && place.country == "US" ) {
+                if (place.county != nil && place.county == self.myLocation.icounty &&
+                        place.state_abbr != nil && place.state_abbr == self.myLocation.istate
+                        && place.country == "US" ) {
+                    
                     alertPlace = place
-                    alert_msg = String(alertPlace.combined_key) + "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths) + "\nSingle Day Change in Cases: " + String(alertPlace.daily_change_cases) + "\nSingle Day Change in Deaths: " + String(alertPlace.daily_change_deaths)
+                    alert_msg =  "Current Location: " + String(alertPlace.combined_key) + "\nTotal Population: " + String(alertPlace.population)
+                    alert_msg += "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) +
+                                 "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths)
+                    alert_msg += "\nDaily Change in Cases: " + String(alertPlace.daily_change_cases) +
+                                 "\nDaily Change in Deaths: " + String(alertPlace.daily_change_deaths) +
+                                 "\nWeekly Change in Cases: " + String(alertPlace.weekly_change_cases) +
+                                 "\nWeekly Change in Deaths: " + String(alertPlace.weekly_change_deaths)
                 }
-            } else if (place.state != nil && place.state == self.myLocation.istate) {
+            } else if (place.country != nil && place.country == self.myLocation.icountry) {
+                if (place.state != nil && place.state_abbr == self.myLocation.istate){
+                       print("province outside US")
+                       alertPlace = place
+                       alert_msg =  "Current Location: " + String(alertPlace.state_abbr) + ", " + String(alertPlace.country) +
+                                    "\nTotal Population: " + String(alertPlace.population)
+                       alert_msg += "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) +
+                                    "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths)
+                       alert_msg += "\nDaily Change in Cases: " + String(alertPlace.daily_change_cases) +
+                                    "\nDaily Change in Deaths: " + String(alertPlace.daily_change_deaths) +
+                                    "\nWeekly Change in Cases: " + String(alertPlace.weekly_change_cases) +
+                                    "\nWeekly Change in Deaths: " + String(alertPlace.weekly_change_deaths)
+                } else{
+                    print("country")
+                    alertPlace = place
+                    alert_msg =  "Current Location: " + String(alertPlace.country) + "\nTotal Population: " + String(alertPlace.population)
+                    alert_msg += "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) +
+                                 "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths)
+                    alert_msg += "\nDaily Change in Cases: " + String(alertPlace.daily_change_cases) +
+                                 "\nDaily Change in Deaths: " + String(alertPlace.daily_change_deaths) +
+                                 "\nWeekly Change in Cases: " + String(alertPlace.weekly_change_cases) +
+                                 "\nWeekly Change in Deaths: " + String(alertPlace.weekly_change_deaths)
+                }
                     print("province")
                     alertPlace = place
                     alert_msg = String(alertPlace.state) + "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths) + "\nSingle Day Change in Cases: " + String(alertPlace.daily_change_cases) + "\nSingle Day Change in Deaths: " + String(alertPlace.daily_change_deaths)
             } else {
-                if (place.state == nil && place.country != nil && place.country == self.myLocation.icountry){
-                    print("country")
-                    alertPlace = place
-                    alert_msg = String(alertPlace.country) + "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths) + "\nSingle Day Change in Cases: " + String(alertPlace.daily_change_cases) + "\nSingle Day Change in Deaths: " + String(alertPlace.daily_change_deaths)
-                }
+               
             }
            
         }
