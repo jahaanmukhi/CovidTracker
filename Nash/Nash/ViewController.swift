@@ -110,17 +110,17 @@ class ViewController: UIViewController {
                 print("USA")
                 if (place.county != nil && place.county == self.myLocation.icounty && place.state_abbr != nil && place.state_abbr == self.myLocation.istate && place.country == "US" ) {
                     alertPlace = place
-                    alert_msg = String(alertPlace.combined_key) + "\nConfirmed Cases" + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths" + String(alertPlace.confirmed_deaths)
+                    alert_msg = String(alertPlace.combined_key) + "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths) + "\nSingle Day Change in Cases: " + String(alertPlace.daily_change_cases) + "\nSingle Day Change in Deaths: " + String(alertPlace.daily_change_deaths)
                 }
             } else if (place.state != nil && place.state == self.myLocation.istate) {
                     print("province")
                     alertPlace = place
-                    alert_msg = String(alertPlace.state) + "\nConfirmed Cases" + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths" + String(alertPlace.confirmed_deaths)
+                    alert_msg = String(alertPlace.state) + "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths) + "\nSingle Day Change in Cases: " + String(alertPlace.daily_change_cases) + "\nSingle Day Change in Deaths: " + String(alertPlace.daily_change_deaths)
             } else {
-                if (place.country != nil && place.country == self.myLocation.icountry){
+                if (place.state == nil && place.country != nil && place.country == self.myLocation.icountry){
                     print("country")
                     alertPlace = place
-                    alert_msg = String(alertPlace.country) + "\nConfirmed Cases" + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths" + String(alertPlace.confirmed_deaths)
+                    alert_msg = String(alertPlace.country) + "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths) + "\nSingle Day Change in Cases: " + String(alertPlace.daily_change_cases) + "\nSingle Day Change in Deaths: " + String(alertPlace.daily_change_deaths)
                 }
             }
            
