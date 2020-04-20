@@ -15,6 +15,7 @@ class LocationSearchTableViewController: UITableViewController {
     var matchingItems : [MKMapItem] = []
     var mapView : MKMapView? = nil
     var handleMapSearchDelegate : HandleMapSearch? = nil
+    var allPins: [Pin] = [] 
     
     // MARK: New Search Bar Variables
     let searchController = UISearchController(searchResultsController: nil)
