@@ -287,105 +287,204 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //
 //        } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
     
+//    func setUpDailyNotification() {
+//
+//                    //setting content of notification
+//                    let content2 = UNMutableNotificationContent()
+//                    content2.title = "Good Morning"
+//                    content2.body = "Check your daily coronavirus update here!"
+//
+//                    //specify date/time for trigger - everyday 8am
+//                    var dateComponents2 = DateComponents()
+//                    dateComponents2.calendar = Calendar.current
+//                    //dateComponents.weekday = 6  // sunday is 1
+//                    dateComponents2.hour =   8//  hours
+//                    dateComponents2.minute = 0 // minutes
+//
+//                    //trigger notification when it matches dateCompotents
+//                    let trigger2 = UNCalendarNotificationTrigger(
+//                             dateMatching: dateComponents2, repeats: true)
+////                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+//
+//
+//                // add action to Notification
+//                let notificationAction2 = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+//                let myCategory2 = UNNotificationCategory(identifier: "myUniqueCategory2", actions: [notificationAction2], intentIdentifiers: [], options: [])
+//
+//                let notificationCenter2 = UNUserNotificationCenter.current()
+//                notificationCenter2.setNotificationCategories([myCategory2])
+//
+//                // cutomise the content categoryIdentifier
+//                content2.categoryIdentifier = "myUniqueCategory2"
+//
+//                // add sound to Notification
+//                content2.sound = UNNotificationSound.default
+//
+//                // Create the request
+//                let request2 = UNNotificationRequest(identifier: "myUniqueIdentifierString12345",
+//                            content: content2, trigger: trigger2)
+//
+//                // Add the request to the main Notification center.
+//
+//                notificationCenter2.add(request2) { (error) in
+//                   if error != nil {
+//                      // Handle any errors.
+//                   } else {
+//                        print("Daily Notification created")
+//                    }
+//                }
+//
+//            } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
+//
+//    // func bodyofDailyNotification() -> String {
+//    //     getAllData()
+//    //     let casesString = String(myLocation.locationConfirmedCases)
+//    //     let deathsString = String(myLocation.locationDeaths)
+//    //     let changeDeathsString = String(myLocation.locationChangeInDeaths)
+//    //     let changeCasesString = String(myLocation.locationChangeInCases)
+//    //     let totalCasesString = String(myLocation.totalCases)
+//
+//    //     var ret = "Total global cases: " + totalCasesString
+//    //     ret += "\nTotal local cases: " + casesString
+//    //     ret += "\nTotal local deaths: " + deathsString
+//    //     ret += "\nDaily change in local cases: " + changeCasesString
+//    //     ret += "\nDaily change in local deaths: " + changeDeathsString
+//    //     ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
+//    //     print(ret)
+//    //     return ret
+//
+//    // }
+//
+//        func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//            let content = notification.request.content
+//
+//            // Process notification content
+//            print("Received Notification with \(content.title) -  \(content.body)")
+//
+//            // Display notification as regular alert and play sound
+//            completionHandler([.alert, .sound])
+//        } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
+//
+//        func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//            let actionIdentifier = response.actionIdentifier
+//            //print("func 2")
+//            switch actionIdentifier {
+//            case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
+//                // Do something
+//                completionHandler()
+//            case UNNotificationDefaultActionIdentifier: // App was opened from notification
+//                // Do something
+//                completionHandler()
+//            case "remindLater": do {
+//                    let newDate = Date(timeInterval: 60, since: Date())
+//                    print("Rescheduling notification until \(newDate)")
+//                    // TODO: reschedule the notification
+//
+//                }
+//                completionHandler()
+//            default:
+//                completionHandler()
+//            }
+//        }//end func userNotificationCenter #2 - CHANGED FOR DAILY UPDATE
     func setUpDailyNotification() {
+                        
+                        //setting content of notification
+                        let content2 = UNMutableNotificationContent()
+                        content2.title = "Good Morning"
+                        content2.body = "Check your daily coronavirus update here!"
+                        
+                        //specify date/time for trigger - everyday 8am
+                        var dateComponents2 = DateComponents()
+                        dateComponents2.calendar = Calendar.current
+                        //dateComponents.weekday = 6  // sunday is 1
+                        dateComponents2.hour =   8//  hours
+                        dateComponents2.minute = 0 // minutes
                     
-                    //setting content of notification
-                    let content2 = UNMutableNotificationContent()
-                    content2.title = "Good Morning"
-                    content2.body = "Check your daily coronavirus update here!"
-                    
-                    //specify date/time for trigger - everyday 8am
-                    var dateComponents2 = DateComponents()
-                    dateComponents2.calendar = Calendar.current
-                    //dateComponents.weekday = 6  // sunday is 1
-                    dateComponents2.hour =   22//  hours
-                    dateComponents2.minute = 25 // minutes
-                
-                    //trigger notification when it matches dateCompotents
-                    let trigger2 = UNCalendarNotificationTrigger(
-                             dateMatching: dateComponents2, repeats: true)
-//                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-       
+                        //trigger notification when it matches dateCompotents
+                        let trigger2 = UNCalendarNotificationTrigger(
+                                 dateMatching: dateComponents2, repeats: true)
+//                    let trigger2 = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+           
 
-                // add action to Notification
-                let notificationAction2 = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-                let myCategory2 = UNNotificationCategory(identifier: "myUniqueCategory2", actions: [notificationAction2], intentIdentifiers: [], options: [])
-        
-                let notificationCenter2 = UNUserNotificationCenter.current()
-                notificationCenter2.setNotificationCategories([myCategory2])
-
-                // cutomise the content categoryIdentifier
-                content2.categoryIdentifier = "myUniqueCategory2"
-
-                // add sound to Notification
-                content2.sound = UNNotificationSound.default
-
-                // Create the request
-                let request2 = UNNotificationRequest(identifier: "myUniqueIdentifierString12345",
-                            content: content2, trigger: trigger2)
-                
-                // Add the request to the main Notification center.
-                
-                notificationCenter2.add(request2) { (error) in
-                   if error != nil {
-                      // Handle any errors.
-                   } else {
-                        print("Daily Notification created")
-                    }
-                }
-                    
-            } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
-    
-    // func bodyofDailyNotification() -> String {
-    //     getAllData()
-    //     let casesString = String(myLocation.locationConfirmedCases)
-    //     let deathsString = String(myLocation.locationDeaths)
-    //     let changeDeathsString = String(myLocation.locationChangeInDeaths)
-    //     let changeCasesString = String(myLocation.locationChangeInCases)
-    //     let totalCasesString = String(myLocation.totalCases)
-        
-    //     var ret = "Total global cases: " + totalCasesString
-    //     ret += "\nTotal local cases: " + casesString
-    //     ret += "\nTotal local deaths: " + deathsString
-    //     ret += "\nDaily change in local cases: " + changeCasesString
-    //     ret += "\nDaily change in local deaths: " + changeDeathsString
-    //     ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
-    //     print(ret)
-    //     return ret
-        
-    // }
-        
-        func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-            let content = notification.request.content
+                    // add action to Notification
+                    let notificationAction2 = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+                    let myCategory2 = UNNotificationCategory(identifier: "myUniqueCategory2", actions: [notificationAction2], intentIdentifiers: [], options: [])
             
-            // Process notification content
-            print("Received Notification with \(content.title) -  \(content.body)")
+                    let notificationCenter2 = UNUserNotificationCenter.current()
+                    notificationCenter2.setNotificationCategories([myCategory2])
 
-            // Display notification as regular alert and play sound
-            completionHandler([.alert, .sound])
-        } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
+                    // cutomise the content categoryIdentifier
+                    content2.categoryIdentifier = "myUniqueCategory2"
+
+                    // add sound to Notification
+                    content2.sound = UNNotificationSound.default
+
+                    // Create the request
+                    let request2 = UNNotificationRequest(identifier: "myUniqueIdentifierString12345",
+                                content: content2, trigger: trigger2)
+                    
+                    // Add the request to the main Notification center.
+                    
+                    notificationCenter2.add(request2) { (error) in
+                       if error != nil {
+                          // Handle any errors.
+                       } else {
+                            print("Daily Notification created")
+                        }
+                    }
+                        
+                } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
         
-        func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-            let actionIdentifier = response.actionIdentifier
-            //print("func 2")
-            switch actionIdentifier {
-            case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
-                // Do something
-                completionHandler()
-            case UNNotificationDefaultActionIdentifier: // App was opened from notification
-                // Do something
-                completionHandler()
-            case "remindLater": do {
-                    let newDate = Date(timeInterval: 60, since: Date())
-                    print("Rescheduling notification until \(newDate)")
-                    // TODO: reschedule the notification
+        // func bodyofDailyNotification() -> String {
+        //     getAllData()
+        //     let casesString = String(myLocation.locationConfirmedCases)
+        //     let deathsString = String(myLocation.locationDeaths)
+        //     let changeDeathsString = String(myLocation.locationChangeInDeaths)
+        //     let changeCasesString = String(myLocation.locationChangeInCases)
+        //     let totalCasesString = String(myLocation.totalCases)
+            
+        //     var ret = "Total global cases: " + totalCasesString
+        //     ret += "\nTotal local cases: " + casesString
+        //     ret += "\nTotal local deaths: " + deathsString
+        //     ret += "\nDaily change in local cases: " + changeCasesString
+        //     ret += "\nDaily change in local deaths: " + changeDeathsString
+        //     ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
+        //     print(ret)
+        //     return ret
+            
+        // }
+            
+            func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+                let content = notification.request.content
                 
+                // Process notification content
+                print("Received Notification with \(content.title) -  \(content.body)")
+
+                // Display notification as regular alert and play sound
+                completionHandler([.alert, .sound])
+            } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
+            
+            func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+                let actionIdentifier = response.actionIdentifier
+                //print("func 2")
+                switch actionIdentifier {
+                case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
+                    // Do something
+                    completionHandler()
+                case UNNotificationDefaultActionIdentifier: // App was opened from notification
+                    // Do something
+                    completionHandler()
+                case "remindLater": do {
+                        let newDate = Date(timeInterval: 60, since: Date())
+                        print("Rescheduling notification until \(newDate)")
+                        // TODO: reschedule the notification
+                    
+                    }
+                    completionHandler()
+                default:
+                    completionHandler()
                 }
-                completionHandler()
-            default:
-                completionHandler()
             }
-        }//end func userNotificationCenter #2 - CHANGED FOR DAILY UPDATE
     
 
     // MARK: UISceneSession Lifecycle

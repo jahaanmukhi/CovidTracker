@@ -160,13 +160,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
 
     
     //when user clicks button, alls map to collect their location
-    func onZoomToUserButton(_ sender: Any) {
+    @IBAction func onZoomToUserButton(_ sender: Any) {
         if CLLocationManager.authorizationStatus() == .authorizedAlways {
             locationManagerVC.startUpdatingLocation()
         } else {
             locationManagerVC.requestAlwaysAuthorization()
         }
-        
     }
     
     //zooms map around user location
