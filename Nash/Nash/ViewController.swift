@@ -115,12 +115,12 @@ class ViewController: UIViewController {
             } else if (place.state != nil && place.state == self.myLocation.istate) {
                     print("province")
                     alertPlace = place
-                    alert_msg = String(alertPlace.state)
+                    alert_msg = String(alertPlace.state) + "\nConfirmed Cases" + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths" + String(alertPlace.confirmed_deaths)
             } else {
                 if (place.country != nil && place.country == self.myLocation.icountry){
                     print("country")
                     alertPlace = place
-                    alert_msg = String(alertPlace.country)
+                    alert_msg = String(alertPlace.country) + "\nConfirmed Cases" + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths" + String(alertPlace.confirmed_deaths)
                 }
             }
            
