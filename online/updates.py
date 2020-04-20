@@ -4,22 +4,14 @@ import csv, json
 from io import StringIO
 import pandas as pd
 
-def sleep(hour, minute):
-    t = datetime.datetime.today()
-    future = datetime.datetime(t.year,t.month,t.day,hour,minute)
-    if t.hour >= hour:
-        future += datetime.timedelta(days=1)
-        time.sleep((future-t).seconds)
-
 def watch_for_updates():
     """
     Waits until 8pm every day and updates the 
     data in the server.
     """
     while True:
-        sleep(20, 30)
         update()
-        time.sleep(60) 
+        time.sleep(60 * 60)
 
 def update():
     """
@@ -239,13 +231,13 @@ def date_manipulation(df, deaths, recovered, filters):
 
 ############################################
 
-with open('us_state_abbreviations.json', 'r') as file1:
+with open('data/us_state_abbreviations.json', 'r') as file1:
     us_state_abbrev = json.load(file1)
 
-with open('global_populations.json', 'r') as file2: 
+with open('data/global_populations.json', 'r') as file2: 
     global_populations = json.load(file2)
 
-with open('provinces_abbreviations.json', 'r') as file3:
+with open('data/provinces_abbreviations.json', 'r') as file3:
     provinces_abbrev = json.load(file3)
 
 if __name__ == '__main__':
