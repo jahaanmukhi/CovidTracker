@@ -110,8 +110,7 @@ class ViewController: UIViewController {
                 print("USA")
                 if (place.county != nil && place.county == self.myLocation.icounty && place.state_abbr != nil && place.state_abbr == self.myLocation.istate && place.country == "US" ) {
                     alertPlace = place
-                    
-                    alert_msg = String(alertPlace.combined_key)
+                    alert_msg = String(alertPlace.combined_key) + "\nConfirmed Cases" + String(alertPlace.confirmed_cases) + "\nConfirmed Deaths" + String(alertPlace.confirmed_deaths)
                 }
             } else if (place.state != nil && place.state == self.myLocation.istate) {
                     print("province")
