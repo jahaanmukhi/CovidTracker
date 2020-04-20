@@ -123,6 +123,7 @@ def filter_df_worldwide(df, deaths, recovered):
                     "weekly_change": "weekly_change_cases"
                 }
     filtered_df.rename(columns=rename, inplace=True)
+    filtered_df['state_abbr'] = filtered_df['state'].map(lambda state: provinces_abbrev[state], na_action='ignore')
     filtered_df['latitude'] = filtered_df['latitude'].round(7)
     filtered_df['longitude'] = filtered_df['longitude'].round(7)
     return filtered_df
@@ -241,9 +242,11 @@ def date_manipulation(df, deaths, recovered, filters):
 with open('us_state_abbreviations.json', 'r') as file1:
     us_state_abbrev = json.load(file1)
 
-global_populations = {}
 with open('global_populations.json', 'r') as file2: 
     global_populations = json.load(file2)
+
+with open('provinces_abbreviations.json', 'r') as file3:
+    provinces_abbrev = json.load(file3)
 
 if __name__ == '__main__':
     update()
