@@ -12,6 +12,7 @@ import UserNotifications
 import CoreLocation
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?
     
