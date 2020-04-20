@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -61,11 +61,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon stats" translatesAutoresizingMaskIntoConstraints="NO" id="PnE-Lv-AJD">
-                                <rect key="frame" x="64" y="217" width="288" height="636"/>
+                                <rect key="frame" x="64" y="376" width="288" height="318"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cxb-oJ-7aA">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cxb-oJ-7aA">
                                 <rect key="frame" x="70" y="734" width="274" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="274" id="bIC-N3-Rom"/>
+                                    <constraint firstAttribute="height" constant="32" id="j9v-NX-t7t"/>
+                                </constraints>
                                 <state key="normal" image="Daily Update">
                                     <attributedString key="attributedTitle"/>
                                 </state>
@@ -78,6 +81,7 @@
                         <constraints>
                             <constraint firstItem="RR9-Re-tGR" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="1cO-P6-Z1x"/>
                             <constraint firstItem="RR9-Re-tGR" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-392" id="BRj-QL-50j"/>
+                            <constraint firstItem="qLU-Xf-DTz" firstAttribute="top" secondItem="Cxb-oJ-7aA" secondAttribute="bottom" constant="8" id="BTB-j1-S4L"/>
                             <constraint firstItem="qLU-Xf-DTz" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Co4-Ea-7eA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="RR9-Re-tGR" secondAttribute="top" constant="11.000000000000028" id="ECe-t7-osP"/>
                             <constraint firstItem="PnE-Lv-AJD" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="82" id="G9f-8Z-EMe"/>
@@ -85,6 +89,7 @@
                             <constraint firstItem="DwO-YM-fET" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-179.5" id="RUK-l1-xJD"/>
                             <constraint firstItem="PnE-Lv-AJD" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" constant="1" id="bjL-Mp-1O6"/>
                             <constraint firstItem="VMW-hZ-fRn" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-259.5" id="dC5-I1-sVG"/>
+                            <constraint firstItem="Cxb-oJ-7aA" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="i5x-h3-rbb"/>
                             <constraint firstItem="qLU-Xf-DTz" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="336" id="rzj-YY-CAi"/>
                             <constraint firstItem="PnE-Lv-AJD" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="9:28" id="tFw-FM-2YN"/>
                             <constraint firstItem="DwO-YM-fET" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" constant="1.5" id="zLg-WN-xsf"/>
@@ -107,11 +112,11 @@
             <point key="canvasLocation" x="749" y="112"/>
         </scene>
     </scenes>
+    <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
-        <image name="Daily Update" width="272" height="28"/>
+        <image name="Daily Update" width="786" height="91"/>
         <image name="Screen Shot 2020-04-17 at 11.41.48 PM" width="280" height="179"/>
         <image name="icon stats" width="288" height="318"/>
         <image name="track" width="432" height="98"/>
     </resources>
-    <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
