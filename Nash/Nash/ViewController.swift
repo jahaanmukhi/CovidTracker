@@ -46,14 +46,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         locationManager.startUpdatingLocation()
+        sleep(1)
+        
         OperationQueue.main.addOperation ({
             self.setCurrentLocation()
         })
-        self.downloadJSON()
+        
+        OperationQueue.main.addOperation ({
+            self.downloadJSON()
+        })
 
-        //daily_alert = bodyofReturnNotification()
-        //print(daily_alert)
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func dailyUpdate(_ sender: Any) {
@@ -79,6 +81,7 @@ class ViewController: UIViewController {
                 self.myLocation.istate = state
                 self.myLocation.icountry = country
         }
+        print("Current Location Finished.")
     }
     
     func downloadJSON(){
@@ -94,19 +97,15 @@ class ViewController: UIViewController {
             } catch{
                 print(error)
             }
+            
             OperationQueue.main.addOperation ({
-                 self.setAlertData()
+                  self.setAlertData()
             })
         }.resume()
     }
     
     func setAlertData(){
         var alertPlace: Covid
-        
-        print(String(self.myLocation.icounty ?? "No County") +
-            ", " + String(self.myLocation.istate  ?? "No State/Province") +
-            ", " + String(self.myLocation.icountry ?? "No Country")
-        )
          
         for place in self.covidWorldWide{
             if (self.myLocation.icountry == "United States") {
@@ -150,6 +149,12 @@ class ViewController: UIViewController {
            
             }
         }
-        print("Done searching")
+        print(
+            "LOCATION: " + String(self.myLocation.icounty ?? "No County") +
+            ", " + String(self.myLocation.istate  ?? "No State/Province") +
+            ", " + String(self.myLocation.icountry ?? "No Country")
+            )
+        
+        print("Alert Process Finished")
     }
 }
