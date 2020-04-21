@@ -71,16 +71,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     
     func addPins(){
                // Set initial location
-               let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
+               //let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
 
                // Do any additional setup after loading the view.
-               mapView.centerToLocation(initialLocation)
+               //mapView.centerToLocation(initialLocation)
         
             
             
             //populate map with pins
             for c in covid {
-                let description = "Cases: \(c.confirmed_cases ?? 0) \n Deaths: \(c.confirmed_deaths ?? 0)"
+                var description =  "Cases: " + String(c.confirmed_cases!) //+ " | " + String(c.daily_change_cases!) + " Today" +
+                                    + "\nDeaths: " + String(c.confirmed_deaths!) //+ " | " + String(c.daily_change_deaths!) + " Today"
+                if (c.confirmed_recovered != nil && c.daily_change_recovered != nil) {
+                    description += "\nRecovered: " + String(c.confirmed_recovered!) //+ " | " + String(c.daily_change_recovered!) + " Today"
+                }
                 let location = getString(c:c)
                 let cases = Float(c.confirmed_cases ?? 0)
                 var percentage = (cases/1000.0)*100.0 + 10
@@ -159,7 +163,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
         let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
 
         // Do any additional setup after loading the view.
-        mapView.centerToLocation(initialLocation)
+        //mapView.centerToLocation(initialLocation)
     }
 
     
