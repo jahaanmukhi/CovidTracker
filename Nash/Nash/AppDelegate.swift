@@ -87,406 +87,90 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         return true
     }
-    
-    // func setUpNotification() {
-    //      //setting content of notification
-    //     let content = UNMutableNotificationContent()
-    //     content.title = "Cases in this area..."
-    //     content.body = bodyofReturnNotification()
-    //     //hardcoded and need to replace with api call to request current location
-        
-    //     content.sound = UNNotificationSound.default
-    //     content.categoryIdentifier = "myUniqueCategory"
-        
-    //     //trigger notification when it matches dateCompotents
-    //     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        
-    //     // add action to Notification
-    //     let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-    //     let myCategory = UNNotificationCategory(identifier: "myUniqueIdentifier", actions: [notificationAction], intentIdentifiers: [], options: [])
-        
-    //     let notificationCenter = UNUserNotificationCenter.current()
-    //             notificationCenter.setNotificationCategories([myCategory])
-        
-    //     // Add the request to the main Notification center.
-    //     let request = UNNotificationRequest(identifier: "returnIdentifer",
-    //                           content: content, trigger: trigger)
 
-            
-    //     notificationCenter.add(request) { (error) in
-    //         if error != nil {
-    //             // Handle any errors.
-    //         } else {
-    //             print("Notification created")
-    //         }
-    //     }
-    // }
-
-    func bodyofReturnNotification() -> String{
-   
-//        getAllData()
-        sleep(1)
-        var ret = "Total local cases: " + String(myLocation.iconfirmedcases)
-        ret += "\nTotal local deaths: " + String(myLocation.ideaths)
-        ret += "\nDaily change in local cases: " + String(myLocation.ichangeInCases)
-        ret += "\nDaily change in local deaths: " + String(myLocation.ichangeInDeaths)
-        //ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
-        print(ret)
-        return ret
-        
-    }
-    
-    // func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        
-    //     let content = notification.request.content
-        
-    //     // Process notification content
-    //     print("Received Notification with \(content.title) -  \(content.body)")
-
-    //     // Display notification as regular alert and play sound
-    //     completionHandler([.alert, .sound])
-    // } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
-    
-    // func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-    //     let actionIdentifier = response.actionIdentifier
-    //     //print("func 2")
-    //     switch actionIdentifier {
-    //     case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
-    //         // Do something
-    //         completionHandler()
-    //     case UNNotificationDefaultActionIdentifier: // App was opened from notification
-    //         // Do something
-    //         completionHandler()
-    //     case "remindLater": do {
-    //             let newDate = Date(timeInterval: 60, since: Date())
-    //             print("Rescheduling notification until \(newDate)")
-    //             // TODO: reschedule the notification
-            
-    //         }
-    //         completionHandler()
-    //     default:
-    //         completionHandler()
-    //     }
-    // }//end func userNotificationCenter
-
-// @UIApplicationMain
-// class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-
-//     //CODE FOR STRUCT_____________________________________________
-    
-//     struct Place: Codable {
-//         var combined_key: String //name of place
-//         var confirmed_cases: Int
-//         var country: String
-//         //var county: String //think there is going to be problem with null values
-//         var daily_change_cases: Int
-//         var daily_change_deaths: Int
-//         var deaths: Int
-// //        var fips: Float //what is this?
-//         var latitude: Float
-//         var longitude: Float
-//         var population: Int
-//         var state: String
-//         var uid: Int
-//     }//create struct to put the data in
-    
-//     var allCases: [Place] = []
-    
-//     struct myLocation {
-//         static let location: String = "Puerto Rico, US"
-//         static var locationConfirmedCases: Int = 0
-//         static var locationCountry: String = ""
-//         static var locationChangeInCases: Int = 0
-//         static var locationChangeInDeaths: Int = 0
-//         static var locationDeaths: Int = 0
-//         static var locationLatitude: Float = 0.0
-//         static var locationLongitude: Float = 0.0
-//         static var locationPopulation: Int = 0
-//         static var locationState: String = ""
-//         static var locationUid: Int = 0
-//         static var totalCases: Int = 1779842
-        
-//     }
-    
-//     //END CODE FOR STRUCT_____________________________________________
-    
-    // func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    //         // not using Google Analytics tool
-    //         //FirebaseApp.configure()
-    //         // MARK: UserNotifications Center Setup
-    //         let center = UNUserNotificationCenter.current()
-    //         center.delegate = self
-    //         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-    //         // request user authorization for notifications
-    //         center.requestAuthorization(options: options) { (granted, error) in
-    //             if granted {
-    //                 //application.registerForRemoteNotifications()
-    //                 print("Permission Granted")
-    //                 self.setUpNotification()
-    //             }
-    //         }
-        
-    //         //give remind me later option
-    //          let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-        
-    //          let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
-
-    //          UNUserNotificationCenter.current().setNotificationCategories([myCategory])
-
-            
-    //         return true
-    //     } //end func didFinishLaunchingWithOptions - CHANGED THIS FOR DAILY NOTIFICATION
-
-        
-//        func setUpNotification() {
-//
-//                //setting content of notification
-//                let content = UNMutableNotificationContent()
-//                content.title = "Coronavirus Update - "
-//                content.body = bodyofReturnNotification()
-//
-//                //specify date/time for trigger - everyday 8am
-//                var dateComponents = DateComponents()
-//                dateComponents.calendar = Calendar.current
-//                //dateComponents.weekday = 6  // sunday is 1
-//                dateComponents.hour = 9  //  hours
-//                dateComponents.minute = 00 // minutes
-//
-//                //trigger notification when it matches dateCompotents
-////                let trigger = UNCalendarNotificationTrigger(
-////                         dateMatching: dateComponents, repeats: true)
-//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-//
-//
-//            // add action to Notification
-//            let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-//            let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
-//
-//            let notificationCenter = UNUserNotificationCenter.current()
-//            notificationCenter.setNotificationCategories([myCategory])
-//
-//            // cutomise the content categoryIdentifier
-//            content.categoryIdentifier = "myUniqueCategory"
-//
-//            // add sound to Notification
-//            content.sound = UNNotificationSound.default
-//
-//            // Create the request
-//            let request = UNNotificationRequest(identifier: "myUniqueIdentifierString1234",
-//                        content: content, trigger: trigger)
-//
-//            // Add the request to the main Notification center.
-//
-//            notificationCenter.add(request) { (error) in
-//               if error != nil {
-//                  // Handle any errors.
-//               } else {
-//                    print("Notification created")
-//                }
-//            }
-//
-//        } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
-    
-//    func setUpDailyNotification() {
-//
-//                    //setting content of notification
-//                    let content2 = UNMutableNotificationContent()
-//                    content2.title = "Good Morning"
-//                    content2.body = "Check your daily coronavirus update here!"
-//
-//                    //specify date/time for trigger - everyday 8am
-//                    var dateComponents2 = DateComponents()
-//                    dateComponents2.calendar = Calendar.current
-//                    //dateComponents.weekday = 6  // sunday is 1
-//                    dateComponents2.hour =   8//  hours
-//                    dateComponents2.minute = 0 // minutes
-//
-//                    //trigger notification when it matches dateCompotents
-//                    let trigger2 = UNCalendarNotificationTrigger(
-//                             dateMatching: dateComponents2, repeats: true)
-////                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-//
-//
-//                // add action to Notification
-//                let notificationAction2 = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-//                let myCategory2 = UNNotificationCategory(identifier: "myUniqueCategory2", actions: [notificationAction2], intentIdentifiers: [], options: [])
-//
-//                let notificationCenter2 = UNUserNotificationCenter.current()
-//                notificationCenter2.setNotificationCategories([myCategory2])
-//
-//                // cutomise the content categoryIdentifier
-//                content2.categoryIdentifier = "myUniqueCategory2"
-//
-//                // add sound to Notification
-//                content2.sound = UNNotificationSound.default
-//
-//                // Create the request
-//                let request2 = UNNotificationRequest(identifier: "myUniqueIdentifierString12345",
-//                            content: content2, trigger: trigger2)
-//
-//                // Add the request to the main Notification center.
-//
-//                notificationCenter2.add(request2) { (error) in
-//                   if error != nil {
-//                      // Handle any errors.
-//                   } else {
-//                        print("Daily Notification created")
-//                    }
-//                }
-//
-//            } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
-//
-//    // func bodyofDailyNotification() -> String {
-//    //     getAllData()
-//    //     let casesString = String(myLocation.locationConfirmedCases)
-//    //     let deathsString = String(myLocation.locationDeaths)
-//    //     let changeDeathsString = String(myLocation.locationChangeInDeaths)
-//    //     let changeCasesString = String(myLocation.locationChangeInCases)
-//    //     let totalCasesString = String(myLocation.totalCases)
-//
-//    //     var ret = "Total global cases: " + totalCasesString
-//    //     ret += "\nTotal local cases: " + casesString
-//    //     ret += "\nTotal local deaths: " + deathsString
-//    //     ret += "\nDaily change in local cases: " + changeCasesString
-//    //     ret += "\nDaily change in local deaths: " + changeDeathsString
-//    //     ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
-//    //     print(ret)
-//    //     return ret
-//
-//    // }
-//
-//        func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-//            let content = notification.request.content
-//
-//            // Process notification content
-//            print("Received Notification with \(content.title) -  \(content.body)")
-//
-//            // Display notification as regular alert and play sound
-//            completionHandler([.alert, .sound])
-//        } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
-//
-//        func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//            let actionIdentifier = response.actionIdentifier
-//            //print("func 2")
-//            switch actionIdentifier {
-//            case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
-//                // Do something
-//                completionHandler()
-//            case UNNotificationDefaultActionIdentifier: // App was opened from notification
-//                // Do something
-//                completionHandler()
-//            case "remindLater": do {
-//                    let newDate = Date(timeInterval: 60, since: Date())
-//                    print("Rescheduling notification until \(newDate)")
-//                    // TODO: reschedule the notification
-//
-//                }
-//                completionHandler()
-//            default:
-//                completionHandler()
-//            }
-//        }//end func userNotificationCenter #2 - CHANGED FOR DAILY UPDATE
+  
     func setUpDailyNotification() {
-                        
-                        //setting content of notification
-                        let content2 = UNMutableNotificationContent()
-                        content2.title = "Good Morning"
-                        content2.body = "Check your daily coronavirus update here!"
-                        
-                        //specify date/time for trigger - everyday 8am
-                        var dateComponents2 = DateComponents()
-                        dateComponents2.calendar = Calendar.current
-                        //dateComponents.weekday = 6  // sunday is 1
-                        dateComponents2.hour =   8//  hours
-                        dateComponents2.minute = 0 // minutes
-                    
-                        //trigger notification when it matches dateCompotents
-                        let trigger2 = UNCalendarNotificationTrigger(
-                                 dateMatching: dateComponents2, repeats: true)
-//                    let trigger2 = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-           
-
-                    // add action to Notification
-                    let notificationAction2 = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-                    let myCategory2 = UNNotificationCategory(identifier: "myUniqueCategory2", actions: [notificationAction2], intentIdentifiers: [], options: [])
-            
-                    let notificationCenter2 = UNUserNotificationCenter.current()
-                    notificationCenter2.setNotificationCategories([myCategory2])
-
-                    // cutomise the content categoryIdentifier
-                    content2.categoryIdentifier = "myUniqueCategory2"
-
-                    // add sound to Notification
-                    content2.sound = UNNotificationSound.default
-
-                    // Create the request
-                    let request2 = UNNotificationRequest(identifier: "myUniqueIdentifierString12345",
-                                content: content2, trigger: trigger2)
-                    
-                    // Add the request to the main Notification center.
-                    
-                    notificationCenter2.add(request2) { (error) in
-                       if error != nil {
-                          // Handle any errors.
-                       } else {
-                            print("Daily Notification created")
-                        }
-                    }
-                        
-                } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
-        
-        // func bodyofDailyNotification() -> String {
-        //     getAllData()
-        //     let casesString = String(myLocation.locationConfirmedCases)
-        //     let deathsString = String(myLocation.locationDeaths)
-        //     let changeDeathsString = String(myLocation.locationChangeInDeaths)
-        //     let changeCasesString = String(myLocation.locationChangeInCases)
-        //     let totalCasesString = String(myLocation.totalCases)
-            
-        //     var ret = "Total global cases: " + totalCasesString
-        //     ret += "\nTotal local cases: " + casesString
-        //     ret += "\nTotal local deaths: " + deathsString
-        //     ret += "\nDaily change in local cases: " + changeCasesString
-        //     ret += "\nDaily change in local deaths: " + changeDeathsString
-        //     ret += "\nPercent change in local cases: " + String(Int((Float(myLocation.locationChangeInCases)/Float(myLocation.locationConfirmedCases)) * 100.0)) + "%"
-        //     print(ret)
-        //     return ret
-            
-        // }
-            
-            func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-                let content = notification.request.content
                 
-                // Process notification content
-                print("Received Notification with \(content.title) -  \(content.body)")
-
-                // Display notification as regular alert and play sound
-                completionHandler([.alert, .sound])
-            } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
+            //setting content of notification
+            let content2 = UNMutableNotificationContent()
+            content2.title = "Track Covid-19!"
+            content2.body = "Stay up to date. Stay home. Stay safe!"
             
-            func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-                let actionIdentifier = response.actionIdentifier
-                //print("func 2")
-                switch actionIdentifier {
-                case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
-                    // Do something
-                    completionHandler()
-                case UNNotificationDefaultActionIdentifier: // App was opened from notification
-                    // Do something
-                    completionHandler()
-                case "remindLater": do {
-                        let newDate = Date(timeInterval: 60, since: Date())
-                        print("Rescheduling notification until \(newDate)")
-                        // TODO: reschedule the notification
-                    
-                    }
-                    completionHandler()
-                default:
-                    completionHandler()
+            //specify date/time for trigger - everyday 8am
+            var dateComponents2 = DateComponents()
+            dateComponents2.calendar = Calendar.current
+            //dateComponents.weekday = 6  // sunday is 1
+            dateComponents2.hour =   8//  hours
+            dateComponents2.minute = 0 // minutes
+        
+            //trigger notification when it matches dateCompotents
+            let trigger2 = UNCalendarNotificationTrigger(
+                     dateMatching: dateComponents2, repeats: true)
+    //                    let trigger2 = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+
+
+            // add action to Notification
+            let notificationAction2 = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+            let myCategory2 = UNNotificationCategory(identifier: "myUniqueCategory2", actions: [notificationAction2], intentIdentifiers: [], options: [])
+
+            let notificationCenter2 = UNUserNotificationCenter.current()
+            notificationCenter2.setNotificationCategories([myCategory2])
+
+            // cutomise the content categoryIdentifier
+            content2.categoryIdentifier = "myUniqueCategory2"
+
+            // add sound to Notification
+            content2.sound = UNNotificationSound.default
+
+            // Create the request
+            let request2 = UNNotificationRequest(identifier: "myUniqueIdentifierString12345",
+                        content: content2, trigger: trigger2)
+            
+            // Add the request to the main Notification center.
+            
+            notificationCenter2.add(request2) { (error) in
+               if error != nil {
+                  // Handle any errors.
+               } else {
+                    print("Daily Notification created")
                 }
             }
-    
+                
+        } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
+
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let content = notification.request.content
+        
+        // Process notification content
+        print("Received Notification with \(content.title) -  \(content.body)")
+
+        // Display notification as regular alert and play sound
+        completionHandler([.alert, .sound])
+    } //end func userNotificationCenter - CHANGED FOR DAILY UPDATE
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let actionIdentifier = response.actionIdentifier
+        //print("func 2")
+        switch actionIdentifier {
+        case UNNotificationDismissActionIdentifier: // Notification was dismissed by user
+            // Do something
+            completionHandler()
+        case UNNotificationDefaultActionIdentifier: // App was opened from notification
+            // Do something
+            completionHandler()
+        case "remindLater": do {
+                let newDate = Date(timeInterval: 60, since: Date())
+                print("Rescheduling notification until \(newDate)")
+                // TODO: reschedule the notification
+            
+            }
+            completionHandler()
+        default:
+            completionHandler()
+        }
+    }
+
 
     // MARK: UISceneSession Lifecycle
 
@@ -546,82 +230,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
-    
-    //MARK: API Call
-    
-    func getAllData() {
-        
-        //totalCases = 0
-        print("starting getAllData")
-        let mySession = URLSession(configuration: URLSessionConfiguration.default)
-        
-        let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
-        
-        let task = mySession.dataTask(with: url) {data, response, error in
-            
-            guard error == nil else {
-                print ("error: \(error!)")
-                return
-            }
-            
-            guard let jsonData = data else {
-                print("No data")
-                return
-            }
-            
-            print("Got the data from network")
-            
-            let decoder = JSONDecoder()
-
-            do {
-                self.allElms = try decoder.decode([Place].self, from: jsonData)
-               // get current location
-                let currLoc = self.locationManager.location
-                print(currLoc)
-                //get city state country from lat and long
-                self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) { city, state, country, error in
-                                    guard let city = city, let state = state, let country = country, error == nil else { return }
-                            print("Current location: " + city + ", " + state + ", ", country)
-                    self.myLocation.icounty = city
-                    self.myLocation.icountry = country
-                    self.myLocation.istate = state
-                    print("Global location variables being declared: ")
-                    print("IVAR: " + String((self.myLocation.icounty ?? "")!))
-                    print("IVAR: " + String((self.myLocation.istate ?? "")!))
-                    print("IVAR: " + String((self.myLocation.icountry ?? "")!))
-
-                    }
-                    sleep(1)
-                
-                    print("IVARl: " + String((self.myLocation.icounty ?? "")!))
-                    print("IVARl: " + String((self.myLocation.istate ?? "")!))
-                    print("IVARl: " + String((self.myLocation.icountry ?? "")!))
-
-                    //begin for loop
-                    for Place in self.allElms{
-                        print("loop")
-                        //print(Place.county)
-                        //print(self.myLocation.icounty)
-                        if (Place.county == self.myLocation.icounty && Place.state_abbr == self.myLocation.istate) {
-                            //print("loop")
-                            print("true")
-                            self.myLocation.icombinedkey = Place.combined_key
-                            self.myLocation.iconfirmedcases = Place.confirmed_cases
-                            self.myLocation.ideaths = Place.confirmed_deaths ?? 0
-                            self.myLocation.ichangeInDeaths = Place.daily_change_deaths
-                            self.myLocation.ichangeInCases = Place.daily_change_cases
-                        }
-                    }
-                print("done!!!")
-            } catch {
-                print("JSON Decode error")
-            }
-        }
-        
-        task.resume()
-        sleep(2)
-        
-    }
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
@@ -631,17 +239,38 @@ extension AppDelegate: CLLocationManagerDelegate {
         print("location manager authorization status changed")
         
         switch status {
-        case .authorizedAlways:
-            print("user allow app to get location data when app is active or in background")
-        case .authorizedWhenInUse:
-            print("user allow app to get location data only when app is active")
-        case .denied:
-            print("user tap 'disallow' on the permission dialog, cant get location data")
-        case .restricted:
-            print("parental control setting disallow location data")
-        case .notDetermined:
-            print("the location permission dialog haven't shown before, user haven't tap allow/disallow")
+            case .authorizedAlways:
+                print("user allow app to get location data when app is active or in background")
+            case .authorizedWhenInUse:
+                print("user allow app to get location data only when app is active")
+            case .denied:
+                print("user tap 'disallow' on the permission dialog, cant get location data")
+            case .restricted:
+                print("parental control setting disallow location data")
+            case .notDetermined:
+                print("the location permission dialog haven't shown before, user haven't tap allow/disallow")
         }
+        //self.setCurrentLocation()
+    }
+    
+    func setCurrentLocation(){
+           let currLoc = self.locationManager.location
+           if (currLoc == nil) {
+            print("No location available")
+            return
+           }
+           print(currLoc)
+           //get city state country from lat and long
+           self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) {
+               city, state, country, error in
+                   guard let city = city, let state = state, let country = country, error == nil
+                       else { return }
+                   //print(city, state, country)
+                   self.myLocation.icounty = city
+                   self.myLocation.istate = state
+                   self.myLocation.icountry = country
+            }
+            print("Current Location Updated After Location Manager Auth Status Changed")
     }
     
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
@@ -679,81 +308,7 @@ extension AppDelegate: CLLocationManagerDelegate {
         }
        
    }
+    
+    
+    
 }
-
-//API CONNECTION CODE_________________________________________
-
-//     func getAllData() {
-//             //print("starting getAllData")
-//             let mySession = URLSession(configuration: URLSessionConfiguration.default)
-            
-//             let url = URL(string: "https://nash-273721.df.r.appspot.com/map")!
-            
-//             let task = mySession.dataTask(with: url) {data, response, error in
-                
-//                 guard error == nil else {
-//                     print ("error: \(error!)")
-//                     return
-//                 }
-                
-//                 guard let jsonData = data else {
-//                     print("No data")
-//                     return
-//                 }
-                
-//                 print("Got the data from network")
-                
-//                 let decoder = JSONDecoder()
-
-//                 do {
-//                     self.allCases = try decoder.decode([Place].self, from: jsonData)
-                     
-// //                    for Place in self.allCases{
-// //                        print(Place.confirmed_cases)
-// //                        print(Place.country)
-// //                    } //prints everything
-// //                    let dispatchGroup = DispatchGroup()
-// //                    let dispatchQueue = DispatchQueue(label: "taskQueue")
-// //                    let dispatchSemaphore = DispatchSemaphore(value: 0)
-                    
-//                         for index in 0..<self.allCases.count {
-//                             myLocation.totalCases += self.allCases[index].confirmed_cases//problem with this
-//                             if self.allCases[index].combined_key == myLocation.location {
-//                                 myLocation.locationConfirmedCases = self.allCases[index].confirmed_cases
-//                                 myLocation.locationCountry = self.allCases[index].country
-//                                 myLocation.locationChangeInCases = self.allCases[index].daily_change_cases
-//                                 myLocation.locationChangeInDeaths = self.allCases[index].daily_change_deaths
-//                                 myLocation.locationDeaths = self.allCases[index].deaths
-//                                 myLocation.locationLatitude = self.allCases[index].latitude
-//                                 myLocation.locationLongitude = self.allCases[index].longitude
-//                                 myLocation.locationPopulation = self.allCases[index].population
-//                                 myLocation.locationState = self.allCases[index].state
-//                                 myLocation.locationUid = self.allCases[index].uid
-//                             }
-//                         } //end of for loop
-// //                    for place in self.allCases{
-// //                        if place.combined_key == myLocation.location {
-// //                            print(place.combined_key)
-// //                        }
-// //                    }
-
-//                     //print("finished printing")
-//                 }
-                    
-//                 catch {
-//                     print("JSON Decode error")
-//                 }
-//             }
-//             task.resume()
-//             sleep(1)
-//             //print("get all data completed")
-//         }
-    
-// }
-
-    
-//END API CONNECTION CODE_____________________________________
-    
-
-
-
