@@ -21,6 +21,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     final let url = URL(string:"https://nash-273721.df.r.appspot.com/map")
     
     var covid = [Covid]()
+    var allPins: [Pin] = []
+    let LSTVC = LocationSearchTableViewController()
     
     var resultSearchController: UISearchController? = nil
     
@@ -88,7 +90,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
                 let color = UIColor.yellow.toColor(UIColor.red, percentage: CGFloat(percentage))
                 let annotation = Pin(coordinate: CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude ), title: location, subtitle: description, color:color)
                 mapView.addAnnotation(annotation)
+                allPins.append(annotation)
             }
+        LSTVC.allPins = allPins
     }
     
 
