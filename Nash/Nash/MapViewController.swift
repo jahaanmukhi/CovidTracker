@@ -22,11 +22,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     
     var covid = [Covid]()
     var allPins: [Pin] = []
-    let LSTVC = LocationSearchTableViewController()
+    var locationSearchTable = LocationSearchTableViewController()
     
     var resultSearchController: UISearchController? = nil
     
-    var selectedPin : MKPlacemark? = nil
+    var selectedPin : Pin? = nil
     
     func getString(c:Covid) -> String {
         var locationString = ""
@@ -47,7 +47,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
         return locationString
     }
     
-    func downloadJSON(){
+    func downloadJSON(LocationSearchTableViewController: LocationSearchTableViewController?){
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
             do{
                 if data == nil {
@@ -64,12 +64,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
             }
         
             OperationQueue.main.addOperation ({
-                 self.addPins()
+                self.addPins(LocationSearchTableViewController: LocationSearchTableViewController)
             })
         }.resume()
     }
     
-    func addPins(){
+    func addPins(LocationSearchTableViewController: LocationSearchTableViewController?){
                // Set initial location
                //let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
 
@@ -96,9 +96,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
                 mapView.addAnnotation(annotation)
                 allPins.append(annotation)
             }
-        LSTVC.allPins = allPins
+        locationSearchTable.allPins = allPins
     }
-    
 
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -124,10 +123,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.downloadJSON()
         
         //set up search results table
-        let locationSearchTable = storyboard!.instantiateViewController(identifier: "LocationSearch") as! LocationSearchTableViewController
+        locationSearchTable = storyboard!.instantiateViewController(identifier: "LocationSearch") as! LocationSearchTableViewController
+        // send array of pins to LocationSearchTableViewController
+        downloadJSON(LocationSearchTableViewController: locationSearchTable)
+        self.addPins(LocationSearchTableViewController: locationSearchTable)
         resultSearchController = UISearchController(searchResultsController: locationSearchTable)
         resultSearchController?.searchResultsUpdater = locationSearchTable as! UISearchResultsUpdating
         
@@ -202,32 +203,30 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
                        error)
         }
     }
-
-    
 }
 
 protocol HandleMapSearch{
-    func dropPinZoomIn(placemark: MKPlacemark)
+    func dropPinZoomIn(pin: Pin)
 }
 
 extension MapViewController : HandleMapSearch {
-    func dropPinZoomIn(placemark: MKPlacemark) {
+    func dropPinZoomIn(pin: Pin) {
     // cache the pin
-    selectedPin = placemark
+    selectedPin = pin
     // clear existing pins
     //mapView.removeAnnotations(mapView.annotations)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = placemark.coordinate
-        
-        if let city = placemark.locality,
-            let state = placemark.administrativeArea
-        {
-            annotation.subtitle = "(city) (state)"
-        }
-        mapView.addAnnotation(annotation)
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = placemark.coordinate
+//
+//        if let city = placemark.locality,
+//            let state = placemark.administrativeArea
+//        {
+//            annotation.subtitle = "(city) (state)"
+//        }
+//        mapView.addAnnotation(annotation)
         
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
+        let region = MKCoordinateRegion(center: pin.coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
 }
