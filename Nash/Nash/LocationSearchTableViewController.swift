@@ -12,7 +12,7 @@ import MapKit
 class LocationSearchTableViewController: UITableViewController {
     
     //search bar variables
-    var matchingItems : [MKMapItem] = []
+    //var matchingItems : [MKMapItem] = []
     var mapView : MKMapView? = nil
     var handleMapSearchDelegate : HandleMapSearch? = nil
     var allPins: [Pin] = [] 
@@ -21,10 +21,11 @@ class LocationSearchTableViewController: UITableViewController {
     let searchController = UISearchController(searchResultsController: nil)
     var filteredPins: [Pin] = []
     var isSearchBarEmpty: Bool { return searchController.searchBar.text?.isEmpty ?? true }
-    var isFiltering: Bool {
-      let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
-      return searchController.isActive && (!isSearchBarEmpty) //|| searchBarScopeIsFiltering)
-    }
+    var isFiltering: Bool = false
+//    {
+//      let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+//      return searchController.isActive && (!isSearchBarEmpty) //|| searchBarScopeIsFiltering)
+//    }
     
     // Dummy array of pins
     var testPins: [Pin] = [Pin(coordinate: CLLocationCoordinate2D(latitude: 37.8199, longitude: 122.4783), title: "Golden Gate Bridge", subtitle: "Bridge", color: UIColor.red),
@@ -33,7 +34,10 @@ class LocationSearchTableViewController: UITableViewController {
     
     func filterContentForSearchText(_ searchText: String) {
         filteredPins = testPins.filter{$0.title!.lowercased().contains(searchText.lowercased())}
-        tableView.reloadData()
+        
+        print("Filtered pins (search \(searchText)) = \(filteredPins.count)")
+        
+        self.tableView.reloadData()
     }
 
     override func viewDidLoad() {
@@ -50,6 +54,7 @@ class LocationSearchTableViewController: UITableViewController {
 
 extension LocationSearchTableViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
+    self.isFiltering = true
     let searchBar = searchController.searchBar
     filterContentForSearchText(searchBar.text!)
   }
@@ -66,7 +71,7 @@ extension LocationSearchTableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-    let pin: Pin
+    var pin: Pin
     if isFiltering {
       pin = filteredPins[indexPath.row]
     } else {
