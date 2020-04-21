@@ -33,15 +33,19 @@ class LocationSearchTableViewController: UITableViewController {
     Pin(coordinate: CLLocationCoordinate2D(latitude: 40.7128, longitude: 74.0060), title: "NYC", subtitle: "City", color: UIColor.green)]
     
     func filterContentForSearchText(_ searchText: String) {
-        filteredPins = testPins.filter{$0.title!.lowercased().contains(searchText.lowercased())}
+        filteredPins = allPins.filter{$0.title!.lowercased().contains(searchText.lowercased())}
         
-        print("Filtered pins (search \(searchText)) = \(filteredPins.count)")
+        //print("Filtered pins (search \(searchText)) = \(filteredPins.count)")
         
         self.tableView.reloadData()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("LENGTH OF ALL PINS: \(allPins.count)")
+        for p in allPins {
+            print("country: \(p.title)")
+        }
         
         // Format searchController
         searchController.searchResultsUpdater = self
@@ -66,7 +70,7 @@ extension LocationSearchTableViewController {
     if isFiltering {
       return filteredPins.count
     }
-      return testPins.count
+      return allPins.count
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,24 +79,21 @@ extension LocationSearchTableViewController {
     if isFiltering {
       pin = filteredPins[indexPath.row]
     } else {
-      pin = testPins[indexPath.row]
+      pin = allPins[indexPath.row]
     }
     cell.textLabel?.text = pin.title
-    cell.detailTextLabel?.text = pin.subtitle
+    let pinSubtitle = pin.subtitle!.components(separatedBy: "\n")
+    cell.detailTextLabel?.text = pinSubtitle[0] + ", " + pinSubtitle[1]
     return cell
   }
-}
     
-
-
-
-
-
-
-
-
-
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedItem = filteredPins[indexPath.row]
+        handleMapSearchDelegate?.dropPinZoomIn(pin: selectedItem)
+        
+        dismiss(animated: true, completion: nil)
+    }
+}
 
     // MARK: - Table view data source
 
