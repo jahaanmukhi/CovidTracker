@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             //specify date/time for trigger - everyday 8am
             var dateComponents2 = DateComponents()
             dateComponents2.calendar = Calendar.current
-            dateComponents2.hour = 23//  hours
-            dateComponents2.minute = 58 // minutes
+            dateComponents2.hour = 10//  hours
+            dateComponents2.minute = 30 // minutes
         
             //trigger notification when it matches dateCompotents
             let trigger2 = UNCalendarNotificationTrigger(dateMatching: dateComponents2, repeats: true)
