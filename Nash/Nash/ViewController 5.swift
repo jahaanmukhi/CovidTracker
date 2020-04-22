@@ -35,86 +35,78 @@ class ViewController: UIViewController {
         var state_abbr: String!
     }
     
-    @IBOutlet weak var appDescription: UILabel!
-    
     final let url = URL(string:"https://nash-273721.df.r.appspot.com/map")
     var covidWorldWide: [Covid] = []
 
     //var allElms: [Place] = []
     let myLocation = APILocation()
+    var alert_msg: String = "Error: Try Again"
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        appDescription.adjustsFontSizeToFitWidth = true
-        
-        locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
-        
         OperationQueue.main.addOperation ({
             self.setCurrentLocation()
         })
+        self.downloadJSON()
 
-        OperationQueue.main.addOperation ({
-            self.downloadJSON()
-        })
-
+        //daily_alert = bodyofReturnNotification()
+        //print(daily_alert)
+        // Do any additional setup after loading the view.
     }
     
-    var alert_msg: String = "Error: Try Again"
-    
     @IBAction func dailyUpdate(_ sender: Any) {
-        OperationQueue.main.addOperation ({
-            self.setAlertData()
-        })
-        OperationQueue.main.addOperation ({
-            let alert = UIAlertController(title: "Daily Coronavirus Update", message: self.alert_msg, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Daily Coronavirus Update", message: alert_msg, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in }))
             self.present(alert, animated: true, completion: nil)
-        })
+    }
+    
+    func setCurrentLocation(){
+        let currLoc = self.locationManager.location
+        if (currLoc == nil) {
+         print("No location available")
+         return
+        }
+        print(currLoc)
+        //get city state country from lat and long
+        self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) {
+            city, state, country, error in
+                guard let city = city, let state = state, let country = country, error == nil
+                    else { return }
+                //print(city, state, country)
+                self.myLocation.icounty = city
+                self.myLocation.istate = state
+                self.myLocation.icountry = country
+        }
     }
     
     func downloadJSON(){
-        
-        URLSession.shared.dataTask(with: url!) { (data, response, error) -> Void in
-            
-            guard error == nil else {
-
-                DispatchQueue.main.async {
-                    // create the alert
-                    let alert = UIAlertController(title: "Error", message: "Not Connected To Internet", preferredStyle: UIAlertController.Style.alert)
-
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-
-                    // show the alert
-                    self.present(alert, animated: true, completion: nil)
-                    
-                    print ("error: \(error!)")
-                }
-
-                return
-                
-            }
-            
+        URLSession.shared.dataTask(with: url!) { (data, response, error) in
             do{
                 if data == nil {
-                    print("No Data")
-                    return
+                    print("Connect to Internet")
+                } else{
+                    let decoder = JSONDecoder()
+                    let results = try decoder.decode([Covid].self, from: data!)
+                    self.covidWorldWide = results
                 }
-                let decoder = JSONDecoder()
-                let results = try decoder.decode([Covid].self, from: data!)
-                self.covidWorldWide = results
             } catch{
                 print(error)
             }
+            OperationQueue.main.addOperation ({
+                 self.setAlertData()
+            })
         }.resume()
-        
     }
     
     func setAlertData(){
-    
         var alertPlace: Covid
+        
+        print(String(self.myLocation.icounty ?? "No County") +
+            ", " + String(self.myLocation.istate  ?? "No State/Province") +
+            ", " + String(self.myLocation.icountry ?? "No Country")
+        )
          
         for place in self.covidWorldWide{
             if (self.myLocation.icountry == "United States") {
@@ -158,33 +150,6 @@ class ViewController: UIViewController {
            
             }
         }
-        print(
-            "LOCATION: " + String(self.myLocation.icounty ?? "No County") +
-            ", " + String(self.myLocation.istate  ?? "No State/Province") +
-            ", " + String(self.myLocation.icountry ?? "No Country")
-            )
-        
-        print("Alert Process Finished")
+        print("Done searching")
     }
-    
-    func setCurrentLocation(){
-        let currLoc = self.locationManager.location
-        if (currLoc == nil) {
-         print("No location available")
-         return
-        }
-        print(currLoc)
-        //get city state country from lat and long
-        self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) {
-            city, state, country, error in
-                guard let city = city, let state = state, let country = country, error == nil
-                    else { return }
-                //print(city, state, country)
-                self.myLocation.icounty = city
-                self.myLocation.istate = state
-                self.myLocation.icountry = country
-        }
-        print("Current Location Finished.")
-    }
-    
 }

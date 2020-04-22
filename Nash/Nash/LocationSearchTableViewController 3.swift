@@ -42,7 +42,10 @@ class LocationSearchTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ALL_PINS (TOTAL LEN): \(allPins.count)")
+        print("LENGTH OF ALL PINS: \(allPins.count)")
+        for p in allPins {
+            print("country: \(p.title)")
+        }
         
         // Format searchController
         searchController.searchResultsUpdater = self

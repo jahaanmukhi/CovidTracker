@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     let locationManager = CLLocationManager()
     let center = UNUserNotificationCenter.current()
     
-    /*
+    //MARK: api struct
     struct Place: Codable {
         var combined_key: String! //name of place
         var confirmed_cases: Int!
@@ -32,18 +32,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var daily_change_deaths: Float!
         var confirmed_deaths: Float?
         var fips: Float! //what is this?
-        var latitude: Float?
-        var longitude: Float?
+        var latitude: Float!
+        var longitude: Float!
         var population: Float!
         var state: String!
         var state_abbr: String!
         var uid: Float!
     }
 
-    //var allElms: [Place] = []
-    */
+    var allElms: [Place] = []
     let myLocation = APILocation()
-    
+        
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        
+        //MARK: set up location tracking
+        
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringVisits()
+        locationManager.delegate = self
+        
+        let status = CLLocationManager.authorizationStatus()
+        
+        
+        //handle location errors if access is denied
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+           if let error = error as? CLError, error.code == .denied {
+              // Location updates are not authorized.
+        
+              manager.stopUpdatingLocation()
+              return
+           }
+           // Notify the user of any errors.
+        }
+        
+        
+        //MARK: set up notifications
+        center.delegate = self
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+        //request authorization for notifications
+        center.requestAuthorization(options:options) { (granted, error) in if granted {
+            print ("Notification permission allowed")
+//            self.setUpNotification()
+            self.setUpDailyNotification()
+            }
+        }
+        
+        let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
+        
+        let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
+
+        UNUserNotificationCenter.current().setNotificationCategories([myCategory])
+        
+        return true
+    }
+
+  
     func setUpDailyNotification() {
                 
             //setting content of notification
@@ -92,76 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
                 
         } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        //MARK: set up location tracking
-        /*
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
-        locationManager.startMonitoringVisits()
-        locationManager.delegate = self
 
-        let status = CLLocationManager.authorizationStatus()
-
-
-        //handle location errors if access is denied
-        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-           if let error = error as? CLError, error.code == .denied {
-              // Location updates are not authorized.
-
-              manager.stopUpdatingLocation()
-              return
-           }
-           // Notify the user of any errors.
-        }
-        */
-        
-        //MARK: set up notifications
-        center.delegate = self
-        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-        //request authorization for notifications
-        center.requestAuthorization(options:options) { (granted, error) in if granted {
-            print ("Notification permission allowed")
-//            self.setUpNotification()
-            self.setUpDailyNotification()
-            }
-        }
-        
-        let notificationAction = UNNotificationAction(identifier: "remindLater", title: "Remind me later", options: [])
-        
-        let myCategory = UNNotificationCategory(identifier: "myUniqueCategory", actions: [notificationAction], intentIdentifiers: [], options: [])
-
-        UNUserNotificationCenter.current().setNotificationCategories([myCategory])
-        
-        return true
-    }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let content = notification.request.content
@@ -274,12 +251,29 @@ extension AppDelegate: CLLocationManagerDelegate {
             case .notDetermined:
                 print("the location permission dialog haven't shown before, user haven't tap allow/disallow")
         }
-        
-        
-        
+        //self.setCurrentLocation()
     }
-   
-    /*
+    
+    func setCurrentLocation(){
+           let currLoc = self.locationManager.location
+           if (currLoc == nil) {
+            print("No location available")
+            return
+           }
+           print(currLoc)
+           //get city state country from lat and long
+           self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) {
+               city, state, country, error in
+                   guard let city = city, let state = state, let country = country, error == nil
+                       else { return }
+                   //print(city, state, country)
+                   self.myLocation.icounty = city
+                   self.myLocation.istate = state
+                   self.myLocation.icountry = country
+            }
+            print("Current Location Updated After Location Manager Auth Status Changed")
+    }
+    
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         print("visit")
        let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
@@ -315,6 +309,7 @@ extension AppDelegate: CLLocationManagerDelegate {
         }
        
    }
-     */
+    
+    
     
 }

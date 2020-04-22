@@ -34,7 +34,6 @@ class ViewController: UIViewController {
         var uid: Int!
         var state_abbr: String!
     }
-    
     @IBOutlet weak var appDescription: UILabel!
     
     final let url = URL(string:"https://nash-273721.df.r.appspot.com/map")
@@ -75,45 +74,25 @@ class ViewController: UIViewController {
     }
     
     func downloadJSON(){
-        
-        URLSession.shared.dataTask(with: url!) { (data, response, error) -> Void in
-            
-            guard error == nil else {
-
-                DispatchQueue.main.async {
-                    // create the alert
-                    let alert = UIAlertController(title: "Error", message: "Not Connected To Internet", preferredStyle: UIAlertController.Style.alert)
-
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-
-                    // show the alert
-                    self.present(alert, animated: true, completion: nil)
-                    
-                    print ("error: \(error!)")
-                }
-
-                return
-                
-            }
-            
+        URLSession.shared.dataTask(with: url!) { (data, response, error) in
             do{
                 if data == nil {
-                    print("No Data")
-                    return
+                    print("Connect to Internet")
+                } else{
+                    let decoder = JSONDecoder()
+                    let results = try decoder.decode([Covid].self, from: data!)
+                    self.covidWorldWide = results
                 }
-                let decoder = JSONDecoder()
-                let results = try decoder.decode([Covid].self, from: data!)
-                self.covidWorldWide = results
             } catch{
                 print(error)
             }
         }.resume()
-        
     }
     
     func setAlertData(){
-    
+        
+  
+        
         var alertPlace: Covid
          
         for place in self.covidWorldWide{
