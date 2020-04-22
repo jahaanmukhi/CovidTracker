@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             content2.title = "Track Covid-19!"
             content2.body = "Get your daily update! Stay home. Stay safe!"
             
-            //specify date/time for trigger - everyday 8am
+            //specify date/time for trigger - everyday 5pm
             var dateComponents2 = DateComponents()
             dateComponents2.calendar = Calendar.current
             dateComponents2.hour = 17//  hours

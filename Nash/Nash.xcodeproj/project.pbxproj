@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3A6D6D4A2445266300D2EC36 /* LocationSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */; };
+		4671A0972450E2280066D552 /* BelAir.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4671A0962450E2280066D552 /* BelAir.gpx */; };
+		4671A09B2450E2520066D552 /* HubeiChina.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4671A09A2450E2520066D552 /* HubeiChina.gpx */; };
+		4671A09D2450E2580066D552 /* Montreal.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4671A09C2450E2580066D552 /* Montreal.gpx */; };
+		4671A09F2450E2650066D552 /* OysterBay.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4671A09E2450E2650066D552 /* OysterBay.gpx */; };
+		4671A0A12450E26D0066D552 /* VeniceItaly.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4671A0A02450E26D0066D552 /* VeniceItaly.gpx */; };
 		CF8643242438F45D00D1C0E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643232438F45D00D1C0E6 /* AppDelegate.swift */; };
 		CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */; };
 		CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643272438F45D00D1C0E6 /* ViewController.swift */; };
@@ -23,6 +28,11 @@
 
 /* Begin PBXFileReference section */
 		3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchTableViewController.swift; sourceTree = "<group>"; };
+		4671A0962450E2280066D552 /* BelAir.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = BelAir.gpx; sourceTree = "<group>"; };
+		4671A09A2450E2520066D552 /* HubeiChina.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = HubeiChina.gpx; sourceTree = "<group>"; };
+		4671A09C2450E2580066D552 /* Montreal.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Montreal.gpx; sourceTree = "<group>"; };
+		4671A09E2450E2650066D552 /* OysterBay.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = OysterBay.gpx; sourceTree = "<group>"; };
+		4671A0A02450E26D0066D552 /* VeniceItaly.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VeniceItaly.gpx; sourceTree = "<group>"; };
 		CF8643202438F45D00D1C0E6 /* Nash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8643232438F45D00D1C0E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +78,11 @@
 		CF8643222438F45D00D1C0E6 /* Nash */ = {
 			isa = PBXGroup;
 			children = (
+				4671A0A02450E26D0066D552 /* VeniceItaly.gpx */,
+				4671A09E2450E2650066D552 /* OysterBay.gpx */,
+				4671A09C2450E2580066D552 /* Montreal.gpx */,
+				4671A09A2450E2520066D552 /* HubeiChina.gpx */,
+				4671A0962450E2280066D552 /* BelAir.gpx */,
 				CF8643422438FA3500D1C0E6 /* ShadowedImageView.swift */,
 				CF8643232438F45D00D1C0E6 /* AppDelegate.swift */,
 				DDCD9D882444B7BE00D25F96 /* APILocation.swift */,
@@ -144,6 +159,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF8643302438F46000D1C0E6 /* Assets.xcassets in Resources */,
+				4671A0A12450E26D0066D552 /* VeniceItaly.gpx in Resources */,
+				4671A09B2450E2520066D552 /* HubeiChina.gpx in Resources */,
+				4671A09F2450E2650066D552 /* OysterBay.gpx in Resources */,
+				4671A09D2450E2580066D552 /* Montreal.gpx in Resources */,
+				4671A0972450E2280066D552 /* BelAir.gpx in Resources */,
 				CF86432B2438F45D00D1C0E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
