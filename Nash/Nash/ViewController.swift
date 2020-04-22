@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     
@@ -40,19 +40,16 @@ class ViewController: UIViewController {
     var covidWorldWide: [Covid] = []
 
     //var allElms: [Place] = []
-    let myLocation = APILocation()
+    var myLocation = APILocation()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         appDescription.adjustsFontSizeToFitWidth = true
         
-        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
         locationManager.startUpdatingLocation()
-        
-        OperationQueue.main.addOperation ({
-            self.setCurrentLocation()
-        })
 
         OperationQueue.main.addOperation ({
             self.downloadJSON()
@@ -74,28 +71,46 @@ class ViewController: UIViewController {
     }
     
     func downloadJSON(){
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+        
+        URLSession.shared.dataTask(with: url!) { (data, response, error) -> Void in
+            
+            guard error == nil else {
+
+                DispatchQueue.main.async {
+                    // create the alert
+                    let alert = UIAlertController(title: "Error", message: "Not Connected To Internet", preferredStyle: UIAlertController.Style.alert)
+
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                    // show the alert
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    print ("error: \(error!)")
+                }
+
+                return
+                
+            }
+            
             do{
                 if data == nil {
-                    print("Connect to Internet")
-                } else{
-                    let decoder = JSONDecoder()
-                    let results = try decoder.decode([Covid].self, from: data!)
-                    self.covidWorldWide = results
+                    print("No Data")
+                    return
                 }
+                let decoder = JSONDecoder()
+                let results = try decoder.decode([Covid].self, from: data!)
+                self.covidWorldWide = results
             } catch{
                 print(error)
             }
         }.resume()
+        
     }
     
     func setAlertData(){
-        
-  
-        
         var alertPlace: Covid
-         
-        for place in self.covidWorldWide{
+        for place in self.covidWorldWide {
             if (self.myLocation.icountry == "United States") {
                 if (place.county != nil && place.county == self.myLocation.icounty &&
                         place.state_abbr != nil && place.state_abbr == self.myLocation.istate
@@ -146,24 +161,34 @@ class ViewController: UIViewController {
         print("Alert Process Finished")
     }
     
-    func setCurrentLocation(){
-        let currLoc = self.locationManager.location
-        if (currLoc == nil) {
-         print("No location available")
-         return
-        }
-        print(currLoc)
-        //get city state country from lat and long
-        self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let currLoc = locations.last!
+        setMyLocationData(currLoc: currLoc)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+    
+    func setMyLocationData(currLoc:CLLocation) {
+        self.myLocation.fetchCityStateAndCountry(from: (currLoc)) {
             city, state, country, error in
                 guard let city = city, let state = state, let country = country, error == nil
                     else { return }
-                //print(city, state, country)
                 self.myLocation.icounty = city
                 self.myLocation.istate = state
                 self.myLocation.icountry = country
+            }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status == .authorizedAlways || status == .authorizedWhenInUse) {
+            let currLoc = manager.location!
+            setMyLocationData(currLoc: currLoc)
         }
-        print("Current Location Finished.")
+        else {
+            alert_msg = "Location services not enabled. Please go into Preferences and reopen the app."
+        }
     }
     
 }
