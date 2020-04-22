@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     //global variables
     static let geoCoder = CLGeocoder()
-    let locationManager = CLLocationManager()
     let center = UNUserNotificationCenter.current()
     
     //MARK: api struct
@@ -47,35 +46,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        //MARK: set up location tracking
+        center.delegate = self
         
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
-        locationManager.startMonitoringVisits()
-        locationManager.delegate = self
-        
-        let status = CLLocationManager.authorizationStatus()
-        
-        
-        //handle location errors if access is denied
-        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-           if let error = error as? CLError, error.code == .denied {
-              // Location updates are not authorized.
-        
-              manager.stopUpdatingLocation()
-              return
-           }
-           // Notify the user of any errors.
-        }
-        
+        sleep(1)
         
         //MARK: set up notifications
-        center.delegate = self
         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
         //request authorization for notifications
         center.requestAuthorization(options:options) { (granted, error) in if granted {
             print ("Notification permission allowed")
-//            self.setUpNotification()
             self.setUpDailyNotification()
             }
         }
@@ -233,83 +212,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 }
 
-extension AppDelegate: CLLocationManagerDelegate {
-    
-    //check to see if user has allowed location permission
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print("location manager authorization status changed")
-        
-        switch status {
-            case .authorizedAlways:
-                print("user allow app to get location data when app is active or in background")
-            case .authorizedWhenInUse:
-                print("user allow app to get location data only when app is active")
-            case .denied:
-                print("user tap 'disallow' on the permission dialog, cant get location data")
-            case .restricted:
-                print("parental control setting disallow location data")
-            case .notDetermined:
-                print("the location permission dialog haven't shown before, user haven't tap allow/disallow")
-        }
-        //self.setCurrentLocation()
-    }
-    
-    func setCurrentLocation(){
-           let currLoc = self.locationManager.location
-           if (currLoc == nil) {
-            print("No location available")
-            return
-           }
-           print(currLoc)
-           //get city state country from lat and long
-           self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) {
-               city, state, country, error in
-                   guard let city = city, let state = state, let country = country, error == nil
-                       else { return }
-                   //print(city, state, country)
-                   self.myLocation.icounty = city
-                   self.myLocation.istate = state
-                   self.myLocation.icountry = country
-            }
-            print("Current Location Updated After Location Manager Auth Status Changed")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
-        print("visit")
-       let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
-
-        
-        AppDelegate.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
-            if let place = placemarks?.first {
-                let description =  "\(place)"
-                self.newVisitReceived(visit, description: description, place: place )
-            }
-        }
-        
-    }
-    
-    func newVisitReceived(_ visit: CLVisit, description: String, place: CLPlacemark) {
-        let location = Location(visit: visit, descriptionString: description)
-        let locality = place.locality
-    
-        let content = UNMutableNotificationContent()
-        content.title = "Cases in " + locality!
-        content.body = "Get data from API"
-        content.sound = .default
-
-        // 2
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let request = UNNotificationRequest(identifier: location.dateString, content: content, trigger: trigger)
-
-         //3
-        center.add(request) { error in if error != nil {
-            print ("something went wrong")
-            }
-            
-        }
-       
-   }
-    
-    
-    
-}

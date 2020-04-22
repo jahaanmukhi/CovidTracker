@@ -21,8 +21,8 @@ class LocationPrefTableViewController: UITableViewController, UISearchResultsUpd
         var daily_change_deaths: Float!
         var confirmed_deaths: Float?
         var fips: Float! //what is this?
-        var latitude: Float!
-        var longitude: Float!
+        var latitude: Float?
+        var longitude: Float?
         var population: Float!
         var state: String!
         var state_abbr: String!

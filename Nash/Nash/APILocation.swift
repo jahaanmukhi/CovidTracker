@@ -24,7 +24,6 @@ class APILocation: NSObject {
     var ipopulation: Float = 0.0
     var istate: String?
     var iuid: Float = 0.0
-    //static var totalCases: Int
     
     func fetchCityStateAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ state: String?, _ country:  String?, _ error: Error?) -> ()) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
@@ -34,6 +33,5 @@ class APILocation: NSObject {
                        error)
         }
     }
-        
 
 }
