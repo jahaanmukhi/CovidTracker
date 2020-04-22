@@ -45,7 +45,7 @@ This project uses a Flask server.
 We update the data daily (after 8PM EST) and host it in JSON format here: [JSON](https://nash-273721.df.r.appspot.com/map)
 
 #### Data
-We use the [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE] (https://github.com/CSSEGISandData/COVID-19). 
+We use the [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19). 
 We combine all of the time series data, which be found in 5 separate CSV files [here](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series), and clean the data so that the map pins work more smoothly. 
 
 See online/updates.py for the data collection and data cleaning code, which is a python script that uses Pandas DF. 
