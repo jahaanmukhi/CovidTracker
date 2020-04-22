@@ -15,7 +15,8 @@ recovered counts as well as daily/weekly increases.
 - [ ] Map interface displaying COVID-19 info 
   - [ ] Pins display current cases and death count for region 
   - [ ] County-level data for United States 
-  - [ ] Country-level data for non-US territories
+  - [ ] Province-level data for China
+  - [ ] Country-level data for territories excluding US and China
   - [ ] Search bar allows users to search nearly 4,000 pins 
 - [ ] Launch Screen and notifications
   - [ ] Button to launch a COVID-19 update based on current location
