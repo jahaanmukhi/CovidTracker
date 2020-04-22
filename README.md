@@ -36,9 +36,7 @@ Jake Derry,  Ava LeWinter, Jahaan Mukhi, Joseph Nagy, David Rothblatt, Sam Snede
 
 This project uses the UIKit, MapKit, CoreLocation, and UserNotification frameworks.
 
-MapKit framework - for COVID-19 heat map
-Core Location - for updated location and daily update
-Local Notification - for daily reminder notification
+MapKit framework - for COVID-19 heat map | Core Location - for updated location and daily update | Local Notification - for daily reminder notification
 
 #### Backend
 
