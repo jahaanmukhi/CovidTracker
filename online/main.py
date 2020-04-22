@@ -16,8 +16,13 @@ def get_map():
     """
     Grabs the map data.
     """
-    with open('data/covid_data.json', 'r') as json_file:
-        return jsonify(json.load(json_file))
+    try:
+      with open(str(updates.get_temp_path()), 'r') as json_file:
+          return jsonify(json.load(json_file))
+    except FileNotFoundError:
+      updates.update()
+      with open(str(updates.get_temp_path()), 'r') as json_file:
+          return jsonify(json.load(json_file))
 
 @app.route('/map/update')
 def update():

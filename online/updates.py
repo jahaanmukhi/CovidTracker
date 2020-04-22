@@ -3,6 +3,17 @@ import requests
 import csv, json 
 from io import StringIO
 import pandas as pd
+import pathlib
+import tempfile
+
+def make_temp_path():
+  with tempfile.NamedTemporaryFile() as temp:
+    return pathlib.Path(temp.name)
+
+path = make_temp_path()
+
+def get_temp_path():
+  return path
 
 def watch_for_updates():
     """
@@ -18,7 +29,7 @@ def update():
     Updates the data in the server.
     """
     # get data from the server
-    # repo 
+    # repo
     # https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series
     
     US_confirmed = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv"
@@ -67,7 +78,7 @@ def update():
 
     covid_data = pd.merge(US_df, global_df, how='outer')
 
-    covid_data.to_json('data/covid_data.json', orient='records')
+    covid_data.to_json(str(path), orient='records')
 
     # save the data to the file
 
@@ -155,7 +166,14 @@ def filter_df_US(df, deaths):
                 }
     
     filtered_df.rename(columns=rename, inplace=True)
-    filtered_df['state_abbr'] = filtered_df['state'].map(lambda state: us_state_abbrev[state], na_action='ignore')
+
+    def get_state_abbrev(state):
+      try:
+        return us_state_abbrev[state]
+      except KeyError:
+        return ""
+
+    filtered_df['state_abbr'] = filtered_df['state'].map(get_state_abbrev, na_action='ignore')
     filtered_df['latitude'] = filtered_df['latitude'].round(7)
     filtered_df['longitude'] = filtered_df['longitude'].round(7)
     return filtered_df
