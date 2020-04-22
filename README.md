@@ -11,6 +11,8 @@ Jake Derry,  Ava LeWinter, Jahaan Mukhi, Joseph Nagy, David Rothblatt, Sam Snede
 - Only can be used in Portrait Mode
 - Constaints allow for build with iPhone 11, iPhone 8, and iPad models
 - Handles cases with No Internet and Location Services Diasbled smoothly
+- Works with most simulated locations (anywhere in USA, London, Sydney, Moscow, ...)
+- GPX files included for some locations as well, including VeniceItaly.gpx
 
 ## Project Overview 
 
