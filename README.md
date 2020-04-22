@@ -31,7 +31,7 @@ This project uses the UIKit, MapKit, CoreLocation, and UserNotification framewor
 
 ### Backend
 
-This project uses a Flask server and a PostgreSQL database.
+This project uses a Flask server.
 
 ## Audience
 
