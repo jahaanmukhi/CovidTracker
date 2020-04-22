@@ -27,11 +27,6 @@ class LocationSearchTableViewController: UITableViewController {
 //      return searchController.isActive && (!isSearchBarEmpty) //|| searchBarScopeIsFiltering)
 //    }
     
-    // Dummy array of pins
-    var testPins: [Pin] = [Pin(coordinate: CLLocationCoordinate2D(latitude: 37.8199, longitude: 122.4783), title: "Golden Gate Bridge", subtitle: "Bridge", color: UIColor.red),
-    Pin(coordinate: CLLocationCoordinate2D(latitude: 36.0007, longitude: -78.9367), title: "Duke University", subtitle: "Duke", color: UIColor.blue),
-    Pin(coordinate: CLLocationCoordinate2D(latitude: 40.7128, longitude: 74.0060), title: "NYC", subtitle: "City", color: UIColor.green)]
-    
     func filterContentForSearchText(_ searchText: String) {
         filteredPins = allPins.filter{$0.title!.lowercased().contains(searchText.lowercased())}
         

@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     
@@ -41,19 +41,16 @@ class ViewController: UIViewController {
     var covidWorldWide: [Covid] = []
 
     //var allElms: [Place] = []
-    let myLocation = APILocation()
+    var myLocation = APILocation()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         appDescription.adjustsFontSizeToFitWidth = true
         
-        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
         locationManager.startUpdatingLocation()
-        
-        OperationQueue.main.addOperation ({
-            self.setCurrentLocation()
-        })
 
         OperationQueue.main.addOperation ({
             self.downloadJSON()
@@ -113,10 +110,8 @@ class ViewController: UIViewController {
     }
     
     func setAlertData(){
-    
         var alertPlace: Covid
-         
-        for place in self.covidWorldWide{
+        for place in self.covidWorldWide {
             if (self.myLocation.icountry == "United States") {
                 if (place.county != nil && place.county == self.myLocation.icounty &&
                         place.state_abbr != nil && place.state_abbr == self.myLocation.istate
@@ -167,24 +162,34 @@ class ViewController: UIViewController {
         print("Alert Process Finished")
     }
     
-    func setCurrentLocation(){
-        let currLoc = self.locationManager.location
-        if (currLoc == nil) {
-         print("No location available")
-         return
-        }
-        print(currLoc)
-        //get city state country from lat and long
-        self.myLocation.fetchCityStateAndCountry(from: (currLoc ?? nil)!) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let currLoc = locations.last!
+        setMyLocationData(currLoc: currLoc)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+    
+    func setMyLocationData(currLoc:CLLocation) {
+        self.myLocation.fetchCityStateAndCountry(from: (currLoc)) {
             city, state, country, error in
                 guard let city = city, let state = state, let country = country, error == nil
                     else { return }
-                //print(city, state, country)
                 self.myLocation.icounty = city
                 self.myLocation.istate = state
                 self.myLocation.icountry = country
+            }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status == .authorizedAlways || status == .authorizedWhenInUse) {
+            let currLoc = manager.location!
+            setMyLocationData(currLoc: currLoc)
         }
-        print("Current Location Finished.")
+        else {
+            alert_msg = "Location services not enabled. Please go into Preferences and reopen the app."
+        }
     }
     
 }
