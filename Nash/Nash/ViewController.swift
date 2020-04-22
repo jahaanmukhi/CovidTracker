@@ -185,12 +185,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if (status == .authorizedAlways || status == .authorizedWhenInUse) {
+        if (manager.location != nil && (status == .authorizedAlways || status == .authorizedWhenInUse) ){
             let currLoc = manager.location!
             setMyLocationData(currLoc: currLoc)
-        }
-        else {
-            alert_msg = "Location services not enabled. Please go into Preferences and reopen the app."
+        } else {
+            alert_msg = "Location services not enabled."
         }
     }
     
