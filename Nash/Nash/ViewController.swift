@@ -47,6 +47,7 @@ class ViewController: UIViewController {
         
         appDescription.adjustsFontSizeToFitWidth = true
         
+        locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         
         OperationQueue.main.addOperation ({

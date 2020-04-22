@@ -24,8 +24,8 @@ struct Covid: Codable {
     let country: String?
     let state: String?
     let county: String?
-    let latitude: Double
-    let longitude: Double
+    let latitude: Double?
+    let longitude: Double?
     let confirmed_cases: Int?
     let confirmed_deaths: Int?
     let daily_change_cases: Int?

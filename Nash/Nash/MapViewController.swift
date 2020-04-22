@@ -70,14 +70,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     }
     
     func addPins(LocationSearchTableViewController: LocationSearchTableViewController?){
-               // Set initial location
-               //let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
-
-               // Do any additional setup after loading the view.
-               //mapView.centerToLocation(initialLocation)
-        
-            
-            
             //populate map with pins
             for c in covid {
                 var description =  "Cases: " + String(c.confirmed_cases!) //+ " | " + String(c.daily_change_cases!) + " Today" +
@@ -92,9 +84,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
                     percentage = 100
                 }
                 let color = UIColor.yellow.toColor(UIColor.red, percentage: CGFloat(percentage))
-                let annotation = Pin(coordinate: CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude ), title: location, subtitle: description, color:color)
-                mapView.addAnnotation(annotation)
-                allPins.append(annotation)
+                if (c.latitude != nil && c.longitude != nil){
+                    let annotation = Pin(coordinate: CLLocationCoordinate2D(latitude: c.latitude ?? 0, longitude: c.longitude ?? 0), title: location, subtitle: description, color:color)
+                    mapView.addAnnotation(annotation)
+                    allPins.append(annotation)
+                }
             }
         locationSearchTable.allPins = allPins
     }
