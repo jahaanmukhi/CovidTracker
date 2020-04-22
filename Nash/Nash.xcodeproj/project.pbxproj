@@ -12,18 +12,25 @@
 		CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */; };
 		CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643272438F45D00D1C0E6 /* ViewController.swift */; };
 		CF86432B2438F45D00D1C0E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8643292438F45D00D1C0E6 /* Main.storyboard */; };
+<<<<<<< HEAD
 		CF86432E2438F45D00D1C0E6 /* Nash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF86432C2438F45D00D1C0E6 /* Nash.xcdatamodeld */; };
 		CF8643302438F46000D1C0E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF86432F2438F46000D1C0E6 /* Assets.xcassets */; };
 		CF8643332438F46000D1C0E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8643312438F46000D1C0E6 /* LaunchScreen.storyboard */; };
 		CF86433B2438F4F200D1C0E6 /* MapStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF86433A2438F4F200D1C0E6 /* MapStoryboard.storyboard */; };
+=======
+		CF8643302438F46000D1C0E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF86432F2438F46000D1C0E6 /* Assets.xcassets */; };
+>>>>>>> master
 		CF8643432438FA3500D1C0E6 /* ShadowedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643422438FA3500D1C0E6 /* ShadowedImageView.swift */; };
 		CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */; };
 		CF8643482438FC2100D1C0E6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643472438FC2100D1C0E6 /* MapViewController.swift */; };
 		CF86434A2438FD4F00D1C0E6 /* Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643492438FD4F00D1C0E6 /* Emergency.swift */; };
 		DD06D226244022500067FA9F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD06D225244022500067FA9F /* Location.swift */; };
+<<<<<<< HEAD
 		DD6FDDCE244A01F7008D266B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FDDCD244A01F7008D266B /* ProfileViewController.swift */; };
 		DD6FDDD0244A09A5008D266B /* LocationPrefTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FDDCF244A09A5008D266B /* LocationPrefTableViewController.swift */; };
 		DD6FDDD4244A4353008D266B /* LocationPrefTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FDDD3244A4353008D266B /* LocationPrefTableViewCell.swift */; };
+=======
+>>>>>>> master
 		DDCD9D892444B7BE00D25F96 /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCD9D882444B7BE00D25F96 /* APILocation.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,19 +41,27 @@
 		CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CF8643272438F45D00D1C0E6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CF86432A2438F45D00D1C0E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		CF86432D2438F45D00D1C0E6 /* Nash.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nash.xcdatamodel; sourceTree = "<group>"; };
 		CF86432F2438F46000D1C0E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF8643322438F46000D1C0E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF8643342438F46000D1C0E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF86433A2438F4F200D1C0E6 /* MapStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapStoryboard.storyboard; sourceTree = "<group>"; };
+=======
+		CF86432F2438F46000D1C0E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CF8643342438F46000D1C0E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+>>>>>>> master
 		CF8643422438FA3500D1C0E6 /* ShadowedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowedImageView.swift; sourceTree = "<group>"; };
 		CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronavirusMapView.swift; sourceTree = "<group>"; };
 		CF8643472438FC2100D1C0E6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CF8643492438FD4F00D1C0E6 /* Emergency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency.swift; sourceTree = "<group>"; };
 		DD06D225244022500067FA9F /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		DD6FDDCD244A01F7008D266B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DD6FDDCF244A09A5008D266B /* LocationPrefTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPrefTableViewController.swift; sourceTree = "<group>"; };
 		DD6FDDD3244A4353008D266B /* LocationPrefTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPrefTableViewCell.swift; sourceTree = "<group>"; };
+=======
+>>>>>>> master
 		DDCD9D882444B7BE00D25F96 /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,13 +100,17 @@
 				DDCD9D882444B7BE00D25F96 /* APILocation.swift */,
 				CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */,
 				CF8643272438F45D00D1C0E6 /* ViewController.swift */,
+<<<<<<< HEAD
 				CF86433A2438F4F200D1C0E6 /* MapStoryboard.storyboard */,
 				DD6FDDCF244A09A5008D266B /* LocationPrefTableViewController.swift */,
 				DD6FDDCD244A01F7008D266B /* ProfileViewController.swift */,
+=======
+>>>>>>> master
 				3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */,
 				CF8643492438FD4F00D1C0E6 /* Emergency.swift */,
 				CF8643472438FC2100D1C0E6 /* MapViewController.swift */,
 				CF8643292438F45D00D1C0E6 /* Main.storyboard */,
+<<<<<<< HEAD
 				CF8643312438F46000D1C0E6 /* LaunchScreen.storyboard */,
 				CF86432F2438F46000D1C0E6 /* Assets.xcassets */,
 				CF8643342438F46000D1C0E6 /* Info.plist */,
@@ -99,6 +118,12 @@
 				CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */,
 				DD06D225244022500067FA9F /* Location.swift */,
 				DD6FDDD3244A4353008D266B /* LocationPrefTableViewCell.swift */,
+=======
+				CF86432F2438F46000D1C0E6 /* Assets.xcassets */,
+				CF8643342438F46000D1C0E6 /* Info.plist */,
+				CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */,
+				DD06D225244022500067FA9F /* Location.swift */,
+>>>>>>> master
 			);
 			path = Nash;
 			sourceTree = "<group>";
@@ -161,9 +186,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				CF8643332438F46000D1C0E6 /* LaunchScreen.storyboard in Resources */,
 				CF8643302438F46000D1C0E6 /* Assets.xcassets in Resources */,
 				CF86433B2438F4F200D1C0E6 /* MapStoryboard.storyboard in Resources */,
+=======
+				CF8643302438F46000D1C0E6 /* Assets.xcassets in Resources */,
+>>>>>>> master
 				CF86432B2438F45D00D1C0E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,18 +205,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */,
+<<<<<<< HEAD
 				DD6FDDD0244A09A5008D266B /* LocationPrefTableViewController.swift in Sources */,
+=======
+>>>>>>> master
 				CF8643242438F45D00D1C0E6 /* AppDelegate.swift in Sources */,
 				CF86434A2438FD4F00D1C0E6 /* Emergency.swift in Sources */,
 				DDCD9D892444B7BE00D25F96 /* APILocation.swift in Sources */,
 				CF8643432438FA3500D1C0E6 /* ShadowedImageView.swift in Sources */,
 				DD06D226244022500067FA9F /* Location.swift in Sources */,
+<<<<<<< HEAD
 				DD6FDDCE244A01F7008D266B /* ProfileViewController.swift in Sources */,
 				3A6D6D4A2445266300D2EC36 /* LocationSearchTableViewController.swift in Sources */,
 				CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */,
 				CF86432E2438F45D00D1C0E6 /* Nash.xcdatamodeld in Sources */,
 				CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */,
 				DD6FDDD4244A4353008D266B /* LocationPrefTableViewCell.swift in Sources */,
+=======
+				3A6D6D4A2445266300D2EC36 /* LocationSearchTableViewController.swift in Sources */,
+				CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */,
+				CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */,
+>>>>>>> master
 				CF8643482438FC2100D1C0E6 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,6 +241,7 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		CF8643312438F46000D1C0E6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -211,6 +250,8 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+=======
+>>>>>>> master
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -333,13 +374,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = GNZ5HU8648;
+=======
+				DEVELOPMENT_TEAM = JBK62Z348L;
+>>>>>>> master
 				INFOPLIST_FILE = Nash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = nash420;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = covidapp;
+>>>>>>> master
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -351,13 +400,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = GNZ5HU8648;
+=======
+				DEVELOPMENT_TEAM = JBK62Z348L;
+>>>>>>> master
 				INFOPLIST_FILE = Nash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = nash420;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = covidapp;
+>>>>>>> master
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -386,6 +443,7 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+<<<<<<< HEAD
 
 /* Begin XCVersionGroup section */
 		CF86432C2438F45D00D1C0E6 /* Nash.xcdatamodeld */ = {
@@ -399,6 +457,8 @@
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */
+=======
+>>>>>>> master
 	};
 	rootObject = CF8643182438F45D00D1C0E6 /* Project object */;
 }
