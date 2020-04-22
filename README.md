@@ -13,6 +13,7 @@ Jake Derry,  Ava LeWinter, Jahaan Mukhi, Joseph Nagy, David Rothblatt, Sam Snede
 - Handles cases with No Internet and Location Services Diasbled smoothly
 - Works with most simulated locations (anywhere in USA, London, Sydney, Moscow, ...)
 - GPX files included for some locations as well, including VeniceItaly.gpx
+- Note that the app simulator is buggy, so it may not recognize the default location during the first attempt to build. If this happens, just try again please. It is better to simulate on a phone if possible. 
 
 ## Project Overview 
 
