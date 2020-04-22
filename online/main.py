@@ -11,18 +11,21 @@ import json
 import threading
 import updates
 
+def get_json():
+  with open(str(updates.get_temp_path()), 'r') as json_file:
+    return jsonify(json.load(json_file))
+
 @app.route('/map')
 def get_map():
     """
     Grabs the map data.
     """
+    updates.check_time()
     try:
-      with open(str(updates.get_temp_path()), 'r') as json_file:
-          return jsonify(json.load(json_file))
+      return get_json()
     except FileNotFoundError:
       updates.update()
-      with open(str(updates.get_temp_path()), 'r') as json_file:
-          return jsonify(json.load(json_file))
+      return get_json()
 
 @app.route('/map/update')
 def update():
