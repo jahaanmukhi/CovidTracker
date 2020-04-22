@@ -6,26 +6,27 @@ Jake Derry, Joseph Nagy, Sam Snedeker, Ava LeWinter, Jahaan Mukhi, David Rothbla
 
 ## Project Goal
 
-To provide disaster information especially COVID-19 updates and 
-allow an interface for communicating status updates to friends 
-during a disaster.
+To provide users with daily COVID-19 updates and a map interface 
+to search and view world-wide COVID-19 data including case, death and 
+recovered counts as well as daily/weekly increases. 
 
 ## Features
 
-- [ ] Login and signup
-- [ ] Map interface displaying friends and disasters
-  - [ ] Displays COVID-19 cases
-- [ ] Friends
-  - [ ] Add someone as a friend
-  - [ ] Friend can share status (safe or not safe)
-  - [ ] Friend update status
-- [ ] News information based on disaster and region #bonus
-
+- [ ] Map interface displaying COVID-19 info 
+  - [ ] Pins display current cases and death count for region 
+  - [ ] County-level data for United States 
+  - [ ] Country-level data for non-US territories
+  - [ ] Search bar allows users to search nearly 4,000 pins 
+- [ ] Launch Screen and notifications
+  - [ ] Button to launch a COVID-19 update based on current location
+  - [ ] Description of application purpose 
+  - [ ] Daily COVID-19 notification sent at night 
+  
 ## Project Architecture
 
 ### Frontend
 
-This project uses the MapKit framework.
+This project uses the UIKit, MapKit, CoreLocation, and UserNotification frameworks.
 
 ### Backend
 
@@ -33,4 +34,4 @@ This project uses a Flask server and a PostgreSQL database.
 
 ## Audience
 
-People who would like to get updates about COVID-19 (and other disasters), would like to share their status with friends, or are worried about their friends.
+People who would like to get updates about COVID-19 and track the ongoing pandemic. 
