@@ -1,6 +1,5 @@
 # Nash Final Project
-
-Jake Derry, Joseph Nagy, Sam Snedeker, Ava LeWinter, Jahaan Mukhi, David Rothblatt
+Jake Derry,  Ava LeWinter, Jahaan Mukhi, Joseph Nagy, David Rothblatt, Sam Snedeker
 
 ## Demo
 
@@ -45,34 +44,36 @@ This project uses a Flask server.
 
 People who would like to get updates about COVID-19 and track the ongoing pandemic. 
 
-## Team Contributions 
+## Team 
 
 ### Team Members 
 Jake Derry, Joseph Nagy, Sam Snedeker, Ava LeWinter, Jahaan Mukhi, David Rothblatt
 
-#### David
+### Team Contributions 
+
+#####David
 - Data Collection & Cleaning 
 - Daily Alert Feature 
 - App Integration & Task Delegation
 
-#### Jake
+#####Jake
 - Server 
 - Location Services
 
-#### Joe 
+#####Joe 
 - MapViewController
 - Map Search Bar
 
-#### Jahaan 
+#####Jahaan 
 - MapViewController
 - Map Pins and Gradient 
 
-#### Sam 
+#####Sam 
 - Location Services
 - Reminder Notification 
 - UI/UX (homepage & constraints)
 
-#### Ava 
+#####Ava 
 - Reminder Notification / Daily Alert 
 - UI/UX (homepage & constraints)
 
