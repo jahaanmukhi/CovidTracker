@@ -21,10 +21,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     final let url = URL(string:"https://nash-273721.df.r.appspot.com/map")
     
     var covid = [Covid]()
+    var allPins: [Pin] = []
+    var locationSearchTable = LocationSearchTableViewController()
     
     var resultSearchController: UISearchController? = nil
     
-    var selectedPin : MKPlacemark? = nil
+    var selectedPin : Pin? = nil
     
     func getString(c:Covid) -> String {
         var locationString = ""
@@ -45,7 +47,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
         return locationString
     }
     
-    func downloadJSON(){
+    func downloadJSON(LocationSearchTableViewController: LocationSearchTableViewController?){
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
             do{
                 if data == nil {
@@ -62,23 +64,27 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
             }
         
             OperationQueue.main.addOperation ({
-                 self.addPins()
+                self.addPins(LocationSearchTableViewController: LocationSearchTableViewController)
             })
         }.resume()
     }
     
-    func addPins(){
+    func addPins(LocationSearchTableViewController: LocationSearchTableViewController?){
                // Set initial location
-               let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
+               //let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
 
                // Do any additional setup after loading the view.
-               mapView.centerToLocation(initialLocation)
+               //mapView.centerToLocation(initialLocation)
         
             
             
             //populate map with pins
             for c in covid {
-                let description = "Cases: \(c.confirmed_cases ?? 0) \n Deaths: \(c.confirmed_deaths ?? 0)"
+                var description =  "Cases: " + String(c.confirmed_cases!) //+ " | " + String(c.daily_change_cases!) + " Today" +
+                                    + "\nDeaths: " + String(c.confirmed_deaths!) //+ " | " + String(c.daily_change_deaths!) + " Today"
+                if (c.confirmed_recovered != nil && c.daily_change_recovered != nil) {
+                    description += "\nRecovered: " + String(c.confirmed_recovered!) //+ " | " + String(c.daily_change_recovered!) + " Today"
+                }
                 let location = getString(c:c)
                 let cases = Float(c.confirmed_cases ?? 0)
                 var percentage = (cases/1000.0)*100.0 + 10
@@ -88,9 +94,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
                 let color = UIColor.yellow.toColor(UIColor.red, percentage: CGFloat(percentage))
                 let annotation = Pin(coordinate: CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude ), title: location, subtitle: description, color:color)
                 mapView.addAnnotation(annotation)
+                allPins.append(annotation)
             }
+        locationSearchTable.allPins = allPins
     }
-    
 
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -116,10 +123,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.downloadJSON()
         
         //set up search results table
-        let locationSearchTable = storyboard!.instantiateViewController(identifier: "LocationSearch") as! LocationSearchTableViewController
+        locationSearchTable = storyboard!.instantiateViewController(identifier: "LocationSearch") as! LocationSearchTableViewController
+        // send array of pins to LocationSearchTableViewController
+        downloadJSON(LocationSearchTableViewController: locationSearchTable)
+        self.addPins(LocationSearchTableViewController: locationSearchTable)
         resultSearchController = UISearchController(searchResultsController: locationSearchTable)
         resultSearchController?.searchResultsUpdater = locationSearchTable as! UISearchResultsUpdating
         
@@ -155,7 +164,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
         let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
 
         // Do any additional setup after loading the view.
-        mapView.centerToLocation(initialLocation)
+        //mapView.centerToLocation(initialLocation)
     }
 
     
@@ -194,32 +203,30 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
                        error)
         }
     }
-
-    
 }
 
 protocol HandleMapSearch{
-    func dropPinZoomIn(placemark: MKPlacemark)
+    func dropPinZoomIn(pin: Pin)
 }
 
 extension MapViewController : HandleMapSearch {
-    func dropPinZoomIn(placemark: MKPlacemark) {
+    func dropPinZoomIn(pin: Pin) {
     // cache the pin
-    selectedPin = placemark
+    selectedPin = pin
     // clear existing pins
     //mapView.removeAnnotations(mapView.annotations)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = placemark.coordinate
-        
-        if let city = placemark.locality,
-            let state = placemark.administrativeArea
-        {
-            annotation.subtitle = "(city) (state)"
-        }
-        mapView.addAnnotation(annotation)
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = placemark.coordinate
+//
+//        if let city = placemark.locality,
+//            let state = placemark.administrativeArea
+//        {
+//            annotation.subtitle = "(city) (state)"
+//        }
+//        mapView.addAnnotation(annotation)
         
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
+        let region = MKCoordinateRegion(center: pin.coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
 }

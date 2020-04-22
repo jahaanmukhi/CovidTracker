@@ -30,8 +30,11 @@ struct Covid: Codable {
     let confirmed_deaths: Int?
     let daily_change_cases: Int?
     let daily_change_deaths: Int?
+    let daily_change_recovered: Int?
     let weekly_change_cases: Int?
     let weekly_change_deaths: Int?
+    let confirmed_recovered: Int?
+    let weekly_change_recovered: Int?
     let state_abbr: String?
     let population: Double?
 
@@ -48,8 +51,11 @@ struct Covid: Codable {
     confirmed_deaths:Int,
     daily_change_cases:Int,
     daily_change_deaths:Int,
+    daily_change_recovered:Int,
     weekly_change_cases:Int,
     weekly_change_deaths:Int,
+    confirmed_recovered:Int,
+    weekly_change_recovered:Int,
     state_abbr:String,
     population:Double
   ) {
@@ -65,8 +71,11 @@ struct Covid: Codable {
     self.confirmed_deaths = confirmed_deaths
     self.daily_change_cases = daily_change_cases
     self.daily_change_deaths = daily_change_deaths
+    self.daily_change_recovered = daily_change_recovered
     self.weekly_change_cases = weekly_change_cases
     self.weekly_change_deaths = weekly_change_deaths
+    self.confirmed_recovered = confirmed_recovered
+    self.weekly_change_recovered = weekly_change_recovered
     self.state_abbr = state_abbr
     self.population = population
   }
