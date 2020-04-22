@@ -7,7 +7,10 @@ Jake Derry,  Ava LeWinter, Jahaan Mukhi, Joseph Nagy, David Rothblatt, Sam Snede
 [Video](https://drive.google.com/file/d/1G-e2B-u51MD9_V_EXvgqa8-2tQYzi17l/view?usp=sharing)
 ### Demo Slides 
 [Slides](https://docs.google.com/presentation/d/1k_aOUrA9rAgZsCnhqjPoiRdui3HZZuxMIgBJ8S3GMj4/edit?usp=sharing)
-
+### Build and Error Handling Details
+- Only can be used in Portrait Mode
+- Constaints allow for build with iPhone 11, iPhone 8, and iPad models
+- Handles cases with No Internet and Location Services Diasbled smoothly
 
 ## Project Overview 
 
