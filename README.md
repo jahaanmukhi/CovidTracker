@@ -4,6 +4,10 @@
 
 Jake Derry, Joseph Nagy, Sam Snedeker, Ava LeWinter, Jahaan Mukhi, David Rothblatt
 
+## Presentation
+
+[Click here to access presentation video](https://drive.google.com/file/d/1G-e2B-u51MD9_V_EXvgqa8-2tQYzi17l/view?usp=sharing)
+
 ## Project Goal
 
 To provide users with daily COVID-19 updates and a map interface 
