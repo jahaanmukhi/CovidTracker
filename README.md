@@ -42,7 +42,9 @@ Local Notification - for daily reminder notification
 
 #### Backend
 
-This project uses a Flask server.
+This project uses a Flask server. 
+
+We update the data daily (after 8PM EST) and host it in JSON format here: [JSON](https://nash-273721.df.r.appspot.com/map)
 
 ### Audience
 
@@ -51,7 +53,7 @@ People who would like to get updates about COVID-19 and track the ongoing pandem
 ## Team 
 
 ### Team Members 
-Jake Derry, Joseph Nagy, Sam Snedeker, Ava LeWinter, Jahaan Mukhi, David Rothblatt
+Jake Derry,  Ava LeWinter, Jahaan Mukhi, Joseph Nagy, David Rothblatt, Sam Snedeker
 
 ### Team Contributions 
 
