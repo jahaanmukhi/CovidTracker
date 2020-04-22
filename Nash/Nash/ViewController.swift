@@ -34,6 +34,7 @@ class ViewController: UIViewController {
         var uid: Int!
         var state_abbr: String!
     }
+    @IBOutlet weak var appDescription: UILabel!
     
     final let url = URL(string:"https://nash-273721.df.r.appspot.com/map")
     var covidWorldWide: [Covid] = []
@@ -43,6 +44,8 @@ class ViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        appDescription.adjustsFontSizeToFitWidth = true
         
         locationManager.startUpdatingLocation()
         
