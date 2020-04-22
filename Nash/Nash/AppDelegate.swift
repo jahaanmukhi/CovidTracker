@@ -21,26 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     static let geoCoder = CLGeocoder()
     let center = UNUserNotificationCenter.current()
     
-    /*
-    struct Place: Codable {
-        var combined_key: String! //name of place
-        var confirmed_cases: Int!
-        var country: String!
-        var county: String! //think there is going to be problem with null values
-        var daily_change_cases: Int!
-        var daily_change_deaths: Float!
-        var confirmed_deaths: Float?
-        var fips: Float! //what is this?
-        var latitude: Float?
-        var longitude: Float?
-        var population: Float!
-        var state: String!
-        var state_abbr: String!
-        var uid: Float!
-    }
-
-    //var allElms: [Place] = []
-    */
     let myLocation = APILocation()
     
     func setUpDailyNotification() {
@@ -85,7 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
                 
         } // end of func setUpNotification - CHANGED FOR DAILY UPDATE
-    
     
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -144,9 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 
-
     // MARK: UISceneSession Lifecycle
-
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
@@ -160,7 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     // MARK: - Core Data stack
-
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -189,7 +165,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }()
 
     // MARK: - Core Data Saving support
-
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {

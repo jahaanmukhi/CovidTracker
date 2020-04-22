@@ -154,10 +154,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
         print("finish location manager")
         
         
-        // Set initial location
-        let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
-
-        // Do any additional setup after loading the view.
+        //Set initial location to SF
+        //let initialLocation = CLLocation(latitude: 37.733795, longitude: -122.446747)
         //mapView.centerToLocation(initialLocation)
     }
 
@@ -183,7 +181,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate,MKMapViewDe
         
         fetchCityAndCountry(from: location) { city, country, error in
             guard let city = city, let country = country, error == nil else { return }
-            //print(city + ", " + country)
         }
         
         locationManagerVC.stopUpdatingLocation()
@@ -205,20 +202,8 @@ protocol HandleMapSearch{
 
 extension MapViewController : HandleMapSearch {
     func dropPinZoomIn(pin: Pin) {
-    // cache the pin
-    selectedPin = pin
-    // clear existing pins
-    //mapView.removeAnnotations(mapView.annotations)
-//        let annotation = MKPointAnnotation()
-//        annotation.coordinate = placemark.coordinate
-//
-//        if let city = placemark.locality,
-//            let state = placemark.administrativeArea
-//        {
-//            annotation.subtitle = "(city) (state)"
-//        }
-//        mapView.addAnnotation(annotation)
-        
+        selectedPin = pin
+
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: pin.coordinate, span: span)
         mapView.setRegion(region, animated: true)

@@ -65,7 +65,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             self.setAlertData()
         })
         OperationQueue.main.addOperation ({
-            let alert = UIAlertController(title: "Daily Coronavirus Update", message: self.alert_msg, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Daily Update", message: self.alert_msg, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in }))
             self.present(alert, animated: true, completion: nil)
         })
@@ -86,6 +86,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
                     // show the alert
                     self.present(alert, animated: true, completion: nil)
+                    
+                    self.alert_msg = "Error: Not Connected To Internet"
                     
                     print ("error: \(error!)")
                 }

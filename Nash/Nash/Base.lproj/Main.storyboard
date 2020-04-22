@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NWW-vf-Zgq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NWW-vf-Zgq">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -62,7 +62,7 @@
                                     <constraint firstAttribute="width" secondItem="DwO-YM-fET" secondAttribute="height" multiplier="373:179" id="r7Y-Ly-piI"/>
                                     <constraint firstAttribute="height" constant="179" id="ws5-zV-ggu"/>
                                 </constraints>
-                                <string key="text">We give you real-time data on the current spread of Corona Virus in your area and across the world. Through daily updates and a live map, you can stay up-to-date on the state of the current global pandemic.</string>
+                                <string key="text">We give you real-time data on the current spread of the novel coronavirus in your area and worldwide! Through daily updates and a live map, you can stay up-to-date on the state of the current global pandemic.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -213,11 +213,11 @@
             <point key="canvasLocation" x="1832" y="788"/>
         </scene>
     </scenes>
-    <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="Daily Update" width="786" height="91"/>
         <image name="icon stats" width="288" height="318"/>
-        <image name="paperplane.fill" catalog="system" width="128" height="121"/>
+        <image name="paperplane.fill" catalog="system" width="64" height="60"/>
         <image name="track" width="1128" height="174"/>
     </resources>
+    <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
