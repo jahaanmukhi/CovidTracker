@@ -34,6 +34,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         var uid: Int!
         var state_abbr: String!
     }
+    
     @IBOutlet weak var appDescription: UILabel!
     
     final let url = URL(string:"https://nash-273721.df.r.appspot.com/map")
@@ -118,8 +119,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     print("IDENTIFIED: County in US")
                     alertPlace = place
 
-                    alert_msg =  "Current Location:\n" + String(alertPlace.combined_key) + "\n\nTotal Population: " + String(alertPlace.population)
-                    alert_msg += "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) +
+                    alert_msg =  "\nCurrent Location:\n" + String(alertPlace.combined_key) + "\n\nTotal Population: " + String(alertPlace.population)
+                    alert_msg += "\n\nConfirmed Cases: " + String(alertPlace.confirmed_cases) +
                                 "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths)
                     alert_msg += "\n\nDaily Change in Cases: " + String(alertPlace.daily_change_cases) +
                                  "\nDaily Change in Deaths: " + String(alertPlace.daily_change_deaths)
@@ -131,7 +132,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     print("IDENTIFIED: Province outside US")
                     alertPlace = place
 
-                    alert_msg =  "Current Location:\n" + String(alertPlace.state_abbr) + ", " + String(alertPlace.country)
+                    alert_msg =  "\nCurrent Location:\n" + String(alertPlace.state_abbr) + ", " + String(alertPlace.country)
                     alert_msg += "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) +
                                 "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths)
                     alert_msg += "\n\nDaily Change in Cases: " + String(alertPlace.daily_change_cases) +
@@ -141,8 +142,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 } else if (place.state == nil) {
                     print("IDENTIFIED: Country")
                     alertPlace = place
-                    alert_msg =  "Current Location:\n" + String(alertPlace.country) + "\n\nTotal Population: " + String(alertPlace.population)
-                    alert_msg += "\nConfirmed Cases: " + String(alertPlace.confirmed_cases) +
+                    alert_msg =  "\nCurrent Location:\n" + String(alertPlace.country) + "\n\nTotal Population: " + String(alertPlace.population)
+                    alert_msg += "\n\nConfirmed Cases: " + String(alertPlace.confirmed_cases) +
                                  "\nConfirmed Deaths: " + String(alertPlace.confirmed_deaths)
                     alert_msg += "\n\nDaily Change in Cases: " + String(alertPlace.daily_change_cases) +
                                  "\nDaily Change in Deaths: " + String(alertPlace.daily_change_deaths)
