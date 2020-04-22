@@ -3,13 +3,17 @@ import requests
 import csv, json 
 from io import StringIO
 import pandas as pd
+import pathlib
+import tempfile
 
-def sleep(hour, minute):
-    t = datetime.datetime.today()
-    future = datetime.datetime(t.year,t.month,t.day,hour,minute)
-    if t.hour >= hour:
-        future += datetime.timedelta(days=1)
-        time.sleep((future-t).seconds)
+def make_temp_path():
+  with tempfile.NamedTemporaryFile() as temp:
+    return pathlib.Path(temp.name)
+
+path = make_temp_path()
+
+def get_temp_path():
+  return path
 
 def watch_for_updates():
     """
@@ -17,16 +21,15 @@ def watch_for_updates():
     data in the server.
     """
     while True:
-        sleep(20, 30)
         update()
-        time.sleep(60) 
+        time.sleep(60 * 60)
 
 def update():
     """
     Updates the data in the server.
     """
     # get data from the server
-    # repo 
+    # repo
     # https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series
     
     US_confirmed = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv"
@@ -75,7 +78,7 @@ def update():
 
     covid_data = pd.merge(US_df, global_df, how='outer')
 
-    covid_data.to_json('data/covid_data.json', orient='records')
+    covid_data.to_json(str(path), orient='records')
 
     # save the data to the file
 
@@ -163,7 +166,14 @@ def filter_df_US(df, deaths):
                 }
     
     filtered_df.rename(columns=rename, inplace=True)
-    filtered_df['state_abbr'] = filtered_df['state'].map(lambda state: us_state_abbrev[state], na_action='ignore')
+
+    def get_state_abbrev(state):
+      try:
+        return us_state_abbrev[state]
+      except KeyError:
+        return ""
+
+    filtered_df['state_abbr'] = filtered_df['state'].map(get_state_abbrev, na_action='ignore')
     filtered_df['latitude'] = filtered_df['latitude'].round(7)
     filtered_df['longitude'] = filtered_df['longitude'].round(7)
     return filtered_df
@@ -239,13 +249,13 @@ def date_manipulation(df, deaths, recovered, filters):
 
 ############################################
 
-with open('us_state_abbreviations.json', 'r') as file1:
+with open('data/us_state_abbreviations.json', 'r') as file1:
     us_state_abbrev = json.load(file1)
 
-with open('global_populations.json', 'r') as file2: 
+with open('data/global_populations.json', 'r') as file2: 
     global_populations = json.load(file2)
 
-with open('provinces_abbreviations.json', 'r') as file3:
+with open('data/provinces_abbreviations.json', 'r') as file3:
     provinces_abbrev = json.load(file3)
 
 if __name__ == '__main__':
