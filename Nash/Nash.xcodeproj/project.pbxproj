@@ -7,29 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B42CF4FA242C00A400733541 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CF4F9242C00A400733541 /* AppDelegate.swift */; };
-		B42CF4FC242C00A400733541 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CF4FB242C00A400733541 /* SceneDelegate.swift */; };
-		B42CF4FE242C00A400733541 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CF4FD242C00A400733541 /* ViewController.swift */; };
-		B42CF501242C00A400733541 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B42CF4FF242C00A400733541 /* Main.storyboard */; };
-		B42CF504242C00A400733541 /* Nash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B42CF502242C00A400733541 /* Nash.xcdatamodeld */; };
-		B42CF506242C00A600733541 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CF505242C00A600733541 /* Assets.xcassets */; };
-		B42CF509242C00A600733541 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B42CF507242C00A600733541 /* LaunchScreen.storyboard */; };
+		3A6D6D4A2445266300D2EC36 /* LocationSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */; };
+		CF8643242438F45D00D1C0E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643232438F45D00D1C0E6 /* AppDelegate.swift */; };
+		CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */; };
+		CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643272438F45D00D1C0E6 /* ViewController.swift */; };
+		CF86432B2438F45D00D1C0E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8643292438F45D00D1C0E6 /* Main.storyboard */; };
+		CF8643302438F46000D1C0E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF86432F2438F46000D1C0E6 /* Assets.xcassets */; };
+		CF8643432438FA3500D1C0E6 /* ShadowedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643422438FA3500D1C0E6 /* ShadowedImageView.swift */; };
+		CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */; };
+		CF8643482438FC2100D1C0E6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643472438FC2100D1C0E6 /* MapViewController.swift */; };
+		CF86434A2438FD4F00D1C0E6 /* Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8643492438FD4F00D1C0E6 /* Emergency.swift */; };
+		DD06D226244022500067FA9F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD06D225244022500067FA9F /* Location.swift */; };
+		DDCD9D892444B7BE00D25F96 /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCD9D882444B7BE00D25F96 /* APILocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B42CF4F6242C00A400733541 /* Nash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nash.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B42CF4F9242C00A400733541 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B42CF4FB242C00A400733541 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B42CF4FD242C00A400733541 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B42CF500242C00A400733541 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B42CF503242C00A400733541 /* Nash.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nash.xcdatamodel; sourceTree = "<group>"; };
-		B42CF505242C00A600733541 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B42CF508242C00A600733541 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		B42CF50A242C00A600733541 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchTableViewController.swift; sourceTree = "<group>"; };
+		CF8643202438F45D00D1C0E6 /* Nash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nash.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF8643232438F45D00D1C0E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		CF8643272438F45D00D1C0E6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CF86432A2438F45D00D1C0E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CF86432F2438F46000D1C0E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CF8643342438F46000D1C0E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF8643422438FA3500D1C0E6 /* ShadowedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowedImageView.swift; sourceTree = "<group>"; };
+		CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoronavirusMapView.swift; sourceTree = "<group>"; };
+		CF8643472438FC2100D1C0E6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		CF8643492438FD4F00D1C0E6 /* Emergency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency.swift; sourceTree = "<group>"; };
+		DD06D225244022500067FA9F /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DDCD9D882444B7BE00D25F96 /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B42CF4F3242C00A400733541 /* Frameworks */ = {
+		CF86431D2438F45D00D1C0E6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -39,33 +49,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B42CF4ED242C00A400733541 = {
+		CF8643172438F45D00D1C0E6 = {
 			isa = PBXGroup;
 			children = (
-				B42CF4F8242C00A400733541 /* Nash */,
-				B42CF4F7242C00A400733541 /* Products */,
+				CF8643222438F45D00D1C0E6 /* Nash */,
+				CF8643212438F45D00D1C0E6 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		B42CF4F7242C00A400733541 /* Products */ = {
+		CF8643212438F45D00D1C0E6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B42CF4F6242C00A400733541 /* Nash.app */,
+				CF8643202438F45D00D1C0E6 /* Nash.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B42CF4F8242C00A400733541 /* Nash */ = {
+		CF8643222438F45D00D1C0E6 /* Nash */ = {
 			isa = PBXGroup;
 			children = (
-				B42CF4F9242C00A400733541 /* AppDelegate.swift */,
-				B42CF4FB242C00A400733541 /* SceneDelegate.swift */,
-				B42CF4FD242C00A400733541 /* ViewController.swift */,
-				B42CF4FF242C00A400733541 /* Main.storyboard */,
-				B42CF505242C00A600733541 /* Assets.xcassets */,
-				B42CF507242C00A600733541 /* LaunchScreen.storyboard */,
-				B42CF50A242C00A600733541 /* Info.plist */,
-				B42CF502242C00A400733541 /* Nash.xcdatamodeld */,
+				CF8643422438FA3500D1C0E6 /* ShadowedImageView.swift */,
+				CF8643232438F45D00D1C0E6 /* AppDelegate.swift */,
+				DDCD9D882444B7BE00D25F96 /* APILocation.swift */,
+				CF8643252438F45D00D1C0E6 /* SceneDelegate.swift */,
+				CF8643272438F45D00D1C0E6 /* ViewController.swift */,
+				3A6D6D492445266300D2EC36 /* LocationSearchTableViewController.swift */,
+				CF8643492438FD4F00D1C0E6 /* Emergency.swift */,
+				CF8643472438FC2100D1C0E6 /* MapViewController.swift */,
+				CF8643292438F45D00D1C0E6 /* Main.storyboard */,
+				CF86432F2438F46000D1C0E6 /* Assets.xcassets */,
+				CF8643342438F46000D1C0E6 /* Info.plist */,
+				CF8643452438FB4C00D1C0E6 /* CoronavirusMapView.swift */,
+				DD06D225244022500067FA9F /* Location.swift */,
 			);
 			path = Nash;
 			sourceTree = "<group>";
@@ -73,13 +88,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B42CF4F5242C00A400733541 /* Nash */ = {
+		CF86431F2438F45D00D1C0E6 /* Nash */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B42CF50D242C00A600733541 /* Build configuration list for PBXNativeTarget "Nash" */;
+			buildConfigurationList = CF8643372438F46000D1C0E6 /* Build configuration list for PBXNativeTarget "Nash" */;
 			buildPhases = (
-				B42CF4F2242C00A400733541 /* Sources */,
-				B42CF4F3242C00A400733541 /* Frameworks */,
-				B42CF4F4242C00A400733541 /* Resources */,
+				CF86431C2438F45D00D1C0E6 /* Sources */,
+				CF86431D2438F45D00D1C0E6 /* Frameworks */,
+				CF86431E2438F45D00D1C0E6 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -87,25 +102,25 @@
 			);
 			name = Nash;
 			productName = Nash;
-			productReference = B42CF4F6242C00A400733541 /* Nash.app */;
+			productReference = CF8643202438F45D00D1C0E6 /* Nash.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B42CF4EE242C00A400733541 /* Project object */ = {
+		CF8643182438F45D00D1C0E6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
-				ORGANIZATIONNAME = Nash;
+				ORGANIZATIONNAME = nash;
 				TargetAttributes = {
-					B42CF4F5242C00A400733541 = {
-						CreatedOnToolsVersion = 11.3.1;
+					CF86431F2438F45D00D1C0E6 = {
+						CreatedOnToolsVersion = 11.3;
 					};
 				};
 			};
-			buildConfigurationList = B42CF4F1242C00A400733541 /* Build configuration list for PBXProject "Nash" */;
+			buildConfigurationList = CF86431B2438F45D00D1C0E6 /* Build configuration list for PBXProject "Nash" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -113,64 +128,61 @@
 				en,
 				Base,
 			);
-			mainGroup = B42CF4ED242C00A400733541;
-			productRefGroup = B42CF4F7242C00A400733541 /* Products */;
+			mainGroup = CF8643172438F45D00D1C0E6;
+			productRefGroup = CF8643212438F45D00D1C0E6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B42CF4F5242C00A400733541 /* Nash */,
+				CF86431F2438F45D00D1C0E6 /* Nash */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B42CF4F4242C00A400733541 /* Resources */ = {
+		CF86431E2438F45D00D1C0E6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B42CF509242C00A600733541 /* LaunchScreen.storyboard in Resources */,
-				B42CF506242C00A600733541 /* Assets.xcassets in Resources */,
-				B42CF501242C00A400733541 /* Main.storyboard in Resources */,
+				CF8643302438F46000D1C0E6 /* Assets.xcassets in Resources */,
+				CF86432B2438F45D00D1C0E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B42CF4F2242C00A400733541 /* Sources */ = {
+		CF86431C2438F45D00D1C0E6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B42CF4FE242C00A400733541 /* ViewController.swift in Sources */,
-				B42CF4FA242C00A400733541 /* AppDelegate.swift in Sources */,
-				B42CF4FC242C00A400733541 /* SceneDelegate.swift in Sources */,
-				B42CF504242C00A400733541 /* Nash.xcdatamodeld in Sources */,
+				CF8643282438F45D00D1C0E6 /* ViewController.swift in Sources */,
+				CF8643242438F45D00D1C0E6 /* AppDelegate.swift in Sources */,
+				CF86434A2438FD4F00D1C0E6 /* Emergency.swift in Sources */,
+				DDCD9D892444B7BE00D25F96 /* APILocation.swift in Sources */,
+				CF8643432438FA3500D1C0E6 /* ShadowedImageView.swift in Sources */,
+				DD06D226244022500067FA9F /* Location.swift in Sources */,
+				3A6D6D4A2445266300D2EC36 /* LocationSearchTableViewController.swift in Sources */,
+				CF8643262438F45D00D1C0E6 /* SceneDelegate.swift in Sources */,
+				CF8643462438FB4C00D1C0E6 /* CoronavirusMapView.swift in Sources */,
+				CF8643482438FC2100D1C0E6 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B42CF4FF242C00A400733541 /* Main.storyboard */ = {
+		CF8643292438F45D00D1C0E6 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B42CF500242C00A400733541 /* Base */,
+				CF86432A2438F45D00D1C0E6 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		B42CF507242C00A600733541 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B42CF508242C00A600733541 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		B42CF50B242C00A600733541 /* Debug */ = {
+		CF8643352438F46000D1C0E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -230,7 +242,7 @@
 			};
 			name = Debug;
 		};
-		B42CF50C242C00A600733541 /* Release */ = {
+		CF8643362438F46000D1C0E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -284,34 +296,36 @@
 			};
 			name = Release;
 		};
-		B42CF50E242C00A600733541 /* Debug */ = {
+		CF8643382438F46000D1C0E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JBK62Z348L;
 				INFOPLIST_FILE = Nash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "CS290-FinalProject.Nash";
+				PRODUCT_BUNDLE_IDENTIFIER = covidapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		B42CF50F242C00A600733541 /* Release */ = {
+		CF8643392438F46000D1C0E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JBK62Z348L;
 				INFOPLIST_FILE = Nash/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "CS290-FinalProject.Nash";
+				PRODUCT_BUNDLE_IDENTIFIER = covidapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -321,38 +335,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B42CF4F1242C00A400733541 /* Build configuration list for PBXProject "Nash" */ = {
+		CF86431B2438F45D00D1C0E6 /* Build configuration list for PBXProject "Nash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B42CF50B242C00A600733541 /* Debug */,
-				B42CF50C242C00A600733541 /* Release */,
+				CF8643352438F46000D1C0E6 /* Debug */,
+				CF8643362438F46000D1C0E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B42CF50D242C00A600733541 /* Build configuration list for PBXNativeTarget "Nash" */ = {
+		CF8643372438F46000D1C0E6 /* Build configuration list for PBXNativeTarget "Nash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B42CF50E242C00A600733541 /* Debug */,
-				B42CF50F242C00A600733541 /* Release */,
+				CF8643382438F46000D1C0E6 /* Debug */,
+				CF8643392438F46000D1C0E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		B42CF502242C00A400733541 /* Nash.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				B42CF503242C00A400733541 /* Nash.xcdatamodel */,
-			);
-			currentVersion = B42CF503242C00A400733541 /* Nash.xcdatamodel */;
-			path = Nash.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
-	rootObject = B42CF4EE242C00A400733541 /* Project object */;
+	rootObject = CF8643182438F45D00D1C0E6 /* Project object */;
 }
