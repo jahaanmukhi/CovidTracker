@@ -34,21 +34,21 @@ Jake Derry,  Ava LeWinter, Jahaan Mukhi, Joseph Nagy, David Rothblatt, Sam Snede
 
 #### Frontend
 
-This project uses the UIKit, MapKit, CoreLocation, and UserNotification frameworks.
+- This project uses the UIKit, MapKit, CoreLocation, and UserNotification frameworks.
 
-MapKit framework - for COVID-19 heat map | Core Location - for updated location and daily update | Local Notification - for daily reminder notification
+- MapKit framework - for COVID-19 heat map | Core Location - for updated location and daily update | Local Notification - for daily reminder notification
 
 #### Backend
 
-This project uses a Flask server. 
+- This project uses a Flask server. 
 
-We update the data daily (after 8PM EST) and host it in JSON format here: [JSON](https://nash-273721.df.r.appspot.com/map)
+- We update the data daily (after 8PM EST) and host it in JSON format here: [JSON](https://nash-273721.df.r.appspot.com/map)
 
 #### Data
-We use the [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19). 
-We combine all of the time series data, which be found in 5 separate CSV files [here](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series), and clean the data so that the map pins work more smoothly. 
+- We use the [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19). 
+- We combine all of the time series data, which be found in 5 separate CSV files [here](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series), and clean the data so that the map pins work more smoothly. 
+- See online/updates.py for the data collection and data cleaning code, which is a python script that uses Pandas DF. 
 
-See online/updates.py for the data collection and data cleaning code, which is a python script that uses Pandas DF. 
 ## Team 
 
 ### Team Members 
