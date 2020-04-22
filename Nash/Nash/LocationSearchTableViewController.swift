@@ -11,7 +11,6 @@ import MapKit
 
 class LocationSearchTableViewController: UITableViewController {
     
-
     var mapView : MKMapView? = nil
     var handleMapSearchDelegate : HandleMapSearch? = nil
     var allPins: [Pin] = [] 

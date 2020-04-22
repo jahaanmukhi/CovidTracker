@@ -6,6 +6,19 @@ import pandas as pd
 import pathlib
 import tempfile
 
+last_update = datetime.datetime.now()
+
+def get_last_jhu_update(t):
+  future = datetime.datetime(t.year,t.month,t.day,20,0)
+  if t.hour < 20:
+    future -= datetime.timedelta(days=1)
+  return future
+
+def check_time():
+  last_jhu_update = get_last_jhu_update(last_update)
+  if last_update < last_jhu_update:
+    update()
+
 def make_temp_path():
   with tempfile.NamedTemporaryFile() as temp:
     return pathlib.Path(temp.name)
@@ -79,8 +92,7 @@ def update():
     covid_data = pd.merge(US_df, global_df, how='outer')
 
     covid_data.to_json(str(path), orient='records')
-
-    # save the data to the file
+    last_update = datetime.datetime.now()
 
 def filter_df(df, deaths=False, recovered=False, worldwide=False):
 

@@ -51,7 +51,11 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <LocationScenarioReference
+<<<<<<< HEAD
+         identifier = "San Francisco, CA, USA"
+=======
          identifier = "New York, NY, USA"
+>>>>>>> master
          referenceType = "1">
       </LocationScenarioReference>
    </LaunchAction>
