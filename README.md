@@ -13,28 +13,32 @@ Jake Derry,  Ava LeWinter, Jahaan Mukhi, Joseph Nagy, David Rothblatt, Sam Snede
 
 ### Project Goal
 
-To provide users with daily COVID-19 updates and a map interface 
-to search and view world-wide COVID-19 data including case, death and 
-recovered counts as well as daily/weekly increases. 
+- Create a resource for people to get updated and accurate information about COVID-19
+- Make it easy for users to find information about COVID-19 in any part of the world 
+- Update users about the changes in COVID-19 cases in their local area
 
 ### Features
 
-- [ ] Map interface displaying COVID-19 info 
-  - [ ] Pins display current cases and death count for region 
-  - [ ] County-level data for United States 
-  - [ ] Province-level data for China
-  - [ ] Country-level data for territories excluding US and China
-  - [ ] Search bar allows users to search nearly 4,000 pins 
-- [ ] Launch Screen and notifications
-  - [ ] Button to launch a COVID-19 update based on current location
-  - [ ] Description of application purpose 
-  - [ ] Daily COVID-19 notification sent at night 
+- [ ] Daily Alert
+  - [ ] Click daily update button to launch an alert with updated stats in your county or country based on your current location 
+  - [ ] The alert displays curent location, population, current cases and deaths, daily change in cases and deaths, as well as weekly change in cases and deaths
+- [ ] Daily Notification
+  - [ ] Reminds you to track the coronavirus daily. Local notification. (Currently set to 5PM, can change in AppDelegate)
+- [ ] Global Map
+  - [ ] Tracks & Zooms to Current Location
+  - [ ] Pins for US counties + Provinces/Regions in Canada, China, and Australia + Rest of Countries Worldwide
+  - [ ] Search Bar: locate over 3000 pins and zoom in to specific pins
+
   
 ### Project Architecture
 
 #### Frontend
 
 This project uses the UIKit, MapKit, CoreLocation, and UserNotification frameworks.
+
+MapKit framework - for COVID-19 heat map
+Core Location - for updated location and daily update
+Local Notification - for daily reminder notification
 
 #### Backend
 
@@ -51,29 +55,29 @@ Jake Derry, Joseph Nagy, Sam Snedeker, Ava LeWinter, Jahaan Mukhi, David Rothbla
 
 ### Team Contributions 
 
-#####David
+David
 - Data Collection & Cleaning 
 - Daily Alert Feature 
 - App Integration & Task Delegation
 
-#####Jake
+Jake
 - Server 
 - Location Services
 
-#####Joe 
+Joe 
 - MapViewController
 - Map Search Bar
 
-#####Jahaan 
+Jahaan 
 - MapViewController
 - Map Pins and Gradient 
 
-#####Sam 
+Sam 
 - Location Services
 - Reminder Notification 
 - UI/UX (homepage & constraints)
 
-#####Ava 
+Ava 
 - Reminder Notification / Daily Alert 
 - UI/UX (homepage & constraints)
 
