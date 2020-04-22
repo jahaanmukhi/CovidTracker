@@ -185,9 +185,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if (manager.location != nil && (status == .authorizedAlways || status == .authorizedWhenInUse) ){
-            let currLoc = manager.location!
-            setMyLocationData(currLoc: currLoc)
+        if (status == .authorizedAlways || status == .authorizedWhenInUse ){
+            if (manager.location != nil){
+                setMyLocationData(currLoc: manager.location!)
+            }
+            alert_msg = "Location not available? Try Again."
         } else {
             alert_msg = "Location services not enabled."
         }
